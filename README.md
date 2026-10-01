@@ -11,6 +11,13 @@ access; the lesson files travel entirely over the local network.
 This repository holds the finished, tested package: the student-facing pages, the
 lesson ZIPs, and the two Windows server implementations behind them.
 
+The core lesson is phases 1–7, scheduled minute-by-minute across 90 minutes. An
+optional **Phase 8 — Expert Challenge** bonus is included for early finishers or a
+follow-up session: 8 procedurally-generated images (matching the exact visual style
+of the training set), each built to test one specific way an image classifier can be
+fooled — color-only shortcuts, orientation, scale, clutter, and contrast — rather than
+just "harder to see." See `TEACHER_NOTES.txt` inside the Phase 8 ZIP for the framing.
+
 ## The problem this solves
 
 The lesson needed every student in a room to grab the same curated set of training
@@ -59,7 +66,7 @@ endpoint and no way to browse or modify anything else on the laptop.
 | `server.ps1` | A from-scratch HTTP file server (`System.Net.HttpListener`) used only when Python is unavailable. Needs Administrator rights once (self-elevates via UAC) because Windows restricts non-loopback `HttpListener` binding to admins — Python's raw sockets don't have this restriction, which is why Python is the preferred path. |
 | `index.html` / `index-ar.html` | The student download page, in English and Arabic (full RTL layout), each linking to the other. |
 | `teacher_qr.html` | An optional, offline, teacher-only page that generates a QR code for whatever address the server is actually running on, so students can scan instead of typing. |
-| `downloads/` | The lesson ZIPs: a MASTER bundle, an already-expanded "Expanded" bundle, and one ZIP per phase (1–7). |
+| `downloads/` | The lesson ZIPs: a MASTER bundle, an already-expanded "Expanded" bundle, one ZIP per core phase (1–7), and an optional bonus Phase 8. |
 | `README_FIRST.txt` | The plain-language operational guide for the teacher: quick start, troubleshooting, firewall notes, network scenarios. |
 | `START_SERVER_LINUX_MAC.sh` | Equivalent launcher for Linux/macOS, included for completeness. |
 

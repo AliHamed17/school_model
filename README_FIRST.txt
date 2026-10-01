@@ -32,6 +32,10 @@ WHAT STUDENTS DO
 4. Go to https://teachablemachine.withgoogle.com/ and upload the extracted
    files (no camera needed).
 
+Phase 8 is an optional bonus (not part of the 90-minute timeline) for
+students who finish early, or for a follow-up session: 8 tricky images,
+each designed to test a specific way the AI model can be fooled.
+
 ARABIC VERSION
 --------------
 The student page also exists fully in Arabic:
