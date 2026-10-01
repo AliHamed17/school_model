@@ -1,0 +1,8 @@
+{
+  "name": "AI Class — Student Downloads",
+  "description": "Local classroom distribution hub for Teachable Machine AI image classification lesson phases, datasets, and guides.",
+  "permissions": [],
+  "capabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
