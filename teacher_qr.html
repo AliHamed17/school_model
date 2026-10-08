@@ -17,13 +17,31 @@ button:hover{background:#232b3a}
 </style>
 </head>
 <body>
-<h1>Teacher QR Code (optional)</h1>
-<p class="hint">For the teacher only. Students do not need this page, and it is not linked from the student download page. The normal typed URL always works without this.</p>
-<p class="hint">Confirm the address below matches what START_SERVER_WINDOWS.bat (or the PowerShell fallback) is showing right now, then generate a QR code students can scan instead of typing it.</p>
+<h1>Teacher QR Code & Multi-Network Hub</h1>
+<p class="hint">For the teacher only. Generate a scannable QR code so students can open the lesson downloads page instantly on their phone, iPad, or Chromebook without typing.</p>
+
+<div id="network-quick-bar" style="margin:16px 0; display:none;">
+  <p class="hint" style="margin-bottom:8px; font-weight:600; color:#111827;">Detected Network Addresses (click to use):</p>
+  <div id="network-buttons" style="display:flex; flex-wrap:wrap; gap:8px;"></div>
+</div>
+
+<p class="hint">Confirm the address below matches how students reach this machine, then generate a QR code:</p>
 <input type="text" id="url" autocomplete="off" spellcheck="false">
-<button id="go">Generate QR code</button>
+<div style="display:flex; gap:10px;">
+  <button id="go">Generate QR code</button>
+  <a href="/" style="padding:11px 18px;font-size:16px;font-weight:600;background:#fff;color:#111827;border:1px solid #ccc;border-radius:8px;text-decoration:none;">Open Downloads Hub</a>
+</div>
 <div id="qr"></div>
 <p class="hint" id="status"></p>
+
+<div style="margin-top:30px; padding:18px; background:#fff; border:1px solid #e1e4e8; border-radius:10px; font-size:14px; line-height:1.6;">
+  <b style="color:#111827;">Connecting on Any Network Guide:</b>
+  <ul style="padding-left:20px; margin:8px 0 0; color:#475569;">
+    <li><b>Public Cloud URL (Works on ANY network worldwide):</b> If running online or via Cloud Run, share the public URL (https://ais-pre-rp4wyeuhw3rca3whcrxqjw-551148841539.europe-west2.run.app). Students can connect over 4G/5G mobile data, home Wi-Fi, or school networks without setup.</li>
+    <li><b>Classroom Wi-Fi / LAN:</b> If running locally on your laptop, ensure students are on the same Wi-Fi network and enter your laptop's local IP (e.g. <code>http://192.168.1.X:3000</code>).</li>
+    <li><b>School Wi-Fi Blocking Devices (AP Isolation)?</b> If the school network blocks communication between student and teacher laptops, turn on your smartphone's Personal Hotspot and connect both devices to it, or use the Cloud URL.</li>
+  </ul>
+</div>
 
 <script>
 /* Vendored, unmodified: QR Code Generator for JavaScript
@@ -2332,11 +2350,13 @@ var qrcode = function() {
   var input = document.getElementById('url');
   var box = document.getElementById('qr');
   var status = document.getElementById('status');
+  var netBar = document.getElementById('network-quick-bar');
+  var netBtns = document.getElementById('network-buttons');
 
-  if (location.protocol === 'http:' && location.hostname !== 'localhost' && location.hostname !== '127.0.0.1') {
-    input.value = location.protocol + '//' + location.host + '/';
+  if (location.hostname !== 'localhost' && location.hostname !== '127.0.0.1') {
+    input.value = location.origin + '/';
   } else {
-    input.placeholder = 'http://YOUR-IP:8000/';
+    input.value = 'http://' + location.hostname + ':' + (location.port || '3000') + '/';
   }
 
   function generate(text) {
@@ -2353,12 +2373,11 @@ var qrcode = function() {
     throw new Error('Address is too long for a QR code.');
   }
 
-  document.getElementById('go').addEventListener('click', function () {
-    var text = input.value.trim();
+  function renderQR(text) {
     box.innerHTML = '';
     status.textContent = '';
     if (!text) {
-      status.textContent = 'Type the address first, e.g. http://192.168.1.25:8000/';
+      status.textContent = 'Type or choose an address first.';
       return;
     }
     try {
@@ -2368,7 +2387,42 @@ var qrcode = function() {
     } catch (e) {
       status.textContent = 'Could not generate QR code: ' + e.message;
     }
+  }
+
+  document.getElementById('go').addEventListener('click', function () {
+    renderQR(input.value.trim());
   });
+
+  // Fetch detected network addresses from server
+  fetch('/api/network-info')
+    .then(function(res){ return res.json(); })
+    .then(function(data){
+      if (data && data.addresses && data.addresses.length > 0) {
+        netBar.style.display = 'block';
+        netBtns.innerHTML = '';
+        
+        // Add current URL button
+        var curBtn = document.createElement('button');
+        curBtn.textContent = 'Current: ' + location.origin;
+        curBtn.style.cssText = 'padding:6px 12px; font-size:13px; font-weight:600; background:#0f172a; color:#fff; border:none; border-radius:6px; cursor:pointer;';
+        curBtn.onclick = function(){ input.value = location.origin + '/'; renderQR(input.value); };
+        netBtns.appendChild(curBtn);
+
+        data.addresses.forEach(function(item){
+          var btn = document.createElement('button');
+          btn.textContent = item.interface + ' (' + item.ip + ')';
+          btn.style.cssText = 'padding:6px 12px; font-size:13px; font-weight:600; background:#e2e8f0; color:#0f172a; border:none; border-radius:6px; cursor:pointer;';
+          btn.onclick = function(){ input.value = item.url + '/'; renderQR(input.value); };
+          netBtns.appendChild(btn);
+        });
+      }
+    })
+    .catch(function(){ /* ignore if offline */ });
+
+  // Auto-generate on initial load
+  if (input.value) {
+    renderQR(input.value.trim());
+  }
 })();
 </script>
 </body>

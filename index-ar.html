@@ -4,147 +4,1481 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>فصل الذكاء الاصطناعي — تنزيلات الطلاب</title>
+<meta name="description" content="Local classroom distribution hub for Teachable Machine AI image classification lesson phases, datasets, and guides.">
+<meta property="og:title" content="فصل الذكاء الاصطناعي — تنزيلات الطلاب">
+<meta property="og:description" content="Local classroom distribution hub for Teachable Machine AI image classification lesson phases, datasets, and guides.">
 <style>
-*{box-sizing:border-box}
-body{font-family:Tahoma,Arial,"Segoe UI",sans-serif;margin:0;background:#f6f7f9;color:#15171a}
-header{background:#111827;color:#fff;padding:34px 20px}
-.wrap{max-width:980px;margin:auto}
-header h1{margin:0 0 8px;font-size:32px}
-header p{margin:0;opacity:.9}
-.langs{float:left;display:flex;gap:8px}
-.langs a{color:#cbd2e0;text-decoration:none;font-size:14px;border:1px solid #374151;padding:6px 12px;border-radius:8px}
-.langs a:hover{background:#1f2937}
-main{padding:26px 20px 50px}
-.notice{background:#fff8db;border:1px solid #ead887;border-radius:10px;padding:18px 20px;margin-bottom:18px;font-size:17px;line-height:1.7}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
-.card{position:relative;background:white;border:1px solid #e1e4e8;border-radius:12px;padding:20px;box-shadow:0 1px 3px rgba(0,0,0,.04)}
-.card h2{font-size:20px;margin:0 0 8px 44px}
-.card p{min-height:44px;color:#525866;line-height:1.6}
-.size{min-height:0 !important;font-size:13px;color:#8a8f98;margin:-8px 0 14px}
-.badge{position:absolute;top:16px;right:16px;width:42px;height:42px;border-radius:50%;background:#111827;color:#fff;font-size:19px;font-weight:800;display:flex;align-items:center;justify-content:center}
-.badge.bonus{background:#9a6b00}
-.card.bonus{border-color:#e8c468;background:#fffdf5}
-.badge.xl{background:#217346}
-.card.xl{border-color:#8fc4a4;background:#f6fbf8}
-.btnrow{display:flex;flex-wrap:wrap;gap:8px}
-.btn.alt{background:#fff;color:#111827;border:2px solid #111827;padding:9px 14px}
-.btn.alt:hover{background:#f0f1f3}
-.btn{display:inline-block;background:#111827;color:white;text-decoration:none;padding:11px 16px;border-radius:8px;font-weight:700}
-.tool{margin-top:28px;padding:18px 20px;background:white;border:1px solid #e1e4e8;border-radius:12px}
-.tool .btn{background:#0b6b3a}
-.small{font-size:14px;color:#666;margin-top:10px;line-height:1.7}
-code{background:#eceff3;border-radius:5px;padding:2px 5px;direction:ltr;display:inline-block}
+*, *::before, *::after { box-sizing: border-box; }
+:root {
+  --bg-canvas: #f8fafc;
+  --bg-surface: #ffffff;
+  --bg-subtle: #f1f5f9;
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #64748b;
+  --border-subtle: #e2e8f0;
+  --border-focus: #0f172a;
+  --accent-brand: #0f172a;
+  --accent-emerald: #059669;
+  --accent-blue: #2563eb;
+  --accent-amber: #d97706;
+  --accent-ruby: #dc2626;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+}
+body {
+  margin: 0;
+  font-family: Tahoma, "Segoe UI", -apple-system, BlinkMacSystemFont, Arial, sans-serif;
+  background-color: var(--bg-canvas);
+  color: var(--text-primary);
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* 1. TOP BAR */
+.topbar {
+  background: #0f172a;
+  color: #f8fafc;
+  border-bottom: 1px solid #1e293b;
+  position: sticky;
+  top: 0;
+  z-index: 40;
+}
+.topbar-wrap {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 14px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.brand-zone {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 17px;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+}
+.brand-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  background: linear-gradient(135deg, #3b82f6, #06b6d4);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 800;
+}
+.nav-zone {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+}
+.nav-link {
+  color: #cbd5e1;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  transition: color 0.15s ease;
+  white-space: nowrap;
+}
+.nav-link:hover {
+  color: #ffffff;
+}
+.action-zone {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.lang-toggle {
+  color: #cbd5e1;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 6px 12px;
+  border: 1px solid #334155;
+  border-radius: var(--radius-sm);
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+.lang-toggle:hover {
+  background: #1e293b;
+  color: #ffffff;
+  border-color: #475569;
+}
+.btn-top-tm {
+  background: #2563eb;
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: var(--radius-sm);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: background 0.15s ease;
+  white-space: nowrap;
+}
+.btn-top-tm:hover {
+  background: #1d4ed8;
+}
+
+/* 2. CONTAINER */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 32px 24px 64px;
+}
+
+/* 3. HERO */
+.hero {
+  background: #ffffff;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 32px;
+  margin-bottom: 28px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+}
+.hero-tagline {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--accent-blue);
+  margin-bottom: 8px;
+}
+.hero h1 {
+  font-size: 30px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin: 0 0 12px;
+  color: var(--text-primary);
+  line-height: 1.35;
+}
+.hero p {
+  font-size: 16px;
+  color: var(--text-secondary);
+  max-width: 880px;
+  margin: 0 0 20px;
+  line-height: 1.7;
+}
+.trust-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px 24px;
+  align-items: center;
+  padding: 14px 18px;
+  background: var(--bg-subtle);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-subtle);
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-bottom: 24px;
+}
+.trust-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 500;
+}
+.trust-item svg {
+  width: 16px;
+  height: 16px;
+  color: var(--accent-emerald);
+}
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+}
+.btn-primary {
+  background: #0f172a;
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 10px 18px;
+  border-radius: var(--radius-sm);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.15s ease;
+  border: 1px solid transparent;
+}
+.btn-primary:hover {
+  background: #1e293b;
+  transform: translateY(-1px);
+}
+.btn-secondary {
+  background: #ffffff;
+  color: var(--text-primary);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 10px 18px;
+  border-radius: var(--radius-sm);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid var(--border-subtle);
+  transition: all 0.15s ease;
+}
+.btn-secondary:hover {
+  background: var(--bg-subtle);
+  border-color: #cbd5e1;
+}
+
+/* 4. SANDBOX */
+.sandbox-card {
+  background: #ffffff;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  margin-bottom: 36px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+}
+.sandbox-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 12px;
+  border-bottom: 1px solid var(--border-subtle);
+  padding-bottom: 16px;
+  margin-bottom: 20px;
+}
+.sandbox-header h2 {
+  font-size: 20px;
+  font-weight: 700;
+  margin: 0 0 4px;
+}
+.sandbox-header p {
+  margin: 0;
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+.sandbox-grid {
+  display: grid;
+  grid-template-columns: 280px 1fr 1fr;
+  gap: 24px;
+  align-items: start;
+}
+@media (max-width: 900px) {
+  .sandbox-grid {
+    grid-template-columns: 1fr;
+  }
+}
+.sandbox-col-title {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--text-muted);
+  margin-bottom: 10px;
+}
+.select-input-group {
+  margin-bottom: 14px;
+}
+.select-input-group label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 6px;
+}
+.select-styled {
+  width: 100%;
+  padding: 8px 12px;
+  font-size: 14px;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  background: #ffffff;
+  color: var(--text-primary);
+  font-family: inherit;
+}
+.preview-box {
+  width: 100%;
+  aspect-ratio: 1;
+  max-width: 220px;
+  background: #f1f5f9;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
+}
+.preview-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.controls-deck {
+  background: var(--bg-subtle);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 16px;
+}
+.control-item {
+  margin-bottom: 16px;
+}
+.control-item:last-child {
+  margin-bottom: 0;
+}
+.control-label-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+.control-val {
+  font-variant-numeric: tabular-nums;
+  color: var(--accent-blue);
+  direction: ltr;
+}
+.slider {
+  width: 100%;
+  height: 6px;
+  accent-color: #2563eb;
+  cursor: pointer;
+}
+.toggle-switch {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+}
+.toggle-switch input {
+  accent-color: #059669;
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
+.prediction-deck {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.prob-row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.prob-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  font-weight: 600;
+}
+.prob-bar-track {
+  height: 10px;
+  background: #e2e8f0;
+  border-radius: 999px;
+  overflow: hidden;
+}
+.prob-bar-fill {
+  height: 100%;
+  transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  border-radius: 999px;
+}
+.bar-apple { background: #dc2626; }
+.bar-banana { background: #eab308; }
+.bar-orange { background: #ea580c; }
+.bar-unknown { background: #64748b; }
+
+.verdict-box {
+  margin-top: 14px;
+  padding: 14px;
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  line-height: 1.6;
+  border: 1px solid transparent;
+}
+.verdict-vulnerable {
+  background: #fef2f2;
+  border-color: #fecdd3;
+  color: #991b1b;
+}
+.verdict-safe {
+  background: #f0fdf4;
+  border-color: #bbf7d0;
+  color: #166534;
+}
+
+/* 5. FILTER TABS */
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+.section-title {
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+.filter-tabs {
+  display: flex;
+  gap: 6px;
+  background: #e2e8f0;
+  padding: 4px;
+  border-radius: var(--radius-md);
+}
+.filter-btn {
+  border: none;
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+  font-family: inherit;
+}
+.filter-btn.active {
+  background: #ffffff;
+  color: var(--text-primary);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.06);
+}
+
+/* 6. GRID */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 20px;
+  margin-bottom: 32px;
+}
+.card {
+  position: relative;
+  background: #ffffff;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px -4px rgba(0,0,0,0.06);
+}
+.card-kicker {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+}
+.card h2 {
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  margin: 0 0 8px;
+  color: var(--text-primary);
+  line-height: 1.4;
+}
+.card-meta {
+  font-size: 12px;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+  margin-bottom: 12px;
+}
+.card p {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin: 0 0 20px;
+  flex-grow: 1;
+}
+.card-actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-top: auto;
+}
+.btn-download {
+  flex: 1;
+  background: #0f172a;
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 9px 14px;
+  border-radius: var(--radius-sm);
+  text-align: center;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+.btn-download:hover {
+  background: #1e293b;
+}
+.btn-inspect {
+  background: var(--bg-subtle);
+  color: var(--text-primary);
+  border: 1px solid var(--border-subtle);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+  font-family: inherit;
+}
+.btn-inspect:hover {
+  background: #e2e8f0;
+}
+
+/* Card Accents */
+.card-phase9 {
+  border-color: #fca5a5;
+  background: linear-gradient(180deg, #fff5f5 0%, #ffffff 40%);
+}
+.card-phase9 .card-kicker {
+  color: var(--accent-ruby);
+}
+.card-phase9 .btn-download {
+  background: #dc2626;
+}
+.card-phase9 .btn-download:hover {
+  background: #b91c1c;
+}
+.card-bonus {
+  border-color: #fde68a;
+  background: linear-gradient(180deg, #fffbeb 0%, #ffffff 40%);
+}
+.card-bonus .card-kicker {
+  color: var(--accent-amber);
+}
+.card-phase10 {
+  border-color: #86efac;
+  background: linear-gradient(180deg, #f0fdf4 0%, #ffffff 40%);
+}
+.card-phase10 .card-kicker {
+  color: #15803d;
+}
+.card-phase10 .btn-download {
+  background: #16a34a;
+}
+.card-phase10 .btn-download:hover {
+  background: #15803d;
+}
+.card-phase10 .card-actions {
+  margin-top: 0;
+}
+.card-phase10 .card-actions + .card-actions {
+  margin-top: 10px;
+}
+.card-phase10 a.btn-inspect {
+  text-decoration: none;
+  display: inline-block;
+}
+.card-phase10 .btn-zip {
+  background: #334155;
+}
+.card-master {
+  border-color: #93c5fd;
+  background: linear-gradient(180deg, #eff6ff 0%, #ffffff 35%);
+}
+.card-master .card-kicker {
+  color: var(--accent-blue);
+}
+
+/* 7. TEACHER PANEL */
+.teacher-banner {
+  background: #ffffff;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 12px;
+}
+.teacher-info h3 {
+  font-size: 17px;
+  font-weight: 700;
+  margin: 0 0 4px;
+}
+.teacher-info p {
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+/* 8. MODAL */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(2px);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+.modal-overlay.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+.modal-dialog {
+  background: #ffffff;
+  width: 100%;
+  max-width: 680px;
+  max-height: 85vh;
+  border-radius: var(--radius-lg);
+  box-shadow: 0 20px 40px -10px rgba(0,0,0,0.25);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transform: translateY(8px);
+  transition: transform 0.2s ease;
+}
+.modal-overlay.open .modal-dialog {
+  transform: translateY(0);
+}
+.modal-header {
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--border-subtle);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.modal-header h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+}
+.modal-close {
+  background: transparent;
+  border: none;
+  font-size: 20px;
+  line-height: 1;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 4px;
+}
+.modal-close:hover {
+  color: var(--text-primary);
+}
+.modal-body {
+  padding: 24px;
+  overflow-y: auto;
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+.modal-preview-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  gap: 12px;
+  margin: 16px 0;
+}
+.thumb-item {
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  background: #f8fafc;
+  text-align: center;
+}
+.thumb-item img {
+  width: 100%;
+  height: 90px;
+  object-fit: cover;
+  display: block;
+}
+.thumb-item span {
+  display: block;
+  font-size: 11px;
+  color: var(--text-muted);
+  padding: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.modal-footer {
+  padding: 16px 24px;
+  border-top: 1px solid var(--border-subtle);
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  background: var(--bg-subtle);
+}
+
+/* 9. ANY NETWORK CONNECTION BAR */
+.network-connect-box {
+  margin-top: 24px;
+  background: var(--bg-subtle);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 16px 20px;
+}
+.network-connect-main {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+.net-status-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+  flex-shrink: 0;
+}
+.btn-copy-url {
+  background: #0f172a;
+  color: #fff;
+  border: none;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 8px 14px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+  font-family: inherit;
+}
+.btn-copy-url:hover {
+  background: #1e293b;
+}
+.btn-qr-link {
+  background: #ffffff;
+  color: var(--text-primary);
+  border: 1px solid var(--border-subtle);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 8px 14px;
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+  font-family: inherit;
+}
+.btn-qr-link:hover {
+  background: #f1f5f9;
+}
+.network-tips {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border-subtle);
+  font-size: 12px;
+  color: var(--text-secondary);
+}
 </style>
 </head>
 <body>
-<header>
-  <div class="wrap">
-    <div class="langs"><a href="index.html">English</a><a href="index-he.html">עברית</a></div>
-    <h1>فصل الذكاء الاصطناعي — تنزيلات الطلاب</h1>
-    <p>نزّل فقط المرحلة التي يطلبها منك المعلم.</p>
+
+<!-- 1. TOP BAR -->
+<header class="topbar">
+  <div class="topbar-wrap">
+    <a href="index-ar.html" class="brand-zone">
+      <span class="brand-icon">AI</span>
+      <span>مختبر الرؤية الحاسوبية · منصة الفصل</span>
+    </a>
+    <nav class="nav-zone">
+      <a href="#curriculum" class="nav-link">المنهج الدراسي</a>
+      <a href="#simulator" class="nav-link">محاكي الفريق الأحمر</a>
+      <a href="#downloads" class="nav-link">التنزيلات</a>
+      <a href="teacher_qr.html" class="nav-link">رمز المعلم (QR)</a>
+    </nav>
+    <div class="action-zone">
+      <a href="https://teachablemachine.withgoogle.com/" target="_blank" rel="noopener" class="btn-top-tm">
+        افتح Teachable Machine ↗
+      </a>
+      <a href="index.html" class="lang-toggle">English</a>
+      <a href="index-he.html" class="lang-toggle">עברית</a>
+    </div>
   </div>
 </header>
-<main class="wrap">
-  <div class="notice">
-    <b>لا حاجة إلى كاميرا.</b> جميع صور التدريب والاختبار والتحدي مُدرجة بالفعل ضمن الملفات.
-  </div>
-  <div class="grid">
 
-        <div class="card">
-          <h2>الحزمة الكاملة — كل المراحل</h2>
-          <p>تنزيل واحد يحتوي على كل ملفات المراحل التسع المضغوطة (تشمل مرحلة التحدي الإضافية ومرحلة Excel).</p>
-          <p class="size">حجم الملف: 4.4 ميجابايت</p>
-          <a class="btn" href="downloads/AI_90min_All_Phases_MASTER.zip" download>تنزيل الملف المضغوط (ZIP)</a>
-        </div>
+<main class="container">
 
-        <div class="card">
-          <h2>الملفات الموسّعة — كل المجلدات والبيانات</h2>
-          <p>جميع ملفات الدرس مُفكّكة مسبقًا داخل مجلدات.</p>
-          <p class="size">حجم الملف: 4.5 ميجابايت</p>
-          <a class="btn" href="downloads/AI_90min_All_Data_Expanded.zip" download>تنزيل الملف المضغوط (ZIP)</a>
-        </div>
+  <!-- 2. HERO -->
+  <section class="hero" id="curriculum">
+    <div class="hero-tagline">منهج الذكاء الاصطناعي والرؤية الحاسوبية · للطلاب من 14 إلى 16 سنة</div>
+    <h1>درّب نماذج الذكاء الاصطناعي، واختبر ثغراتها، وتعلّم حمايتها</h1>
+    <p>
+      منظومة توزيع محلية تعمل بالكامل دون الحاجة لاتصال بالإنترنت داخل الفصل المدرسي.
+      تعلّم تدريب شبكات التعلم العميق ونقل المعرفة، واكتشف سبب خداع النماذج تحت الهجمات العدائية وعيوب دالة الاحتمالات.
+    </p>
 
-        <div class="card">
-          <div class="badge">1</div>
-          <h2>المرحلة 1 — الإحماء (0–15 دقيقة)</h2>
-          <p>إحماء اختياري بلعبة Quick, Draw! مع التعليمات.</p>
-          <p class="size">حجم الملف: 1.5 كيلوبايت</p>
-          <a class="btn" href="downloads/Phase_01_Warmup_0-15min.zip" download>تنزيل الملف المضغوط (ZIP)</a>
-        </div>
+    <div class="trust-strip">
+      <span class="trust-item">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+        لا حاجة إلى كاميرا · صور محلية مُنتقاة 100%
+      </span>
+      <span class="trust-item">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+        يعمل محليًا عبر شبكة الواي فاي بالفصل دون إنترنت
+      </span>
+      <span class="trust-item">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+        مُهيأ لمنصة Google Teachable Machine
+      </span>
+    </div>
 
-        <div class="card">
-          <div class="badge">2</div>
-          <h2>المرحلة 2 — تدريب الذكاء الاصطناعي (15–47 دقيقة)</h2>
-          <p>90 صورة تدريب: تفاح، موز، برتقال.</p>
-          <p class="size">حجم الملف: 753 كيلوبايت</p>
-          <a class="btn" href="downloads/Phase_02_Train_Model_15-47min.zip" download>تنزيل الملف المضغوط (ZIP)</a>
-        </div>
+    <div class="hero-actions">
+      <a class="btn-primary" href="downloads/AI_90min_All_Phases_MASTER.zip" download>
+        تنزيل كل المراحل (الحزمة الكاملة 1–10 · 4.7 ميجابايت)
+      </a>
+      <a class="btn-secondary" href="downloads/AI_90min_All_Data_Expanded.zip" download>
+        تنزيل المجلدات المفككة مسبقًا
+      </a>
+      <a class="btn-secondary" href="https://teachablemachine.withgoogle.com/" target="_blank" rel="noopener">
+        افتح Teachable Machine ↗
+      </a>
+    </div>
 
-        <div class="card">
-          <div class="badge">3</div>
-          <h2>المرحلة 3 — اختبار سهل (47–57 دقيقة)</h2>
-          <p>24 صورة اختبار جديدة + نموذج تسجيل النتائج.</p>
-          <p class="size">حجم الملف: 203 كيلوبايت</p>
-          <a class="btn" href="downloads/Phase_03_Easy_Test_47-57min.zip" download>تنزيل الملف المضغوط (ZIP)</a>
-        </div>
-
-        <div class="card">
-          <div class="badge">4</div>
-          <h2>المرحلة 4 — أربك الذكاء الاصطناعي (57–67 دقيقة)</h2>
-          <p>30 صورة أصعب + تقرير الإخفاقات.</p>
-          <p class="size">حجم الملف: 490 كيلوبايت</p>
-          <a class="btn" href="downloads/Phase_04_Break_The_AI_57-67min.zip" download>تنزيل الملف المضغوط (ZIP)</a>
-        </div>
-
-        <div class="card">
-          <div class="badge">5</div>
-          <h2>المرحلة 5 — تحسين وإعادة التدريب (67–75 دقيقة)</h2>
-          <p>أمثلة تدريب إضافية + صور تحقق منفصلة.</p>
-          <p class="size">حجم الملف: 469 كيلوبايت</p>
-          <a class="btn" href="downloads/Phase_05_Improve_Retrain_67-75min.zip" download>تنزيل الملف المضغوط (ZIP)</a>
-        </div>
-
-        <div class="card">
-          <div class="badge">6</div>
-          <h2>المرحلة 6 — تحدي الذكاء الاصطناعي (75–87 دقيقة)</h2>
-          <p>صور فواكه مختلطة وغامضة + ورقة التحدي.</p>
-          <p class="size">حجم الملف: 112 كيلوبايت</p>
-          <a class="btn" href="downloads/Phase_06_Ambiguous_Challenge_75-87min.zip" download>تنزيل الملف المضغوط (ZIP)</a>
-        </div>
-
-        <div class="card">
-          <div class="badge">7</div>
-          <h2>المرحلة 7 — بطاقة الخروج (87–90 دقيقة)</h2>
-          <p>أسئلة ختامية للطلاب + إجابات المعلم.</p>
-          <p class="size">حجم الملف: 1.2 كيلوبايت</p>
-          <a class="btn" href="downloads/Phase_07_Exit_Ticket_87-90min.zip" download>تنزيل الملف المضغوط (ZIP)</a>
-        </div>
-
-        <div class="card bonus">
-          <div class="badge bonus">8</div>
-          <h2>المرحلة 8 — التحدي الاحترافي (إضافية)</h2>
-          <p>اختيارية، لمن ينهي العمل مبكرًا. 8 صور صعبة صُممت لخداع الذكاء الاصطناعي.</p>
-          <p class="size">حجم الملف: 12.7 كيلوبايت</p>
-          <a class="btn" href="downloads/Phase_08_Expert_Challenge_BONUS.zip" download>تنزيل الملف المضغوط (ZIP)</a>
-        </div>
-
-        <div class="card xl">
-          <div class="badge xl">9</div>
-          <h2>المرحلة 9 — مختبر البيانات في Excel (درس متابعة، حوالي 45 دقيقة)</h2>
-          <p>حوّلوا نتائج الذكاء الاصطناعي إلى أرقام ورسوم بيانية في Excel. دليل خطوة بخطوة بالصور بالعربية والعبرية والإنجليزية.</p>
-          <p class="size">حجم الملف: 2.5 ميجابايت</p>
-          <div class="btnrow">
-            <a class="btn" href="excel/guide-ar.html">افتح الدليل</a>
-            <a class="btn alt" href="downloads/Phase_09_Excel_Data_Lab_FOLLOWUP.zip" download>تنزيل الملف المضغوط (ZIP)</a>
+    <!-- Live Multi-Network Student Share Hub (Arabic) -->
+    <div class="network-connect-box">
+      <div class="network-connect-main">
+        <div class="net-status-dot" title="الخادم نشط"></div>
+        <div style="flex:1; min-width:240px;">
+          <div style="font-size:12px; font-weight:700; color:var(--text-muted); margin-bottom:2px;">
+            رابط اتصال الطلاب المباشر (أي شبكة أو جهاز)
+          </div>
+          <div style="font-family:monospace; font-size:14px; font-weight:700; color:var(--text-primary); word-break:break-all; direction:ltr; text-align:right;" id="display-student-url">
+            جارٍ تحميل رابط الاتصال...
           </div>
         </div>
+        <div style="display:flex; gap:8px;">
+          <button class="btn-copy-url" onclick="copyStudentUrl()">
+            <span id="copy-btn-text">نسخ الرابط</span>
+          </button>
+          <a href="teacher_qr.html" class="btn-qr-link">
+            عرض رمز QR
+          </a>
+        </div>
+      </div>
+      <div class="network-tips">
+        <span><b>الاتصال عبر أي شبكة:</b> يمكن للطلاب الدخول عبر هواتف آيفون وأندرويد وأجهزة كروم بوك والحواسيب المحمولة على شبكة الواي فاي بالفصل، أو عبر نقطة اتصال الجوال (Hotspot)، أو الرابط السحابي المباشر.</span>
+      </div>
+    </div>
+  </section>
 
-  </div>
-  <div class="tool">
-    <p style="margin:0 0 12px;color:#525866">بعد فك ضغط الملف، انتقل إلى أداة تدريب الذكاء الاصطناعي:</p>
-    <a class="btn" href="https://teachablemachine.withgoogle.com/" target="_blank" rel="noopener">افتح Teachable Machine</a>
-    <p class="small">الخطوات: اضغط <code>Get Started</code> ثم <code>Image Project</code> ثم <code>Standard Image Model</code>، بعدها ارفع الملفات (بدون كاميرا).</p>
-  </div>
+  <!-- 3. SIMULATOR -->
+  <section class="sandbox-card" id="simulator">
+    <div class="sandbox-header">
+      <div>
+        <h2>منصة التشخيص التفاعلية (الفريق الأحمر)</h2>
+        <p>استكشف كيف تُقيّم الشبكات العصبية الصور واكتشف لماذا تُعطي دالة Softmax ثقة زائفة ومفرطة لمدخلات غريبة.</p>
+      </div>
+      <div style="font-size:12px; color:var(--text-muted); direction:ltr;">
+        MobileNet 224x224 Emulation
+      </div>
+    </div>
+
+    <div class="sandbox-grid">
+      <!-- Col 1 -->
+      <div>
+        <div class="sandbox-col-title">1. اختيار عينة الاختبار</div>
+        <div class="select-input-group">
+          <label for="sample-select">اختر الصورة المراد اختبارها:</label>
+          <select id="sample-select" class="select-styled" onchange="runSimulation()">
+            <option value="apple">تفاحة قياسية (صورة عادية)</option>
+            <option value="banana">موزة قياسية (صورة عادية)</option>
+            <option value="orange">برتقالة قياسية (صورة عادية)</option>
+            <option value="tennis">🎾 كرة تنس (خارج نطاق التدريب OOD)</option>
+            <option value="basketball">🏀 كرة سلة (فخ تشابه اللون والملمس)</option>
+            <option value="texture_swap">🍏 تفاحة بجلد الموز (صراع النسيج مقابل الشكل)</option>
+            <option value="patch">🛡️ ملصق تشويش عدائي بصري</option>
+            <option value="noise">⚡ تشويش شبكي عالي التردد</option>
+            <option value="traffic">🔴 إشارة مرور حمراء (خارج نطاق التدريب حرج)</option>
+          </select>
+        </div>
+        <div class="preview-box">
+          <img id="sim-preview-img" src="preview/phase_09/adv_01_ood_tennis_ball.png" alt="معاينة الصورة" referrerpolicy="no-referrer">
+        </div>
+      </div>
+
+      <!-- Col 2 -->
+      <div>
+        <div class="sandbox-col-title">2. متغيرات الدفاع الهندسي</div>
+        <div class="controls-deck">
+          <div class="control-item">
+            <div class="control-label-row">
+              <span>انحياز النسيج مقابل الشكل:</span>
+              <span class="control-val" id="val-texture-bias">70% نسيج</span>
+            </div>
+            <input type="range" id="slider-texture-bias" min="0" max="100" value="70" class="slider" oninput="runSimulation()">
+          </div>
+
+          <div class="control-item">
+            <div class="control-label-row">
+              <span>مستوى التشويش العدائي:</span>
+              <span class="control-val" id="val-noise-level">0%</span>
+            </div>
+            <input type="range" id="slider-noise" min="0" max="100" value="0" class="slider" oninput="runSimulation()">
+          </div>
+
+          <div class="control-item">
+            <label class="toggle-switch">
+              <input type="checkbox" id="check-threshold" onchange="runSimulation()">
+              <span>حارس عتبة الثقة (رفض التوقع إذا قل عن 75%)</span>
+            </label>
+          </div>
+
+          <div class="control-item">
+            <label class="toggle-switch">
+              <input type="checkbox" id="check-fourth-class" onchange="runSimulation()">
+              <span>تفعيل فئة الدفاع الرابعة ("أخرى / خلفية")</span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Col 3 -->
+      <div>
+        <div class="sandbox-col-title">3. توزيع احتمالات النموذج</div>
+        <div class="prediction-deck">
+          <div class="prob-row">
+            <div class="prob-header"><span>تفاح (Apple)</span><span id="prob-val-apple" class="control-val">0%</span></div>
+            <div class="prob-bar-track"><div id="prob-bar-apple" class="prob-bar-fill bar-apple" style="width:0%"></div></div>
+          </div>
+          <div class="prob-row">
+            <div class="prob-header"><span>موز (Banana)</span><span id="prob-val-banana" class="control-val">0%</span></div>
+            <div class="prob-bar-track"><div id="prob-bar-banana" class="prob-bar-fill bar-banana" style="width:0%"></div></div>
+          </div>
+          <div class="prob-row">
+            <div class="prob-header"><span>برتقال (Orange)</span><span id="prob-val-orange" class="control-val">0%</span></div>
+            <div class="prob-bar-track"><div id="prob-bar-orange" class="prob-bar-fill bar-orange" style="width:0%"></div></div>
+          </div>
+          <div class="prob-row" id="row-unknown" style="display:none;">
+            <div class="prob-header"><span>دفاع: فئة أخرى / خلفية</span><span id="prob-val-unknown" class="control-val">0%</span></div>
+            <div class="prob-bar-track"><div id="prob-bar-unknown" class="prob-bar-fill bar-unknown" style="width:0%"></div></div>
+          </div>
+
+          <div id="verdict-banner" class="verdict-box verdict-vulnerable">
+            جارٍ تحليل استجابة النموذج للثغرات...
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. DOWNLOADS -->
+  <section id="downloads">
+    <div class="section-header">
+      <h2 class="section-title">مراحل الدرس ومجموعات التحدي</h2>
+      <div class="filter-tabs">
+        <button class="filter-btn active" onclick="filterPhases('all', this)">كل الملفات <span dir="ltr">(1–10)</span></button>
+        <button class="filter-btn" onclick="filterPhases('core', this)">الدرس الأساسي (1–7)</button>
+        <button class="filter-btn" onclick="filterPhases('hardcore', this)">المتقدم (8 – 10)</button>
+        <button class="filter-btn" onclick="filterPhases('bundles', this)">الحزم المجمعة</button>
+      </div>
+    </div>
+
+    <div class="grid" id="phase-grid">
+
+      <!-- PHASE 10 - EXCEL DATA LAB -->
+      <div class="card card-phase10" data-category="hardcore">
+        <div>
+          <div class="card-kicker">المرحلة 10 · درس متابعة · حوالي 45 دقيقة</div>
+          <h2>مختبر البيانات في Excel: حوّل نتائج الذكاء الاصطناعي إلى رسوم بيانية</h2>
+          <div class="card-meta">2.5 ميجابايت · دليل خطوة بخطوة مع صور · العربية / English / עברית</div>
+          <p>
+            اكتب النسب المئوية التي أعطاها Teachable Machine (تفاح / موز / برتقال) في Excel، واحسب الدقة بالمعادلات، وارسم خمسة رسوم: دائري وأعمدة وخطي وانتشار XY وفقاعات XYZ. يتضمن ملف بداية ومثالاً جاهزاً بكل اللغات.
+          </p>
+        </div>
+        <div>
+          <div class="card-actions">
+            <a class="btn-download" href="excel/guide-ar.html">افتح الدليل</a>
+            <a class="btn-inspect" href="excel/guide-en.html">English</a>
+            <a class="btn-inspect" href="excel/guide-he.html">עברית</a>
+          </div>
+          <div class="card-actions">
+            <a class="btn-download btn-zip" href="downloads/Phase_10_Excel_Data_Lab_FOLLOWUP.zip" download>تنزيل ملف ZIP (الدليل + ملفات Excel)</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- PHASE 09 -->
+      <div class="card card-phase9" data-category="hardcore">
+        <div>
+          <div class="card-kicker">المرحلة 09 · التحدي المتقدم الخارق (الفريق الأحمر)</div>
+          <h2>التحدي العدائي واختبار المدخلات الخارجية</h2>
+          <div class="card-meta">215 كيلوبايت · 12 صورة هجوم واختبار · المفهوم: أمان الذكاء الاصطناعي والمتانة</div>
+          <p>
+            التحدي الأقوى لطلاب المرحلة الثانوية. اكشف عيب دالة Softmax والثقة الزائفة للذكاء الاصطناعي باختبار كرات التنس والسلة وتبديل الأنسجة، ثم صمم فئة رابعة دفاعية لإنقاذ النموذج.
+          </p>
+        </div>
+        <div class="card-actions">
+          <a class="btn-download" href="downloads/Phase_09_Adversarial_Gauntlet_ULTIMATE.zip" download>تنزيل ملف ZIP</a>
+          <button class="btn-inspect" onclick="openPhaseModal('phase9')">معاينة وتدقيق</button>
+        </div>
+      </div>
+
+      <!-- PHASE 08 -->
+      <div class="card card-bonus" data-category="hardcore">
+        <div>
+          <div class="card-kicker">المرحلة 08 · تحدي إضافي</div>
+          <h2>التحدي الاحترافي (صور مخادعة)</h2>
+          <div class="card-meta">13 كيلوبايت · 8 صور صعبة · المفهوم: تعلّم الاختصارات الزائفة</div>
+          <p>
+            مخصص لمن يُنهي عمله مبكرًا. يختبر هل تعلّم النموذج الخصائص البيولوجية الحقيقية للفاكهة أم اعتمد على اختصارات بسيطة مثل اللون فقط أو اتجاه الصورة أو الحجم.
+          </p>
+        </div>
+        <div class="card-actions">
+          <a class="btn-download" href="downloads/Phase_08_Expert_Challenge_BONUS.zip" download>تنزيل ملف ZIP</a>
+          <button class="btn-inspect" onclick="openPhaseModal('phase8')">معاينة وتدقيق</button>
+        </div>
+      </div>
+
+      <!-- MASTER -->
+      <div class="card card-master" data-category="bundles">
+        <div>
+          <div class="card-kicker">الحزمة الكاملة</div>
+          <h2>الحزمة الشاملة — كل المراحل <span dir="ltr" style="white-space:nowrap">(1–10)</span></h2>
+          <div class="card-meta">4.7 ميجابايت · يشمل جميع الملفات المضغوطة · دليل المعلم الشامل</div>
+          <p>
+            ملف واحد يضم كل مراحل الدرس العشر مع أوراق العمل ونماذج الإجابة للمعلم، وهو ممتاز للحفظ على ذاكرة فلاش في الفصل.
+          </p>
+        </div>
+        <div class="card-actions">
+          <a class="btn-download" href="downloads/AI_90min_All_Phases_MASTER.zip" download>تنزيل ملف ZIP</a>
+          <button class="btn-inspect" onclick="openPhaseModal('master')">تفاصيل الحزمة</button>
+        </div>
+      </div>
+
+      <!-- EXPANDED -->
+      <div class="card card-master" data-category="bundles">
+        <div>
+          <div class="card-kicker">الحزمة الكاملة</div>
+          <h2>الملفات الموسّعة — مجلدات مفككة مسبقًا</h2>
+          <div class="card-meta">4.7 ميجابايت · مجلدات جاهزة للرفع مباشرة دون فك ضغط</div>
+          <p>
+            جميع صور التدريب والاختبار والتحدي مفككة وجاهزة في مجلدات مرتبة؛ لتسهيل العمل في المدارس التي تحظر فتح ملفات ZIP.
+          </p>
+        </div>
+        <div class="card-actions">
+          <a class="btn-download" href="downloads/AI_90min_All_Data_Expanded.zip" download>تنزيل ملف ZIP</a>
+          <button class="btn-inspect" onclick="openPhaseModal('expanded')">تفاصيل الحزمة</button>
+        </div>
+      </div>
+
+      <!-- PHASE 01 -->
+      <div class="card" data-category="core">
+        <div>
+          <div class="card-kicker">المرحلة 01 · 0–15 دقيقة</div>
+          <h2>الإحماء ولعبة Quick, Draw!</h2>
+          <div class="card-meta">1.5 كيلوبايت · تعليمات الإحماء · المفهوم: تمييز الأنماط</div>
+          <p>
+            مقدمة تفاعلية للتعرف على أنماط التعلم الآلي عبر لعبة رسم سريعة تمهد لفهم كيفية استخراج الشبكات العصبية للملامح.
+          </p>
+        </div>
+        <div class="card-actions">
+          <a class="btn-download" href="downloads/Phase_01_Warmup_0-15min.zip" download>تنزيل ملف ZIP</a>
+          <button class="btn-inspect" onclick="openPhaseModal('phase1')">تفاصيل</button>
+        </div>
+      </div>
+
+      <!-- PHASE 02 -->
+      <div class="card" data-category="core">
+        <div>
+          <div class="card-kicker">المرحلة 02 · 15–47 دقيقة</div>
+          <h2>تدريب نموذج الذكاء الاصطناعي</h2>
+          <div class="card-meta">753 كيلوبايت · 90 صورة تدريبية · الفئات: تفاح، موز، برتقال</div>
+          <p>
+            ارفع 30 صورة لكل صنف في Teachable Machine، ودرب نموذجك الأساسي في الرؤية الحاسوبية دون حاجة لكاميرا.
+          </p>
+        </div>
+        <div class="card-actions">
+          <a class="btn-download" href="downloads/Phase_02_Train_Model_15-47min.zip" download>تنزيل ملف ZIP</a>
+          <button class="btn-inspect" onclick="openPhaseModal('phase2')">تفاصيل</button>
+        </div>
+      </div>
+
+      <!-- PHASE 03 -->
+      <div class="card" data-category="core">
+        <div>
+          <div class="card-kicker">المرحلة 03 · 47–57 دقيقة</div>
+          <h2>الاختبار السهل والمقاييس الأساسية</h2>
+          <div class="card-meta">203 كيلوبايت · 24 صورة جديدة · نموذج تسجيل النتائج</div>
+          <p>
+            اختبر نموذجك بصور غير مرئية مسبقًا، واحسب دقة التنبؤ الأساسية وتعرف على مدى قدرة النموذج على التعميم لصور الفواكه الطبيعية.
+          </p>
+        </div>
+        <div class="card-actions">
+          <a class="btn-download" href="downloads/Phase_03_Easy_Test_47-57min.zip" download>تنزيل ملف ZIP</a>
+          <button class="btn-inspect" onclick="openPhaseModal('phase3')">تفاصيل</button>
+        </div>
+      </div>
+
+      <!-- PHASE 04 -->
+      <div class="card" data-category="core">
+        <div>
+          <div class="card-kicker">المرحلة 04 · 57–67 دقيقة</div>
+          <h2>إرباك النموذج (اختبار الضغط)</h2>
+          <div class="card-meta">490 كيلوبايت · 30 صورة أصعب · تقرير الأخطاء</div>
+          <p>
+            اكتشف نقاط الضعف: فواكه مقطعة، إضاءة غير اعتيادية، حجب جزئي وتقريب مفرط. املأ تقرير الأخطاء لتوثيق أسباب الإخفاق.
+          </p>
+        </div>
+        <div class="card-actions">
+          <a class="btn-download" href="downloads/Phase_04_Break_The_AI_57-67min.zip" download>تنزيل ملف ZIP</a>
+          <button class="btn-inspect" onclick="openPhaseModal('phase4')">تفاصيل</button>
+        </div>
+      </div>
+
+      <!-- PHASE 05 -->
+      <div class="card" data-category="core">
+        <div>
+          <div class="card-kicker">المرحلة 05 · 67–75 دقيقة</div>
+          <h2>التحسين وإعادة التدريب</h2>
+          <div class="card-meta">469 كيلوبايت · صور تدريب مستهدفة · مجموعة تحقق</div>
+          <p>
+            أضف صور تدريب مخصصة لمعالجة الأخطاء التي ظهرت في المرحلة الرابعة، ثم أعد التدريب وقس التحسن بمجموعة تحقق منفصلة.
+          </p>
+        </div>
+        <div class="card-actions">
+          <a class="btn-download" href="downloads/Phase_05_Improve_Retrain_67-75min.zip" download>تنزيل ملف ZIP</a>
+          <button class="btn-inspect" onclick="openPhaseModal('phase5')">تفاصيل</button>
+        </div>
+      </div>
+
+      <!-- PHASE 06 -->
+      <div class="card" data-category="core">
+        <div>
+          <div class="card-kicker">المرحلة 06 · 75–87 دقيقة</div>
+          <h2>تحدي الغموض وصراع الخصائص</h2>
+          <div class="card-meta">112 كيلوبايت · فواكه مختلطة وغامضة · ورقة التحدي</div>
+          <p>
+            قدّم للنموذج أكثر من نوع فاكهة في نفس الإطار أو هجينًا غامضًا، وحلل كيف تتعامل الشبكة العصبية مع تضارب إشارات الملامح.
+          </p>
+        </div>
+        <div class="card-actions">
+          <a class="btn-download" href="downloads/Phase_06_Ambiguous_Challenge_75-87min.zip" download>تنزيل ملف ZIP</a>
+          <button class="btn-inspect" onclick="openPhaseModal('phase6')">تفاصيل</button>
+        </div>
+      </div>
+
+      <!-- PHASE 07 -->
+      <div class="card" data-category="core">
+        <div>
+          <div class="card-kicker">المرحلة 07 · 87–90 دقيقة</div>
+          <h2>بطاقة الخروج والتأمل الختامي</h2>
+          <div class="card-meta">1.2 كيلوبايت · أسئلة الطلاب · نموذج إجابة المعلم</div>
+          <p>
+            لخص ما تعلمته وأجب عن الأسئلة التأملية حول اختصارات التعلم الآلي والفرط في التخصيص ومدى موثوقية الذكاء الاصطناعي في الواقع.
+          </p>
+        </div>
+        <div class="card-actions">
+          <a class="btn-download" href="downloads/Phase_07_Exit_Ticket_87-90min.zip" download>تنزيل ملف ZIP</a>
+          <button class="btn-inspect" onclick="openPhaseModal('phase7')">تفاصيل</button>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 5. TEACHER PANEL -->
+  <section class="teacher-banner">
+    <div class="teacher-info">
+      <h3>أدوات المعلم ورمز الاستجابة السريعة (QR)</h3>
+      <p>هل تحتاج إلى ربط أجهزة الطلاب بسرعة عبر شبكة الفصل؟ استخدم صفحة رمز QR المتوفرة بدون إنترنت.</p>
+    </div>
+    <div style="display:flex; gap:10px;">
+      <a href="teacher_qr.html" class="btn-secondary">افتح مولد رمز QR للمعلم ↗</a>
+      <a href="https://teachablemachine.withgoogle.com/" target="_blank" rel="noopener" class="btn-primary">افتح Teachable Machine ↗</a>
+    </div>
+  </section>
+
 </main>
+
+<!-- 6. MODAL INSPECTOR -->
+<div class="modal-overlay" id="inspectModal" onclick="closeModalOnBackdrop(event)">
+  <div class="modal-dialog" role="dialog" aria-modal="true">
+    <div class="modal-header">
+      <h3 id="modalTitle">تفاصيل المرحلة</h3>
+      <button class="modal-close" onclick="closeModal()" aria-label="إغلاق النافذة">&times;</button>
+    </div>
+    <div class="modal-body" id="modalBody">
+      <!-- Dynamic Content -->
+    </div>
+    <div class="modal-footer">
+      <button class="btn-secondary" onclick="closeModal()">إغلاق</button>
+      <a id="modalDownloadBtn" class="btn-primary" href="#" download>تنزيل ملف ZIP</a>
+    </div>
+  </div>
+</div>
+
+<script>
+// SIMULATOR LOGIC
+const SAMPLES = {
+  apple: { name: "تفاحة قياسية", img: "preview/phase_08/expert_04_upside_down_apple.png", appleBase: 95, bananaBase: 2, orangeBase: 3, isOOD: false, type: "فاكهة طبيعية" },
+  banana: { name: "موزة قياسية", img: "preview/phase_08/expert_03_tiny_banana_corner.png", appleBase: 3, bananaBase: 94, orangeBase: 3, isOOD: false, type: "فاكهة طبيعية" },
+  orange: { name: "برتقالة قياسية", img: "preview/phase_08/expert_06_washed_out_orange.png", appleBase: 4, bananaBase: 2, orangeBase: 94, isOOD: false, type: "فاكهة طبيعية" },
+  tennis: { name: "كرة تنس (خارج النطاق)", img: "preview/phase_09/adv_01_ood_tennis_ball.png", appleBase: 12, bananaBase: 42, orangeBase: 46, isOOD: true, type: "مدخل خارج التدريب OOD" },
+  basketball: { name: "كرة سلة (فخ الملمس واللون)", img: "preview/phase_09/adv_02_ood_basketball.png", appleBase: 8, bananaBase: 1, orangeBase: 91, isOOD: true, type: "فخ اختصار اللون" },
+  texture_swap: { name: "تفاحة بجلد الموز", img: "preview/phase_09/adv_03_texture_swap_apple_banana.png", appleBase: 45, bananaBase: 50, orangeBase: 5, isOOD: false, type: "صراع النسيج مقابل الشكل" },
+  patch: { name: "ملصق تشويش عدائي", img: "preview/phase_09/adv_04_adversarial_patch_sticker.png", appleBase: 62, bananaBase: 28, orangeBase: 10, isOOD: false, type: "هجوم عدائي موضعي" },
+  noise: { name: "تشويش شبكي عالي التردد", img: "preview/phase_09/adv_05_checkerboard_frequency_noise.png", appleBase: 35, bananaBase: 30, orangeBase: 35, isOOD: false, type: "اضطراب ترددي" },
+  traffic: { name: "إشارة مرور حمراء (حرج)", img: "preview/phase_09/adv_09_ood_traffic_light_red.png", appleBase: 88, bananaBase: 3, orangeBase: 9, isOOD: true, type: "مدخل خارج التدريب ذو أهمية أمنية" }
+};
+
+function runSimulation() {
+  const sampleKey = document.getElementById('sample-select').value;
+  const sample = SAMPLES[sampleKey] || SAMPLES.tennis;
+  const textureBias = parseInt(document.getElementById('slider-texture-bias').value, 10);
+  const noise = parseInt(document.getElementById('slider-noise').value, 10);
+  const thresholdActive = document.getElementById('check-threshold').checked;
+  const fourthClassActive = document.getElementById('check-fourth-class').checked;
+
+  document.getElementById('val-texture-bias').textContent = textureBias + '% نسيج';
+  document.getElementById('val-noise-level').textContent = noise + '%';
+  document.getElementById('sim-preview-img').src = sample.img;
+
+  let rawApple = sample.appleBase;
+  let rawBanana = sample.bananaBase;
+  let rawOrange = sample.orangeBase;
+  let rawUnknown = 0;
+
+  if (sampleKey === 'texture_swap') {
+    rawBanana = 10 + (textureBias * 0.8);
+    rawApple = 90 - (textureBias * 0.7);
+  }
+
+  if (noise > 0) {
+    const spread = noise * 0.35;
+    rawApple += (Math.random() - 0.5) * spread;
+    rawBanana += (Math.random() - 0.5) * spread;
+    rawOrange += (Math.random() - 0.5) * spread;
+  }
+
+  if (fourthClassActive) {
+    document.getElementById('row-unknown').style.display = 'flex';
+    if (sample.isOOD) {
+      rawUnknown = 85 + (Math.random() * 10);
+      rawApple *= 0.15;
+      rawBanana *= 0.15;
+      rawOrange *= 0.15;
+    } else {
+      rawUnknown = 4 + (Math.random() * 4);
+    }
+  } else {
+    document.getElementById('row-unknown').style.display = 'none';
+  }
+
+  let sum = rawApple + rawBanana + rawOrange + (fourthClassActive ? rawUnknown : 0);
+  if (sum <= 0) sum = 1;
+  const pApple = Math.max(0, Math.round((rawApple / sum) * 100));
+  const pBanana = Math.max(0, Math.round((rawBanana / sum) * 100));
+  const pOrange = Math.max(0, Math.round((rawOrange / sum) * 100));
+  const pUnknown = fourthClassActive ? Math.max(0, 100 - (pApple + pBanana + pOrange)) : 0;
+
+  document.getElementById('prob-val-apple').textContent = pApple + '%';
+  document.getElementById('prob-bar-apple').style.width = pApple + '%';
+
+  document.getElementById('prob-val-banana').textContent = pBanana + '%';
+  document.getElementById('prob-bar-banana').style.width = pBanana + '%';
+
+  document.getElementById('prob-val-orange').textContent = pOrange + '%';
+  document.getElementById('prob-bar-orange').style.width = pOrange + '%';
+
+  if (fourthClassActive) {
+    document.getElementById('prob-val-unknown').textContent = pUnknown + '%';
+    document.getElementById('prob-bar-unknown').style.width = pUnknown + '%';
+  }
+
+  const maxProb = Math.max(pApple, pBanana, pOrange, pUnknown);
+  const verdictBanner = document.getElementById('verdict-banner');
+
+  if (sample.isOOD && !fourthClassActive && (!thresholdActive || maxProb >= 75)) {
+    verdictBanner.className = 'verdict-box verdict-vulnerable';
+    verdictBanner.innerHTML = '<b>ثغرة حرجة مكتشفة:</b> هذا العنصر ليس فاكهة على الإطلاق! لكن دالة Softmax أجبرت النموذج على التخمين بنسبة ثقة ' + maxProb + '%. لحماية النظام، يجب إضافة فئة دفاعية رابعة أو تفعيل حد أدنى للثقة.';
+  } else if (sample.isOOD && thresholdActive && maxProb < 75) {
+    verdictBanner.className = 'verdict-box verdict-safe';
+    verdictBanner.innerHTML = '<b>تفعيل حارس عتبة الثقة:</b> أعلى نسبة ثقة (' + maxProb + '%) أقل من حد الرفض (75%). تم وضع إشارة [غير معترف به / ثقة منخفضة] لحماية النظام.';
+  } else if (sample.isOOD && fourthClassActive && pUnknown >= 60) {
+    verdictBanner.className = 'verdict-box verdict-safe';
+    verdictBanner.innerHTML = '<b>نجاح الدفاع الهندسي:</b> الفئة الرابعة ("أخرى / خلفية") التقطت هذا العنصر الغريب بنسبة ' + pUnknown + '% ومنعت الخطأ الكارثي.';
+  } else if (sampleKey === 'texture_swap') {
+    const winner = pBanana > pApple ? 'موز (تغلّب النسيج واللون على الشكل الهندسي)' : 'تفاح (تغلّب الشكل الهندسي على النسيج)';
+    verdictBanner.className = 'verdict-box verdict-vulnerable';
+    verdictBanner.innerHTML = '<b>تحليل انحياز النسيج:</b> تم التصنيف كـ: ' + winner + '. الشبكات العصبية العميقة تميل بطبيعتها إلى التركيز على النسيج السطحي أكثر من الهيكل الكلي.';
+  } else {
+    verdictBanner.className = 'verdict-box verdict-safe';
+    verdictBanner.innerHTML = '<b>تنبؤ طبيعي:</b> تعرّف النموذج بنجاح على ' + sample.name + ' بنسبة ثقة ' + maxProb + '%.';
+  }
+}
+
+// FILTER PHASES
+function filterPhases(category, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+
+  const cards = document.querySelectorAll('#phase-grid .card');
+  cards.forEach(card => {
+    const cardCat = card.getAttribute('data-category');
+    if (category === 'all') {
+      card.style.display = 'flex';
+    } else if (category === 'core' && cardCat === 'core') {
+      card.style.display = 'flex';
+    } else if (category === 'hardcore' && cardCat === 'hardcore') {
+      card.style.display = 'flex';
+    } else if (category === 'bundles' && cardCat === 'bundles') {
+      card.style.display = 'flex';
+    } else {
+      card.style.display = 'none';
+    }
+  });
+}
+
+// MODAL INSPECTOR DATA
+const PHASE_DETAILS = {
+  phase9: {
+    title: "المرحلة 09 — التحدي العدائي واختبار المدخلات الخارجية (للمتقدمين)",
+    zip: "downloads/Phase_09_Adversarial_Gauntlet_ULTIMATE.zip",
+    body: `
+      <p><b>المستوى المستهدف:</b> طلاب المرحلة الثانوية (14–16 سنة)</p>
+      <p>في هذه المرحلة، يتقمّص الطلاب دور فريق التدقيق الأمني (Red Team) لاكتشاف ثغرات النموذج عبر 12 هجمة بصرية مصممة رياضيًا.</p>
+      <p><b>نماذج من صور الاختبار بالداخل:</b></p>
+      <div class="modal-preview-grid">
+        <div class="thumb-item"><img src="preview/phase_09/adv_01_ood_tennis_ball.png" alt="كرة تنس"><span>كرة تنس (OOD)</span></div>
+        <div class="thumb-item"><img src="preview/phase_09/adv_02_ood_basketball.png" alt="كرة سلة"><span>كرة سلة (OOD)</span></div>
+        <div class="thumb-item"><img src="preview/phase_09/adv_03_texture_swap_apple_banana.png" alt="تبديل النسيج"><span>تبديل النسيج</span></div>
+        <div class="thumb-item"><img src="preview/phase_09/adv_04_adversarial_patch_sticker.png" alt="ملصق تشويش"><span>ملصق تشويش</span></div>
+        <div class="thumb-item"><img src="preview/phase_09/adv_05_checkerboard_frequency_noise.png" alt="تشويش شبكي"><span>تشويش ترددي</span></div>
+        <div class="thumb-item"><img src="preview/phase_09/adv_09_ood_traffic_light_red.png" alt="ضوء أحمر"><span>إشارة مرور</span></div>
+      </div>
+      <p><b>الملفات المضمنة في الأرشيف:</b></p>
+      <ul>
+        <li><code>STUDENT_START_HERE.txt</code> — دليل البداية السريعة للتدقيق الأمني</li>
+        <li><code>MISSION_BRIEF.txt</code> — شرح مصيدة دالة Softmax والثقة الزائفة</li>
+        <li><code>AUDIT_WORKSHEET.txt</code> — ورقة تسجيل النتائج ونسب الثقة والأسئلة التحليلية</li>
+        <li><code>TEACHER_KEY_AND_DEBRIEF.txt</code> — نموذج إجابات المعلم وأسئلة النقاش الصفي</li>
+        <li><code>DATA_ADVERSARIAL_GAUNTLET/</code> — 12 صورة هجوم واختبار بدقة عالية (256×256)</li>
+      </ul>
+    `
+  },
+  phase8: {
+    title: "المرحلة 08 — التحدي الاحترافي (إضافية)",
+    zip: "downloads/Phase_08_Expert_Challenge_BONUS.zip",
+    body: `
+      <p><b>المستوى المستهدف:</b> من ينهي العمل مبكرًا</p>
+      <p>8 صور صعبة تكشف تعلم النموذج للاختصارات السطحية مثل فحص اللون فقط أو التأثر باتجاه الصورة أو حجمها.</p>
+      <div class="modal-preview-grid">
+        <div class="thumb-item"><img src="preview/phase_08/expert_01_round_ball_no_stem.png" alt="كرة"><span>كرة مجردة</span></div>
+        <div class="thumb-item"><img src="preview/phase_08/expert_02_green_apple.png" alt="تفاحة خضراء"><span>تفاحة خضراء</span></div>
+        <div class="thumb-item"><img src="preview/phase_08/expert_03_tiny_banana_corner.png" alt="موزة صغيرة"><span>موزة بالزاوية</span></div>
+        <div class="thumb-item"><img src="preview/phase_08/expert_04_upside_down_apple.png" alt="مقلوبة"><span>تفاحة مقلوبة</span></div>
+      </div>
+      <p><b>الملفات بالداخل:</b> مجلد <code>DATA_EXPERT/</code> (8 صور)، ونموذج النتائج وملاحظات المعلم.</p>
+    `
+  },
+  master: {
+    title: "الحزمة الشاملة — كل المراحل (1–10)",
+    zip: "downloads/AI_90min_All_Phases_MASTER.zip",
+    body: `
+      <p>ملف التحميل الرئيسي الذي يحتوي على كل مراحل الدرس العشر مع أوراق العمل ونماذج المعلم.</p>
+      <p>الحجم: <b>4.7 ميجابايت</b>. يُفك ضغطه مرة واحدة على جهاز المعلم.</p>
+    `
+  },
+  expanded: {
+    title: "الملفات الموسّعة — مجلدات مفككة مسبقًا",
+    zip: "downloads/AI_90min_All_Data_Expanded.zip",
+    body: `
+      <p>جميع صور ومجلدات التدريب مفككة وجاهزة للاستخدام في المدارس التي تحظر ملفات ZIP.</p>
+    `
+  },
+  phase2: {
+    title: "المرحلة 02 — تدريب نموذج الذكاء الاصطناعي",
+    zip: "downloads/Phase_02_Train_Model_15-47min.zip",
+    body: `
+      <p><b>المدة:</b> 15–47 دقيقة</p>
+      <p>يحتوي على 90 صورة تدريبية موزعة بالتساوي بين التفاح (30) والموز (30) والبرتقال (30)، وجاهزة للرفع المباشر في Teachable Machine.</p>
+    `
+  }
+};
+
+function openPhaseModal(phaseKey) {
+  const data = PHASE_DETAILS[phaseKey] || {
+    title: "تفاصيل المرحلة",
+    zip: "downloads/AI_90min_All_Phases_MASTER.zip",
+    body: "<p>حزمة الدرس القياسية مع مجموعات البيانات وأوراق العمل.</p>"
+  };
+  document.getElementById('modalTitle').textContent = data.title;
+  document.getElementById('modalBody').innerHTML = data.body;
+  document.getElementById('modalDownloadBtn').href = data.zip;
+  document.getElementById('inspectModal').classList.add('open');
+}
+
+function closeModal() {
+  document.getElementById('inspectModal').classList.remove('open');
+}
+
+function closeModalOnBackdrop(e) {
+  if (e.target.id === 'inspectModal') {
+    closeModal();
+  }
+}
+
+function initConnectionBar() {
+  const urlDisplay = document.getElementById('display-student-url');
+  if (urlDisplay) {
+    urlDisplay.textContent = location.origin + '/';
+  }
+}
+
+function copyStudentUrl() {
+  const url = location.origin + '/';
+  const textEl = document.getElementById('copy-btn-text');
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(url).then(() => {
+      if (textEl) {
+        textEl.textContent = 'تم النسخ!';
+        setTimeout(() => { textEl.textContent = 'نسخ الرابط'; }, 2500);
+      }
+    }).catch(() => fallbackCopy(url, textEl));
+  } else {
+    fallbackCopy(url, textEl);
+  }
+}
+
+function fallbackCopy(text, textEl) {
+  const tempInput = document.createElement('input');
+  tempInput.value = text;
+  document.body.appendChild(tempInput);
+  tempInput.select();
+  document.execCommand('copy');
+  document.body.removeChild(tempInput);
+  if (textEl) {
+    textEl.textContent = 'تم النسخ!';
+    setTimeout(() => { textEl.textContent = 'نسخ الرابط'; }, 2500);
+  }
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+  initConnectionBar();
+  runSimulation();
+});
+</script>
+
 </body>
 </html>

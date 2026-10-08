@@ -11,21 +11,36 @@ access; the lesson files travel entirely over the local network.
 This repository holds the finished, tested package: the student-facing pages, the
 lesson ZIPs, and the two Windows server implementations behind them.
 
-The core lesson is phases 1–7, scheduled minute-by-minute across 90 minutes. An
-optional **Phase 8 — Expert Challenge** bonus is included for early finishers or a
-follow-up session: 8 procedurally-generated images (matching the exact visual style
-of the training set), each built to test one specific way an image classifier can be
-fooled — color-only shortcuts, orientation, scale, clutter, and contrast — rather than
-just "harder to see." See `TEACHER_NOTES.txt` inside the Phase 8 ZIP for the framing.
+## Curriculum overview (Phases 1–10)
 
-**Phase 9 — Excel Data Lab** is a ~45-minute follow-up lesson. Students type the
-percentages Teachable Machine gave them into a spreadsheet, calculate accuracy and
-confidence with formulas (`IF`, `INDEX/MATCH`, `AVERAGEIF` …) and draw five charts: pie,
-column, line, **XY scatter** and **XYZ bubble**. It comes with an illustrated step-by-step
-guide in **English, Arabic and Hebrew** (right-to-left pages), a starter `.xlsx` and a
-finished answer-key `.xlsx` per language, a printable results sheet, and teacher notes.
-Everything in it was checked against real Microsoft Excel, not just written from memory
-(see "How Phase 9 was verified" below).
+The core lesson is phases 1–7, scheduled minute-by-minute across 90 minutes. Phases 8–10
+are optional extensions.
+
+| Phase | Time | Focus | What students get |
+|---|---|---|---|
+| **1** | 0–15 min | Warm-up | Quick, Draw! pattern-recognition intro. |
+| **2** | 15–47 min | Baseline training | 90 curated fruit images (Apple, Banana, Orange) for Teachable Machine. |
+| **3** | 47–57 min | Easy test | 24 unseen test images and a results sheet that records all three percentages per image. |
+| **4** | 57–67 min | Break the AI | 30 stress-test images (occlusion, slicing, lighting) and a failure report. |
+| **5** | 67–75 min | Improve & retrain | Targeted extra data plus a separate validation set. |
+| **6** | 75–87 min | Ambiguous challenge | Mixed and hybrid fruit images. |
+| **7** | 87–90 min | Exit ticket | Reflection questions and a teacher answer key. |
+| **8** | Bonus | Expert challenge | 8 images, each built to test one way a classifier can be fooled (colour shortcut, orientation, scale, clutter, contrast). |
+| **9** | Bonus (advanced) | Adversarial Gauntlet | 12 attack images — out-of-distribution objects (tennis ball, basketball, traffic light), texture swaps, adversarial-patch stickers, checkerboard noise — then design a defensive 4th "Other" class. |
+| **10** | Follow-up, ~45 min | Excel Data Lab | Turn the Phase 3 numbers into formulas and five charts in Excel, with an illustrated guide in English, Arabic and Hebrew. |
+
+**Phase 10 — Excel Data Lab.** Students type the percentages Teachable Machine gave them
+into a spreadsheet, calculate accuracy and confidence with formulas (`IF`, `INDEX/MATCH`,
+`AVERAGEIF` …) and draw five charts: pie, column, line, **XY scatter** and **XYZ bubble**.
+It comes with an illustrated step-by-step guide in **English, Arabic and Hebrew**
+(right-to-left pages), a starter `.xlsx` and a finished answer-key `.xlsx` per language,
+a printable results sheet, and teacher notes. Everything in it was checked against real
+Microsoft Excel, not just written from memory (see "How Phase 10 was verified" below).
+
+The English and Arabic student pages also include an in-browser **Red Team simulator**
+for Phase 9: it shows why a softmax classifier with no "unknown" class answers with high
+confidence on a tennis ball, how texture can beat shape, and what a confidence-threshold
+guard or a 4th rejection class changes.
 
 ## The problem this solves
 
@@ -73,10 +88,14 @@ endpoint and no way to browse or modify anything else on the laptop.
 |---|---|
 | `START_SERVER_WINDOWS.bat` | The only file a teacher needs to run. Detects Python, starts the server, opens the page automatically, and detects/avoids starting a duplicate server if one is already running. Falls back to the PowerShell server below if Python isn't installed. |
 | `server.ps1` | A from-scratch HTTP file server (`System.Net.HttpListener`) used only when Python is unavailable. Needs Administrator rights once (self-elevates via UAC) because Windows restricts non-loopback `HttpListener` binding to admins — Python's raw sockets don't have this restriction, which is why Python is the preferred path. |
-| `index.html` / `index-ar.html` / `index-he.html` | The student download page in English, Arabic and Hebrew (full RTL layout), each linking to the others. |
-| `excel/` | Phase 9 as web pages: `guide-en/ar/he.html` (click a formula to copy it), `START_HERE.html` language chooser, `img/` (illustrations + real Excel charts), `files/` (starter and example workbooks). The same folder is zipped into `downloads/Phase_09_Excel_Data_Lab_FOLLOWUP.zip`. |
+| `index.html` / `index-ar.html` | The student hub in English and Arabic (RTL), with the phase cards, filter tabs and the Red Team simulator. |
+| `index-he.html` | The student download page in Hebrew (RTL). It uses a simpler layout and does not include the Red Team simulator. |
+| `excel/` | Phase 10 as web pages: `guide-en/ar/he.html` (click a formula to copy it), `START_HERE.html` language chooser, `img/` (illustrations + real Excel charts), `files/` (starter and example workbooks). The same folder is zipped into `downloads/Phase_10_Excel_Data_Lab_FOLLOWUP.zip`. |
 | `teacher_qr.html` | An optional, offline, teacher-only page that generates a QR code for whatever address the server is actually running on, so students can scan instead of typing. |
-| `downloads/` | The lesson ZIPs: a MASTER bundle, an already-expanded "Expanded" bundle, one ZIP per core phase (1–7), the optional bonus Phase 8, and the Phase 9 Excel follow-up. |
+| `downloads/` | The lesson ZIPs: a MASTER bundle, an already-expanded "Expanded" bundle, one ZIP per phase (1–10). |
+| `preview/` | Preview pictures for Phases 8 and 9, used by the student hub's inspect dialogs and the simulator. |
+| `server.js`, `package.json`, `api/`, `vercel.json`, `.vercelignore`, `.env.example`, `metadata.json` | Optional Node.js/Express server and the settings for the online copy on Vercel. Not needed for the Windows launcher; see "Running it". |
+| `scripts/` | Generators for the Phase 9 attack images and ZIP. |
 | `README_FIRST.txt` | The plain-language operational guide for the teacher: quick start, troubleshooting, firewall notes, network scenarios. |
 | `START_SERVER_LINUX_MAC.sh` | Equivalent launcher for Linux/macOS, included for completeness. |
 
@@ -112,7 +131,7 @@ under real testing:
   link-local, and known-virtual adapter names, then lists real candidates with the
   Wi-Fi adapter prioritized first.
 
-## How Phase 9 was verified
+## How Phase 10 was verified
 
 Spreadsheet instructions are easy to get subtly wrong, so the Excel material was tested
 against real Excel rather than assumed:
@@ -147,5 +166,20 @@ against real Excel rather than assumed:
 ## Running it
 
 See [`README_FIRST.txt`](README_FIRST.txt) for the full step-by-step teacher guide.
-Short version: unzip, double-click `START_SERVER_WINDOWS.bat`, read the address it
-shows you, give that address to students.
+
+- **Windows (recommended):** unzip, double-click `START_SERVER_WINDOWS.bat`, read the
+  address it shows you (`http://YOUR-IP:8000`), give that address to students. It uses
+  Python if present and otherwise the built-in PowerShell server — nothing to install.
+- **Linux / macOS:** `./START_SERVER_LINUX_MAC.sh` (port 8000; uses Node only if
+  `npm install` has already been run, otherwise Python).
+- **Node.js (optional):** `npm install` once, then `npm start` — serves on port 3000.
+  `START_SERVER_WINDOWS.bat` deliberately does not start it automatically: on a computer
+  that has Node.js but where `npm install` was never run, `node server.js` stops with
+  `Cannot find package 'express'`.
+- **Online copy:** the repository is deployed on Vercel (`vercel.json`, `api/`), which is
+  useful when classroom Wi-Fi blocks device-to-device traffic. The site works from any
+  network, but students then download over the internet instead of from the laptop.
+
+The server's address changes with the network (home, school, hotspot). The Windows
+launcher re-detects it every time it starts, and the student pages use relative links,
+so they work on whatever address students open.
