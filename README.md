@@ -18,6 +18,15 @@ of the training set), each built to test one specific way an image classifier ca
 fooled — color-only shortcuts, orientation, scale, clutter, and contrast — rather than
 just "harder to see." See `TEACHER_NOTES.txt` inside the Phase 8 ZIP for the framing.
 
+**Phase 9 — Excel Data Lab** is a ~45-minute follow-up lesson. Students type the
+percentages Teachable Machine gave them into a spreadsheet, calculate accuracy and
+confidence with formulas (`IF`, `INDEX/MATCH`, `AVERAGEIF` …) and draw five charts: pie,
+column, line, **XY scatter** and **XYZ bubble**. It comes with an illustrated step-by-step
+guide in **English, Arabic and Hebrew** (right-to-left pages), a starter `.xlsx` and a
+finished answer-key `.xlsx` per language, a printable results sheet, and teacher notes.
+Everything in it was checked against real Microsoft Excel, not just written from memory
+(see "How Phase 9 was verified" below).
+
 ## The problem this solves
 
 The lesson needed every student in a room to grab the same curated set of training
@@ -64,9 +73,10 @@ endpoint and no way to browse or modify anything else on the laptop.
 |---|---|
 | `START_SERVER_WINDOWS.bat` | The only file a teacher needs to run. Detects Python, starts the server, opens the page automatically, and detects/avoids starting a duplicate server if one is already running. Falls back to the PowerShell server below if Python isn't installed. |
 | `server.ps1` | A from-scratch HTTP file server (`System.Net.HttpListener`) used only when Python is unavailable. Needs Administrator rights once (self-elevates via UAC) because Windows restricts non-loopback `HttpListener` binding to admins — Python's raw sockets don't have this restriction, which is why Python is the preferred path. |
-| `index.html` / `index-ar.html` | The student download page, in English and Arabic (full RTL layout), each linking to the other. |
+| `index.html` / `index-ar.html` / `index-he.html` | The student download page in English, Arabic and Hebrew (full RTL layout), each linking to the others. |
+| `excel/` | Phase 9 as web pages: `guide-en/ar/he.html` (click a formula to copy it), `START_HERE.html` language chooser, `img/` (illustrations + real Excel charts), `files/` (starter and example workbooks). The same folder is zipped into `downloads/Phase_09_Excel_Data_Lab_FOLLOWUP.zip`. |
 | `teacher_qr.html` | An optional, offline, teacher-only page that generates a QR code for whatever address the server is actually running on, so students can scan instead of typing. |
-| `downloads/` | The lesson ZIPs: a MASTER bundle, an already-expanded "Expanded" bundle, one ZIP per core phase (1–7), and an optional bonus Phase 8. |
+| `downloads/` | The lesson ZIPs: a MASTER bundle, an already-expanded "Expanded" bundle, one ZIP per core phase (1–7), the optional bonus Phase 8, and the Phase 9 Excel follow-up. |
 | `README_FIRST.txt` | The plain-language operational guide for the teacher: quick start, troubleshooting, firewall notes, network scenarios. |
 | `START_SERVER_LINUX_MAC.sh` | Equivalent launcher for Linux/macOS, included for completeness. |
 
@@ -101,6 +111,29 @@ under real testing:
   switch's address instead of the real Wi-Fi one. The launcher filters out loopback,
   link-local, and known-virtual adapter names, then lists real candidates with the
   Wi-Fi adapter prioritized first.
+
+## How Phase 9 was verified
+
+Spreadsheet instructions are easy to get subtly wrong, so the Excel material was tested
+against real Excel rather than assumed:
+
+- Each answer-key workbook was opened in Excel and its formulas produced the documented
+  numbers (12 images, 10 correct, 2 wrong, 83.3% accuracy, average confidence 82.7, lowest
+  47; per fruit 100% / 75% / 75%) in all three languages, including the right-to-left Arabic
+  and Hebrew sheets.
+- Every chart in the guide is a picture exported by Excel itself from those workbooks. The
+  first export exposed overlapping titles, heavy black gridlines and stray legend keys from
+  the library defaults — fixed before use.
+- The guide's click-by-click steps were replayed in Excel by selecting exactly the ranges
+  the guide names and inserting each chart type. This caught a real error: selecting
+  `C1:E13` for the bubble chart makes Excel treat the header row as a data point, so the
+  guide says to select `C2:E13` (no header) for that one chart.
+- The "Ctrl-select" and "Sort" challenges were checked the same way.
+- The screen illustrations (ribbon, formula bar, numbered callouts) are simplified drawings
+  rendered with headless Chrome so Arabic and Hebrew text shapes and flows right-to-left
+  correctly; the guide labels them as illustrations. Arabic/Hebrew menu names follow
+  Microsoft's terminology as closely as possible, but were not checked against an
+  Arabic-language Excel — worth a native-speaker skim.
 
 ## Security model
 

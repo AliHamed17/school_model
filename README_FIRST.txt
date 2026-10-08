@@ -36,11 +36,23 @@ Phase 8 is an optional bonus (not part of the 90-minute timeline) for
 students who finish early, or for a follow-up session: 8 tricky images,
 each designed to test a specific way the AI model can be fooled.
 
-ARABIC VERSION
---------------
-The student page also exists fully in Arabic:
+Phase 9 is a follow-up lesson (about 45 minutes) in Excel: students type in
+the numbers from their AI tests, calculate accuracy with formulas, and draw
+five charts (pie, column, line, XY scatter, XYZ bubble). The step-by-step
+guide with pictures is in English, Arabic and Hebrew, with a starter Excel
+file for each language. Open it from the Phase 9 card ("Open the guide"),
+or directly:
+   http://YOUR-IP:8000/excel/START_HERE.html
+Phase 3's results sheet now asks students to write down all three
+percentages per image - that is the data Phase 9 uses (if they didn't, the
+guide has example numbers they can type instead).
+
+ARABIC AND HEBREW VERSIONS
+---------------------------
+The student page also exists fully in Arabic and in Hebrew:
    http://YOUR-IP:8000/index-ar.html
-Each page has a language link at the top ("English" / "العربية").
+   http://YOUR-IP:8000/index-he.html
+Each page has language links at the top ("English" / "العربية" / "עברית").
 
 IF THE BROWSER DOESN'T OPEN BY ITSELF
 ---------------------------------------
@@ -119,6 +131,8 @@ FILES
 -----
 index.html                  Student download page (English)
 index-ar.html                Student download page (Arabic, right-to-left)
+index-he.html                Student download page (Hebrew, right-to-left)
+excel/                      Phase 9 Excel guide (EN/AR/HE), pictures and Excel files
 teacher_qr.html             Optional teacher-only QR code generator
 downloads/                  All phase ZIPs
 START_SERVER_WINDOWS.bat    Double-click this (Windows) - handles everything

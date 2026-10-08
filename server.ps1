@@ -50,6 +50,7 @@ $Mime = @{
     ".js"  ="application/javascript; charset=utf-8"
     ".ico" ="image/x-icon"
     ".json"="application/json; charset=utf-8"
+    ".xlsx"="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
 }
 
 while ($Listener.IsListening) {

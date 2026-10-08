@@ -11,8 +11,9 @@ header{background:#111827;color:#fff;padding:34px 20px}
 .wrap{max-width:980px;margin:auto}
 header h1{margin:0 0 8px;font-size:32px}
 header p{margin:0;opacity:.9}
-.lang{float:left;color:#cbd2e0;text-decoration:none;font-size:14px;border:1px solid #374151;padding:6px 12px;border-radius:8px}
-.lang:hover{background:#1f2937}
+.langs{float:left;display:flex;gap:8px}
+.langs a{color:#cbd2e0;text-decoration:none;font-size:14px;border:1px solid #374151;padding:6px 12px;border-radius:8px}
+.langs a:hover{background:#1f2937}
 main{padding:26px 20px 50px}
 .notice{background:#fff8db;border:1px solid #ead887;border-radius:10px;padding:18px 20px;margin-bottom:18px;font-size:17px;line-height:1.7}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
@@ -23,6 +24,11 @@ main{padding:26px 20px 50px}
 .badge{position:absolute;top:16px;right:16px;width:42px;height:42px;border-radius:50%;background:#111827;color:#fff;font-size:19px;font-weight:800;display:flex;align-items:center;justify-content:center}
 .badge.bonus{background:#9a6b00}
 .card.bonus{border-color:#e8c468;background:#fffdf5}
+.badge.xl{background:#217346}
+.card.xl{border-color:#8fc4a4;background:#f6fbf8}
+.btnrow{display:flex;flex-wrap:wrap;gap:8px}
+.btn.alt{background:#fff;color:#111827;border:2px solid #111827;padding:9px 14px}
+.btn.alt:hover{background:#f0f1f3}
 .btn{display:inline-block;background:#111827;color:white;text-decoration:none;padding:11px 16px;border-radius:8px;font-weight:700}
 .tool{margin-top:28px;padding:18px 20px;background:white;border:1px solid #e1e4e8;border-radius:12px}
 .tool .btn{background:#0b6b3a}
@@ -33,7 +39,7 @@ code{background:#eceff3;border-radius:5px;padding:2px 5px;direction:ltr;display:
 <body>
 <header>
   <div class="wrap">
-    <a class="lang" href="index.html">English</a>
+    <div class="langs"><a href="index.html">English</a><a href="index-he.html">עברית</a></div>
     <h1>فصل الذكاء الاصطناعي — تنزيلات الطلاب</h1>
     <p>نزّل فقط المرحلة التي يطلبها منك المعلم.</p>
   </div>
@@ -46,15 +52,15 @@ code{background:#eceff3;border-radius:5px;padding:2px 5px;direction:ltr;display:
 
         <div class="card">
           <h2>الحزمة الكاملة — كل المراحل</h2>
-          <p>تنزيل واحد يحتوي على كل ملفات المراحل الثماني المضغوطة (تشمل المرحلة الإضافية).</p>
-          <p class="size">حجم الملف: 2.0 ميجابايت</p>
+          <p>تنزيل واحد يحتوي على كل ملفات المراحل التسع المضغوطة (تشمل مرحلة التحدي الإضافية ومرحلة Excel).</p>
+          <p class="size">حجم الملف: 4.4 ميجابايت</p>
           <a class="btn" href="downloads/AI_90min_All_Phases_MASTER.zip" download>تنزيل الملف المضغوط (ZIP)</a>
         </div>
 
         <div class="card">
           <h2>الملفات الموسّعة — كل المجلدات والبيانات</h2>
           <p>جميع ملفات الدرس مُفكّكة مسبقًا داخل مجلدات.</p>
-          <p class="size">حجم الملف: 2.0 ميجابايت</p>
+          <p class="size">حجم الملف: 4.5 ميجابايت</p>
           <a class="btn" href="downloads/AI_90min_All_Data_Expanded.zip" download>تنزيل الملف المضغوط (ZIP)</a>
         </div>
 
@@ -120,6 +126,17 @@ code{background:#eceff3;border-radius:5px;padding:2px 5px;direction:ltr;display:
           <p>اختيارية، لمن ينهي العمل مبكرًا. 8 صور صعبة صُممت لخداع الذكاء الاصطناعي.</p>
           <p class="size">حجم الملف: 12.7 كيلوبايت</p>
           <a class="btn" href="downloads/Phase_08_Expert_Challenge_BONUS.zip" download>تنزيل الملف المضغوط (ZIP)</a>
+        </div>
+
+        <div class="card xl">
+          <div class="badge xl">9</div>
+          <h2>المرحلة 9 — مختبر البيانات في Excel (درس متابعة، حوالي 45 دقيقة)</h2>
+          <p>حوّلوا نتائج الذكاء الاصطناعي إلى أرقام ورسوم بيانية في Excel. دليل خطوة بخطوة بالصور بالعربية والعبرية والإنجليزية.</p>
+          <p class="size">حجم الملف: 2.5 ميجابايت</p>
+          <div class="btnrow">
+            <a class="btn" href="excel/guide-ar.html">افتح الدليل</a>
+            <a class="btn alt" href="downloads/Phase_09_Excel_Data_Lab_FOLLOWUP.zip" download>تنزيل الملف المضغوط (ZIP)</a>
+          </div>
         </div>
 
   </div>

@@ -11,8 +11,9 @@ header{background:#111827;color:#fff;padding:34px 20px}
 .wrap{max-width:980px;margin:auto}
 header h1{margin:0 0 8px;font-size:32px}
 header p{margin:0;opacity:.9}
-.lang{float:right;color:#cbd2e0;text-decoration:none;font-size:14px;border:1px solid #374151;padding:6px 12px;border-radius:8px}
-.lang:hover{background:#1f2937}
+.langs{float:right;display:flex;gap:8px}
+.langs a{color:#cbd2e0;text-decoration:none;font-size:14px;border:1px solid #374151;padding:6px 12px;border-radius:8px}
+.langs a:hover{background:#1f2937}
 main{padding:26px 20px 50px}
 .notice{background:#fff8db;border:1px solid #ead887;border-radius:10px;padding:18px 20px;margin-bottom:18px;font-size:17px;line-height:1.5}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
@@ -23,6 +24,11 @@ main{padding:26px 20px 50px}
 .badge{position:absolute;top:16px;right:16px;width:42px;height:42px;border-radius:50%;background:#111827;color:#fff;font-size:19px;font-weight:800;display:flex;align-items:center;justify-content:center}
 .badge.bonus{background:#9a6b00}
 .card.bonus{border-color:#e8c468;background:#fffdf5}
+.badge.xl{background:#217346}
+.card.xl{border-color:#8fc4a4;background:#f6fbf8}
+.btnrow{display:flex;flex-wrap:wrap;gap:8px}
+.btn.alt{background:#fff;color:#111827;border:2px solid #111827;padding:9px 14px}
+.btn.alt:hover{background:#f0f1f3}
 .btn{display:inline-block;background:#111827;color:white;text-decoration:none;padding:11px 16px;border-radius:8px;font-weight:700}
 .tool{margin-top:28px;padding:18px 20px;background:white;border:1px solid #e1e4e8;border-radius:12px}
 .tool .btn{background:#0b6b3a}
@@ -33,7 +39,7 @@ code{background:#eceff3;border-radius:5px;padding:2px 5px}
 <body>
 <header>
   <div class="wrap">
-    <a class="lang" href="index-ar.html">العربية</a>
+    <div class="langs"><a href="index-ar.html">العربية</a><a href="index-he.html">עברית</a></div>
     <h1>AI Class — Student Downloads</h1>
     <p>Download only the phase your teacher tells you to use.</p>
   </div>
@@ -46,15 +52,15 @@ code{background:#eceff3;border-radius:5px;padding:2px 5px}
 
         <div class="card">
           <h2>MASTER — All Phases</h2>
-          <p>One download containing all 8 phase ZIPs (including the bonus phase).</p>
-          <p class="size">File size: 2.0 MB</p>
+          <p>One download containing all 9 phase ZIPs (including the bonus and Excel phases).</p>
+          <p class="size">File size: 4.4 MB</p>
           <a class="btn" href="downloads/AI_90min_All_Phases_MASTER.zip" download>Download ZIP</a>
         </div>
 
         <div class="card">
           <h2>Expanded — All folders/data</h2>
           <p>All lesson files already expanded into folders.</p>
-          <p class="size">File size: 2.0 MB</p>
+          <p class="size">File size: 4.5 MB</p>
           <a class="btn" href="downloads/AI_90min_All_Data_Expanded.zip" download>Download ZIP</a>
         </div>
 
@@ -120,6 +126,17 @@ code{background:#eceff3;border-radius:5px;padding:2px 5px}
           <p>Optional, for early finishers. 8 tricky images designed to fool the AI.</p>
           <p class="size">File size: 12.7 KB</p>
           <a class="btn" href="downloads/Phase_08_Expert_Challenge_BONUS.zip" download>Download ZIP</a>
+        </div>
+
+        <div class="card xl">
+          <div class="badge xl">9</div>
+          <h2>Phase 9 — Excel Data Lab (follow-up, ~45 min)</h2>
+          <p>Turn your AI results into numbers and charts in Excel. Step-by-step guide with pictures in English, Arabic and Hebrew.</p>
+          <p class="size">File size: 2.5 MB</p>
+          <div class="btnrow">
+            <a class="btn" href="excel/guide-en.html">Open the guide</a>
+            <a class="btn alt" href="downloads/Phase_09_Excel_Data_Lab_FOLLOWUP.zip" download>Download ZIP</a>
+          </div>
         </div>
 
   </div>
