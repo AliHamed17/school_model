@@ -628,6 +628,14 @@ body {
 .card-phase12 .btn-download { background: #0f766e; }
 .card-phase12 .btn-download:hover { background: #115e59; }
 .card-phase12 a.btn-inspect { text-decoration: none; display: inline-block; }
+.card-phase13 {
+  border-color: #fca5a5;
+  background: linear-gradient(180deg, #fff1f2 0%, #ffffff 40%);
+}
+.card-phase13 .card-kicker { color: #be123c; }
+.card-phase13 .btn-download { background: #be123c; }
+.card-phase13 .btn-download:hover { background: #9f1239; }
+.card-phase13 a.btn-inspect { text-decoration: none; display: inline-block; }
 .card-master {
   border-color: #93c5fd;
   background: linear-gradient(180deg, #eff6ff 0%, #ffffff 35%);
@@ -878,7 +886,7 @@ body {
 
     <div class="hero-actions">
       <a class="btn-primary" href="downloads/AI_90min_All_Phases_MASTER.zip" download>
-        تنزيل كل المراحل (الحزمة الكاملة 0–12 · 5.8 ميجابايت)
+        تنزيل كل المراحل (الحزمة الكاملة 0–13 · 5.8 ميجابايت)
       </a>
       <a class="btn-secondary" href="downloads/AI_90min_All_Data_Expanded.zip" download>
         تنزيل المجلدات المفككة مسبقًا
@@ -1020,14 +1028,37 @@ body {
     <div class="section-header">
       <h2 class="section-title">مراحل الدرس ومجموعات التحدي</h2>
       <div class="filter-tabs">
-        <button class="filter-btn active" onclick="filterPhases('all', this)">كل الملفات <span dir="ltr">(0–12)</span></button>
+        <button class="filter-btn active" onclick="filterPhases('all', this)">كل الملفات <span dir="ltr">(0–13)</span></button>
         <button class="filter-btn" onclick="filterPhases('core', this)">الدرس الأساسي (0–7)</button>
-        <button class="filter-btn" onclick="filterPhases('hardcore', this)">المتقدم (8 – 12)</button>
+        <button class="filter-btn" onclick="filterPhases('hardcore', this)">المتقدم (8 – 13)</button>
         <button class="filter-btn" onclick="filterPhases('bundles', this)">الحزم المجمعة</button>
       </div>
     </div>
 
     <div class="grid" id="phase-grid">
+
+      <!-- PHASE 13 - INBOX DEFENDER (XL CHALLENGE) -->
+      <div class="card card-phase13" data-category="hardcore">
+        <div>
+          <div class="card-kicker">المرحلة 13 · تحدٍّ كبير · 45–60 دقيقة · بلا صور</div>
+          <h2>حارس البريد: درّب ذكاءً اصطناعيًا ليوقف رسائل الاحتيال</h2>
+          <div class="card-meta">لعبة + فيديو + دليل · <bdi>العربية</bdi> · English · <bdi>עברית</bdi> · بدون إنترنت</div>
+          <p>
+            ذكاء اصطناعي يقرأ <i>الكلمات</i> لا الصور. علّمه برسائل احتيال وأمان من كتابتك، وشاهد أي الكلمات يعدّها أدلة، وتغلّب على المحتالين الماكرين الذين يغيّرون حيلهم، واضبط درجة صرامة حارسك. ستة مستويات وأوسمة وفيديو مدته 3 دقائق ودليل خطوة بخطوة.
+          </p>
+        </div>
+        <div>
+          <div class="card-actions">
+            <a class="btn-download" href="inbox/guide-ar.html#video">الدليل + الفيديو</a>
+            <a class="btn-inspect" href="inbox/guide-en.html#video">English</a>
+            <a class="btn-inspect" href="inbox/guide-he.html#video">עברית</a>
+          </div>
+          <div class="card-actions" style="margin-top:10px">
+            <a class="btn-download" style="background:#334155" href="inbox/index.html?lang=ar">▶ العب اللعبة</a>
+            <a class="btn-inspect" href="downloads/Phase_13_Inbox_Defender_XL.zip" download>ZIP</a>
+          </div>
+        </div>
+      </div>
 
       <!-- PHASE 12 - DETECTIVE MAP -->
       <div class="card card-phase12" data-category="hardcore">
@@ -1119,10 +1150,10 @@ body {
       <div class="card card-master" data-category="bundles">
         <div>
           <div class="card-kicker">الحزمة الكاملة</div>
-          <h2>الحزمة الشاملة — كل المراحل <span dir="ltr" style="white-space:nowrap">(0–12)</span></h2>
+          <h2>الحزمة الشاملة — كل المراحل <span dir="ltr" style="white-space:nowrap">(0–13)</span></h2>
           <div class="card-meta">5.8 ميجابايت · يشمل جميع الملفات المضغوطة · دليل المعلم الشامل</div>
           <p>
-            ملف واحد يضم كل مراحل الدرس (13 مرحلة) مع أوراق العمل ونماذج الإجابة للمعلم، وهو ممتاز للحفظ على ذاكرة فلاش في الفصل.
+            ملف واحد يضم كل مراحل الدرس (14 مرحلة) مع أوراق العمل ونماذج الإجابة للمعلم، وهو ممتاز للحفظ على ذاكرة فلاش في الفصل.
           </p>
         </div>
         <div class="card-actions">
@@ -1474,10 +1505,10 @@ const PHASE_DETAILS = {
     `
   },
   master: {
-    title: "الحزمة الشاملة — كل المراحل (0–12)",
+    title: "الحزمة الشاملة — كل المراحل (0–13)",
     zip: "downloads/AI_90min_All_Phases_MASTER.zip",
     body: `
-      <p>ملف التحميل الرئيسي الذي يحتوي على كل مراحل الدرس (13 مرحلة) مع أوراق العمل ونماذج المعلم.</p>
+      <p>ملف التحميل الرئيسي الذي يحتوي على كل مراحل الدرس (14 مرحلة) مع أوراق العمل ونماذج المعلم.</p>
       <p>الحجم: <b>5.8 ميجابايت</b>. يُفك ضغطه مرة واحدة على جهاز المعلم.</p>
     `
   },

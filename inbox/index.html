@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Inbox Defender</title>
+<style>
+:root{--ink:#16181d;--mut:#5b6270;--bg:#f1f4f9;--line:#dfe5ee;--navy:#0f172a;--blue:#2563eb;--spam:#dc2626;--safe:#16a34a}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Segoe UI",Tahoma,Arial,sans-serif;line-height:1.5}
+header{background:var(--navy);color:#fff;padding:10px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+header .brand{font-weight:800;font-size:19px}
+.langs{display:flex;gap:6px}.langs button{background:transparent;border:1px solid #334155;color:#cbd5e1;padding:5px 12px;border-radius:8px;cursor:pointer;font:inherit;font-size:14px}.langs button.on{background:#334155;color:#fff}
+main{max-width:1080px;margin:0 auto;padding:14px 14px 70px}
+.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px 20px;box-shadow:0 2px 10px rgba(15,23,42,.05);margin-bottom:14px}
+h1{margin:0 0 4px;font-size:32px}h2{margin:0 0 6px;font-size:24px}h3{margin:12px 0 6px;font-size:17px}.sub{color:var(--mut);margin:0 0 8px}
+.stepper{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.st{flex:1;min-width:110px;border:2px solid var(--line);background:#fff;border-radius:12px;padding:6px 10px;font:inherit;font-weight:700;font-size:14px;cursor:pointer;text-align:center;color:var(--mut)}
+.st.on{border-color:var(--blue);color:var(--blue);background:#eff6ff}.st.done{border-color:#86efac;color:#166534;background:#f0fdf4}.st:disabled{opacity:.45;cursor:default}
+.btn{background:var(--blue);color:#fff;border:0;border-radius:12px;padding:10px 18px;font:inherit;font-weight:700;cursor:pointer;font-size:16px}.btn.alt{background:#fff;color:var(--ink);border:2px solid var(--ink)}.btn.sm{padding:6px 12px;font-size:14px}.btn.spam{background:var(--spam)}.btn.safe{background:var(--safe)}.btn:disabled{opacity:.4;cursor:default}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:10px}
+.cols2{display:grid;grid-template-columns:1fr 1fr;gap:12px}@media(max-width:760px){.cols2{grid-template-columns:1fr}}
+.col{border:2px solid var(--line);border-radius:14px;padding:8px 10px;max-height:380px;overflow:auto}.col.sp{border-color:#fecaca;background:#fff7f7}.col.sf{border-color:#bbf7d0;background:#f6fff9}
+.col h3{margin:2px 0 6px;position:sticky;top:0;background:inherit}
+.msg{background:#fff;border:1px solid var(--line);border-radius:10px;padding:6px 10px;margin:5px 0;font-size:14.5px}.msg.mine{border-color:var(--blue);background:#eff6ff}.tag{font-size:11px;color:var(--blue);font-weight:800}
+textarea{width:100%;font:inherit;font-size:16px;border:2px solid var(--line);border-radius:12px;padding:8px 10px;min-height:64px}
+.big{font-size:30px;font-weight:800}
+.bar{display:flex;align-items:center;gap:8px;margin:4px 0;font-size:15px}.bar .w{width:96px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.bar .t{flex:1;height:14px;border-radius:99px;background:#e8edf5;overflow:hidden}.bar .t i{display:block;height:100%;border-radius:99px}.bar.sp i{background:var(--spam)}.bar.sf i{background:var(--safe)}
+input[type=text]{font:inherit;font-size:16px;border:2px solid var(--line);border-radius:10px;padding:6px 10px;width:220px}
+.msgbig{font-size:21px;border:3px solid var(--line);border-radius:16px;padding:16px 18px;background:#fff;min-height:84px;margin:8px 0}
+.chips span{display:inline-block;border-radius:8px;padding:1px 6px;margin:2px 1px;font-size:18px}
+.gauge{position:relative;height:22px;border-radius:99px;background:linear-gradient(90deg,#bbf7d0,#fef9c3,#fecaca);margin:8px 0 2px;border:1px solid var(--line)}
+.gauge .pin{position:absolute;top:-5px;width:6px;height:30px;background:var(--navy);border-radius:3px;transform:translateX(-3px)}.gauge .thp{position:absolute;top:-3px;width:3px;height:26px;background:#7c3aed;transform:translateX(-1px)}
+.gl{display:flex;justify-content:space-between;font-size:12px;color:var(--mut)}
+.verdict{border-radius:14px;padding:10px 14px;margin-top:10px;font-weight:800;border:2px solid #cfe3f7;background:#f1f8ff}.verdict.ok{background:#effaf3;border-color:#b8e3c8}.verdict.no{background:#fdf0ef;border-color:#f1c2bf}
+.pill{display:inline-block;border-radius:999px;padding:4px 14px;font-weight:800;background:#eef2ff;margin-inline-end:6px}.pill.r{background:#fee2e2}
+.mat{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin:8px 0}.mat div{border-radius:12px;padding:10px;text-align:center;font-weight:700;border:2px solid var(--line)}.mat .g{background:#f0fdf4;border-color:#86efac}.mat .b{background:#fef2f2;border-color:#fecaca}.mat b{display:block;font-size:28px}
+.note{background:#fff8db;border:1px solid #ead887;border-radius:12px;padding:8px 12px;margin-top:8px;font-size:15px}
+.hp{height:16px;border-radius:99px;background:#fecaca;overflow:hidden;margin:6px 0}.hp i{display:block;height:100%;background:#16a34a}
+.badges{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px}.bd{border:2px solid var(--line);border-radius:14px;padding:10px;text-align:center;opacity:.45;filter:grayscale(1)}.bd.got{opacity:1;filter:none;border-color:#facc15;background:#fffbe6}.bd .e{font-size:32px}.bd b{display:block}.bd small{color:var(--mut)}
+input[type=range]{width:100%}
+</style></head>
+<body>
+<header><div class="brand">🛡️ <span id="hb"></span></div><div class="langs" id="langs"></div></header>
+<main><div id="app"></div></main>
+<script>
+const MSG = {"en":{"spam_train":["You are our LUCKY WINNER! Click the link now to claim your free phone","FREE gift card! Click here and enter your password to claim your prize","Urgent: your account will be blocked. Verify your password now","Win a free game console today, just click this link","Earn easy cash fast from home, no work needed, click now","Congratulations! You won 1000 dollars. Send your bank number to claim","Get 10000 followers free, click the link and log in","Final warning: confirm your password or lose your account today","Limited offer! Free pizza coupons for life, claim your prize now","Your parcel is waiting, pay a small fee at this link to receive it","Click now to win a brand new bike, free entry, hurry","Special prize just for you, send your password to the winner team","Make money fast, double your cash today, click the secret link","Your phone has a virus! Click here now to clean it for free","Free robux and free skins, click the link and enter your login","Dear user, your bank account is locked, verify now at this link","You have been selected for a free holiday, claim your prize today","Hot deal: cheap sneakers, 90 percent off, click now and pay by gift card","Win free tickets, click the link, only today, claim now","Your email won the lottery, reply with your password to get the cash"],"safe_train":["Maths homework is due on Thursday, please bring your notebook","Mum: dinner is at seven, can you buy some bread on the way home","Football practice is moved to five o'clock because of the rain","Happy birthday Dana! We will have cake after school today","The science test will cover chapters three and four","Can you send me the notes from the history lesson please","We have a free period now, the teacher is sick, meet in room twelve","Great game yesterday, we can win the next match if we practise","Don't forget to bring your PE kit and a bottle of water tomorrow","The school trip permission slip must be signed by Friday","Dad is picking you up today, wait near the front gate","Library books are due back next week, don't forget to return them","Thanks for helping me with the project, you explained it really well","Free pizza at the chess club lunch meeting on Wednesday, everyone welcome","Your art project looks amazing, the teacher wants to show it to the class","I will call you later, I am at my grandmother's house now","Class photo day is Monday, please wear your school uniform","Do you want to play online after homework, we can team up and win","The bus is late today, we will arrive at school at nine","Please read the story for English class and answer the three questions"],"spam_test":["Claim your free prize now, you are today's lucky winner, click here","Urgent notice: verify your account password or it will be blocked","Win free money fast, click the link and send your bank details","Free gift for you! Click now to get your new phone","Your parcel fee is unpaid, click the link to pay now","Make cash easily from home, click the secret link today","Congratulations winner, send your password to receive 500 dollars","Free followers and free skins, log in at this link now"],"safe_test":["The maths test is on Tuesday, please revise chapter five","Mum says dinner is ready, come home now","Can you bring your football boots to practice tomorrow","Happy birthday! See you at the party after school","The teacher said we have a free lesson, meet in the library","Thanks for sending the history notes, they were really helpful","Please sign the trip form and bring it on Friday","We can win the match if everyone comes to practice at five"],"tricky":[{"t":"FR33 g1ft c4rd!! cl1ck h3re n0w t0 cl4im y0ur pr1ze","y":1},{"t":"Dear student, kindly confirm your login details to keep your school account active","y":1},{"t":"Hello friend, a nice person left you some money, reply and we will explain","y":1},{"t":"URGENT: bring your PE kit today, we play to WIN the final!","y":0},{"t":"Free lesson now! Click Assignments in the school app to find the new room","y":0},{"t":"Congratulations on winning the maths prize, the school will send your certificate","y":0}]},"ar":{"spam_train":["أنت الفائز المحظوظ! اضغط على الرابط الآن لتستلم هاتفك المجاني","بطاقة هدية مجانية! اضغط هنا وأدخل كلمة المرور لتستلم جائزتك","عاجل: سيتم إغلاق حسابك. أكّد كلمة المرور الآن","اربح جهاز ألعاب مجاني اليوم، فقط اضغط على هذا الرابط","اكسب مالاً بسهولة وبسرعة من البيت بدون عمل، اضغط الآن","مبروك! ربحت ألف دولار. أرسل رقم حسابك البنكي لتستلمها","احصل على عشرة آلاف متابع مجانًا، اضغط الرابط وسجّل الدخول","تحذير أخير: أكّد كلمة المرور وإلا ستخسر حسابك اليوم","عرض محدود! قسائم بيتزا مجانية مدى الحياة، استلم جائزتك الآن","طردك بانتظارك، ادفع رسمًا صغيرًا عبر هذا الرابط لتستلمه","اضغط الآن واربح دراجة جديدة، الدخول مجاني، أسرع","جائزة خاصة لك، أرسل كلمة المرور إلى فريق الفائزين","اكسب المال بسرعة، ضاعف نقودك اليوم، اضغط الرابط السري","هاتفك فيه فيروس! اضغط هنا الآن لتنظيفه مجانًا","روبوكس مجاني وأشكال مجانية، اضغط الرابط وأدخل بيانات الدخول","عزيزي المستخدم، حسابك البنكي مقفل، أكّد الآن عبر هذا الرابط","تم اختيارك لرحلة مجانية، استلم جائزتك اليوم","عرض ساخن: أحذية رخيصة خصم تسعين بالمئة، اضغط الآن وادفع ببطاقة هدية","اربح تذاكر مجانية، اضغط الرابط، اليوم فقط، استلم الآن","بريدك ربح اليانصيب، أرسل كلمة المرور لتحصل على المال"],"safe_train":["واجب الرياضيات يُسلَّم يوم الخميس، أحضروا دفاتركم من فضلكم","ماما: العشاء الساعة السابعة، هل تشتري بعض الخبز في طريقك إلى البيت؟","تدريب كرة القدم نُقل إلى الساعة الخامسة بسبب المطر","عيد ميلاد سعيد يا دانا! سنأكل الكعكة بعد المدرسة اليوم","اختبار العلوم سيشمل الفصلين الثالث والرابع","هل يمكنك أن ترسل لي ملاحظات درس التاريخ من فضلك؟","عندنا حصة فراغ الآن، المعلم مريض، نلتقي في الغرفة اثنتي عشرة","مباراة رائعة أمس، نستطيع أن نربح المباراة القادمة إذا تدربنا","لا تنسَ أن تحضر ملابس الرياضة وزجاجة ماء غدًا","يجب توقيع إذن الرحلة المدرسية قبل يوم الجمعة","أبي سيأخذك اليوم، انتظر قرب البوابة الأمامية","كتب المكتبة يجب إعادتها الأسبوع القادم، لا تنسوا إرجاعها","شكرًا لأنك ساعدتني في المشروع، شرحت بشكل ممتاز","بيتزا مجانية في لقاء نادي الشطرنج يوم الأربعاء، الجميع مرحب به","مشروعك الفني رائع، المعلمة تريد عرضه على الصف","سأتصل بك لاحقًا، أنا في بيت جدتي الآن","يوم صورة الصف يوم الاثنين، الرجاء لبس الزي المدرسي","هل تريد أن نلعب عبر الإنترنت بعد الواجب، نتعاون ونربح؟","الحافلة متأخرة اليوم، سنصل إلى المدرسة في التاسعة","الرجاء قراءة القصة لحصة اللغة العربية والإجابة عن الأسئلة الثلاثة"],"spam_test":["استلم جائزتك المجانية الآن، أنت الفائز المحظوظ اليوم، اضغط هنا","إشعار عاجل: أكّد كلمة مرور حسابك وإلا سيتم إغلاقه","اربح مالاً مجانيًا بسرعة، اضغط الرابط وأرسل بياناتك البنكية","هدية مجانية لك! اضغط الآن لتحصل على هاتفك الجديد","رسوم طردك غير مدفوعة، اضغط الرابط لتدفع الآن","اكسب نقودًا بسهولة من البيت، اضغط الرابط السري اليوم","مبروك أيها الفائز، أرسل كلمة المرور لتستلم خمسمئة دولار","متابعون مجانيون وأشكال مجانية، سجّل الدخول عبر هذا الرابط الآن"],"safe_test":["اختبار الرياضيات يوم الثلاثاء، الرجاء مراجعة الفصل الخامس","ماما تقول إن العشاء جاهز، تعال إلى البيت الآن","هل يمكنك إحضار حذاء كرة القدم إلى التدريب غدًا؟","عيد ميلاد سعيد! نراك في الحفلة بعد المدرسة","قال المعلم إن عندنا حصة فراغ، نلتقي في المكتبة","شكرًا لأنك أرسلت ملاحظات التاريخ، كانت مفيدة جدًا","الرجاء توقيع نموذج الرحلة وإحضاره يوم الجمعة","نستطيع أن نربح المباراة إذا حضر الجميع التدريب في الخامسة"],"tricky":[{"t":"م.ج.ا.ن.ي!! ب.ط.ا.ق.ة ه.د.ي.ة، ا.ض.غ.ط ه.ن.ا ا.ل.آ.ن ل.ت.س.ت.ل.م ج.ا.ئ.ز.ت.ك","y":1},{"t":"عزيزي الطالب، نرجو تأكيد بيانات دخولك ليبقى حسابك المدرسي فعّالًا","y":1},{"t":"مرحبًا يا صديقي، شخص طيب ترك لك بعض المال، رد علينا وسنشرح لك","y":1},{"t":"عاجل: أحضروا ملابس الرياضة اليوم، سنلعب لنربح النهائي!","y":0},{"t":"حصة فراغ الآن! اضغط على الواجبات في تطبيق المدرسة لتجد الغرفة الجديدة","y":0},{"t":"مبروك على ربح جائزة الرياضيات، ستُرسل المدرسة شهادتك","y":0}]},"he":{"spam_train":["אתם הזוכים בהגרלה! לחצו על הקישור עכשיו כדי לקבל טלפון חינם","שובר מתנה חינם! לחצו כאן והזינו סיסמה כדי לקבל את הפרס","דחוף: החשבון שלכם ייחסם. אשרו את הסיסמה עכשיו","זכו בקונסולת משחקים חינם היום, רק לחצו על הקישור הזה","הרוויחו כסף קל ומהר מהבית בלי עבודה, לחצו עכשיו","מזל טוב! זכיתם באלף דולר. שלחו מספר חשבון בנק כדי לקבל","קבלו עשרת אלפים עוקבים חינם, לחצו על הקישור והתחברו","אזהרה אחרונה: אשרו את הסיסמה או שתאבדו את החשבון היום","מבצע מוגבל! קופוני פיצה חינם לכל החיים, קבלו את הפרס עכשיו","החבילה שלכם מחכה, שלמו אגרה קטנה בקישור הזה כדי לקבל אותה","לחצו עכשיו וזכו באופניים חדשים, כניסה חינם, מהרו","פרס מיוחד בשבילכם, שלחו סיסמה לצוות הזוכים","הרוויחו כסף מהר, הכפילו את הכסף היום, לחצו על הקישור הסודי","בטלפון שלכם יש וירוס! לחצו כאן עכשיו כדי לנקות אותו בחינם","רובוקס חינם ועורות חינם, לחצו על הקישור והזינו פרטי התחברות","משתמש יקר, חשבון הבנק שלך נעול, אשר עכשיו דרך הקישור הזה","נבחרתם לחופשה חינם, קבלו את הפרס שלכם היום","מבצע חם: נעליים זולות, תשעים אחוז הנחה, לחצו עכשיו ושלמו בשובר מתנה","זכו בכרטיסים חינם, לחצו על הקישור, רק היום, קבלו עכשיו","האימייל שלכם זכה בלוטו, שלחו סיסמה כדי לקבל את הכסף"],"safe_train":["שיעורי החשבון להגשה ביום חמישי, תביאו את המחברות בבקשה","אמא: ארוחת הערב בשבע, אפשר לקנות קצת לחם בדרך הביתה?","האימון בכדורגל הועבר לחמש בגלל הגשם","יום הולדת שמח דנה! נאכל עוגה אחרי בית הספר היום","המבחן במדעים יכלול את פרקים שלוש וארבע","אפשר לשלוח לי את הסיכום משיעור ההיסטוריה בבקשה?","יש לנו שעה פנויה עכשיו, המורה חולה, נפגשים בחדר שתים עשרה","משחק מעולה אתמול, אפשר לנצח במשחק הבא אם נתאמן","אל תשכחו להביא ציוד ספורט ובקבוק מים מחר","אישור הטיול של בית הספר צריך להיחתם עד יום שישי","אבא אוסף אותך היום, חכה ליד השער הקדמי","ספרי הספרייה צריכים לחזור בשבוע הבא, אל תשכחו להחזיר","תודה שעזרת לי בפרויקט, הסברת מצוין","פיצה חינם במפגש חוג השחמט ביום רביעי, כולם מוזמנים","פרויקט האמנות שלך נראה מדהים, המורה רוצה להראות אותו לכיתה","אתקשר אליך אחר כך, אני בבית של סבתא עכשיו","יום צילום כיתתי ביום שני, תלבשו מדי בית ספר בבקשה","רוצה לשחק אונליין אחרי השיעורים, נשחק יחד ונצליח לנצח?","האוטובוס מאחר היום, נגיע לבית הספר בתשע","בבקשה לקרוא את הסיפור לשיעור עברית ולענות על שלוש השאלות"],"spam_test":["קבלו את הפרס החינמי שלכם עכשיו, אתם הזוכים בהגרלה היום, לחצו כאן","הודעה דחופה: אשרו את סיסמת החשבון או שהוא ייחסם","זכו בכסף חינם מהר, לחצו על הקישור ושלחו פרטי בנק","מתנה חינם בשבילכם! לחצו עכשיו כדי לקבל טלפון חדש","אגרת החבילה שלכם לא שולמה, לחצו על הקישור לשלם עכשיו","הרוויחו כסף בקלות מהבית, לחצו על הקישור הסודי היום","מזל טוב לזוכה, שלחו סיסמה כדי לקבל חמש מאות דולר","עוקבים חינם ועורות חינם, התחברו דרך הקישור הזה עכשיו"],"safe_test":["המבחן בחשבון ביום שלישי, בבקשה לחזור על פרק חמש","אמא אומרת שארוחת הערב מוכנה, בוא הביתה עכשיו","אפשר להביא נעלי כדורגל לאימון מחר?","יום הולדת שמח! נתראה במסיבה אחרי בית הספר","המורה אמר שיש לנו שעה פנויה, נפגשים בספרייה","תודה ששלחת את סיכומי ההיסטוריה, הם עזרו מאוד","בבקשה לחתום על טופס הטיול ולהביא אותו ביום שישי","אפשר לנצח במשחק אם כולם יבואו לאימון בחמש"],"tricky":[{"t":"ח.י.נ.ם!! ש.ו.ב.ר מ.ת.נ.ה, ל.ח.צ.ו כ.א.ן ע.כ.ש.י.ו ל.ק.ב.ל א.ת ה.פ.ר.ס","y":1},{"t":"תלמיד יקר, אנא אשר את פרטי ההתחברות כדי שחשבון בית הספר יישאר פעיל","y":1},{"t":"שלום חבר, אדם נחמד השאיר לך קצת כסף, ענה לנו ונסביר","y":1},{"t":"דחוף: תביאו ציוד ספורט היום, משחקים כדי לנצח בגמר!","y":0},{"t":"שעה פנויה עכשיו! לחצו על מטלות באפליקציית בית הספר כדי למצוא את החדר החדש","y":0},{"t":"מזל טוב על הזכייה בפרס במתמטיקה, בית הספר ישלח את התעודה","y":0}]}};
+const T = {
+en:{dir:'ltr',name:'English',brand:'Inbox Defender',title:'Inbox Defender',
+ tag:'Scammers are flooding the school inbox with fake prizes and password traps. You are the Inbox Defender: teach an AI to block scam messages and let real ones through — then beat the sneaky scammers!',
+ lv:['Teach','Learn','Race','Boss','Tune','Report'],
+ h1:'Level 1 · Teach the guard',p1:'The AI starts knowing nothing. Here are messages that were marked scam or safe. Then write some of your own!',colSpam:'🚫 Scam messages',colSafe:'✅ Safe messages',yours:'yours',write:'Write your own message to teach the AI',ph:'Type a message…',addSpam:'Add as scam',addSafe:'Add as safe',train:'🧠 Train the AI',trained:'The AI read {n} messages and learned {w} different words.',next:'Next level ▶',
+ h2:'Level 2 · What did the AI learn?',p2:'The AI counts how often each word shows up in scam messages and in safe messages. Words that appear mostly in scams get a red clue; words that appear mostly in safe messages get a green clue.',topSpam:'Strongest scam clues',topSafe:'Strongest safe clues',search:'Test a word in the AI’s brain',searchPh:'type any word…',sIn:'appears in {a} scam and {b} safe messages',lean:{spam:'→ leans SCAM',safe:'→ leans SAFE',none:'→ no lean'},unknown:'The AI has never seen this word, so it ignores it.',both:'Tip: words like “free” and “win” appear in BOTH kinds of messages. One word is never enough — the AI adds up ALL the clues in a message.',
+ h3:'Level 3 · The inbox race',p3:'New messages arrive. First YOU decide: scam or safe? Then watch the AI add up its clues.',you:'You',ai:'AI',scam:'🚫 Scam',safe:'✅ Safe',truth:'Truth',aiSays:'The AI says',chance:'{p}% chance of scam',why:'Why? Every word pushes the score: red = scam clue, green = safe clue, grey = no clue.',right:'Correct',wrong:'Wrong',nextMsg:'Next message ▶',msgOf:'Message {n} of {t}',
+ h4:'Level 4 · Boss: the sneaky scammers',p4:'Scammers keep changing their tricks: misspelled words, polite words, and real messages that sound scary. Beat the AI — then patch it by teaching it the ones it missed.',hp:'AI defence: {a} of {t} tricks beaten',patch:'🔧 Teach the AI this message',patched:'Patched! Now the AI says',patchNote:'Careful: teaching one message only fixes THAT message. Scammers will invent new tricks, so real spam filters keep learning from new examples all the time.',
+ h5:'Level 5 · Tune the guard',p5:'How sure must the AI be before it blocks a message? Slide it and watch two numbers fight each other.',th:'Block a message when the AI is at least {p}% sure it is a scam',caught:'Scam caught',falseAl:'Real messages wrongly blocked',matrix:['Scam blocked ✔','Real blocked ✘ (false alarm)','Scam missed ✘','Real delivered ✔'],mission:'Mission: catch at least 85% of the scams and wrongly block at most 10% of the real messages.',missionOk:'Mission complete! 🎉',missionNo:'Not yet — try another strictness.',trade:'A strict guard lets fewer scams through but blocks more real messages. A relaxed guard does the opposite. There is no perfect setting — people choose what matters more.',evalN:'Measured on {n} messages the AI was not taught.',
+ h6:'Level 6 · Report card',p6:'Great work, defender!',scoreRace:'Race: you {a}/{n} · AI {b}/{n}',scoreBoss:'Boss: the AI beat {a}/{t} tricks · you patched {p}',badgesH:'Your badges',badges:[['🛡️','Guard Trainer','Added 2 of your own messages'],['🔍','Word Detective','Tested a word in the AI’s brain'],['🏆','Beat the AI','Scored at least as well as the AI in the race'],['🔧','Patcher','Patched the AI after a sneaky trick'],['⚖️','Balanced Guard','Completed the tuning mission']],dl:'Download my results (opens in Excel)',again:'Play again',think:'Think about it',qs:['Which clue words surprised you?','Why can one word never decide?','What new trick could a scammer invent next, and how would you teach the AI?','Who is hurt more: a scam that slips through, or a real message that gets blocked?'],
+ csv:['Message','Really a scam? (1=yes)','AI chance of scam %','Verdict at your strictness','AI right? (1=yes)'],verdict:['Blocked','Delivered'],lock:'Finish the previous level first.',autoPatched:'(taught)'},
+ar:{dir:'rtl',name:'العربية',brand:'حارس البريد',title:'حارس البريد',
+ tag:'المحتالون يغرقون بريد المدرسة بجوائز مزيفة وفخاخ كلمات المرور. أنت حارس البريد: علّم ذكاءً اصطناعيًا أن يحجب رسائل الاحتيال ويُمرّر الرسائل الحقيقية — ثم تغلّب على المحتالين الماكرين!',
+ lv:['علّم','تعلّم','سباق','الزعيم','اضبط','التقرير'],
+ h1:'المستوى 1 · علّم الحارس',p1:'يبدأ الذكاء الاصطناعي بلا أي معرفة. هذه رسائل وُسمت احتيالًا أو آمنة. ثم اكتب بعض الرسائل بنفسك!',colSpam:'🚫 رسائل احتيال',colSafe:'✅ رسائل آمنة',yours:'من كتابتك',write:'اكتب رسالتك لتعلّم الذكاء الاصطناعي',ph:'اكتب رسالة…',addSpam:'أضف كاحتيال',addSafe:'أضف كآمنة',train:'🧠 درّب الذكاء الاصطناعي',trained:'قرأ الذكاء الاصطناعي {n} رسالة وتعلّم {w} كلمة مختلفة.',next:'المستوى التالي ▶',
+ h2:'المستوى 2 · ماذا تعلّم الذكاء الاصطناعي؟',p2:'يعدّ الذكاء الاصطناعي كم مرة تظهر كل كلمة في رسائل الاحتيال وفي الرسائل الآمنة. الكلمات التي تظهر غالبًا في الاحتيال تأخذ دليلًا أحمر، والتي تظهر غالبًا في الآمنة تأخذ دليلًا أخضر.',topSpam:'أقوى أدلة الاحتيال',topSafe:'أقوى الأدلة على الأمان',search:'اختبر كلمة في دماغ الذكاء الاصطناعي',searchPh:'اكتب أي كلمة…',sIn:'تظهر في {a} رسالة احتيال و{b} رسالة آمنة',lean:{spam:'← تميل إلى الاحتيال',safe:'← تميل إلى الأمان',none:'← لا ميل'},unknown:'لم يرَ الذكاء الاصطناعي هذه الكلمة من قبل فيتجاهلها.',both:'تلميح: كلمات مثل «مجاني» و«نربح» تظهر في النوعين. كلمة واحدة لا تكفي أبدًا — الذكاء الاصطناعي يجمع كل الأدلة في الرسالة.',
+ h3:'المستوى 3 · سباق البريد',p3:'تصل رسائل جديدة. أولًا تقرر أنت: احتيال أم آمنة؟ ثم شاهد الذكاء الاصطناعي يجمع أدلته.',you:'أنت',ai:'الذكاء الاصطناعي',scam:'🚫 احتيال',safe:'✅ آمنة',truth:'الحقيقة',aiSays:'الذكاء الاصطناعي يقول',chance:'احتمال الاحتيال {p}%',why:'لماذا؟ كل كلمة تدفع الدرجة: أحمر = دليل احتيال، أخضر = دليل أمان، رمادي = لا دليل.',right:'صحيح',wrong:'خطأ',nextMsg:'الرسالة التالية ▶',msgOf:'الرسالة {n} من {t}',
+ h4:'المستوى 4 · الزعيم: المحتالون الماكرون',p4:'يغيّر المحتالون حيلهم: كلمات بأخطاء إملائية وألفاظ مهذبة ورسائل حقيقية تبدو مخيفة. تغلّب على الذكاء الاصطناعي — ثم أصلحه بتعليمه الرسائل التي أخطأ فيها.',hp:'دفاع الذكاء الاصطناعي: هزم {a} من {t} حيل',patch:'🔧 علّم الذكاء الاصطناعي هذه الرسالة',patched:'تم الإصلاح! الآن يقول الذكاء الاصطناعي',patchNote:'انتبه: تعليم رسالة واحدة يصلح تلك الرسالة فقط. سيخترع المحتالون حيلًا جديدة، ولذلك تظل مرشحات البريد الحقيقية تتعلم من أمثلة جديدة دائمًا.',
+ h5:'المستوى 5 · اضبط الحارس',p5:'ما مدى تأكّد الذكاء الاصطناعي قبل أن يحجب رسالة؟ حرّك المؤشر وشاهد رقمين يتصارعان.',th:'احجب الرسالة عندما يتأكد الذكاء الاصطناعي بنسبة {p}% على الأقل أنها احتيال',caught:'احتيال تم اصطياده',falseAl:'رسائل حقيقية حُجبت خطأً',matrix:['احتيال محجوب ✔','حقيقية محجوبة ✘ (إنذار كاذب)','احتيال فات ✘','حقيقية وصلت ✔'],mission:'المهمة: اصطد 85% على الأقل من الاحتيال واحجب خطأً 10% على الأكثر من الرسائل الحقيقية.',missionOk:'أنجزت المهمة! 🎉',missionNo:'ليس بعد — جرّب درجة صرامة أخرى.',trade:'الحارس الصارم يترك احتيالًا أقل لكنه يحجب رسائل حقيقية أكثر. والحارس المتساهل يفعل العكس. لا يوجد ضبط مثالي — الناس يختارون الأهم عندهم.',evalN:'القياس على {n} رسالة لم يتعلمها الذكاء الاصطناعي.',
+ h6:'المستوى 6 · بطاقة التقرير',p6:'عمل رائع أيها الحارس!',scoreRace:'السباق: أنت {a}/{n} · الذكاء الاصطناعي {b}/{n}',scoreBoss:'الزعيم: هزم الذكاء الاصطناعي {a}/{t} حيل · أصلحت أنت {p}',badgesH:'أوسمتك',badges:[['🛡️','مدرّب الحارس','أضفت رسالتين من كتابتك'],['🔍','محقق الكلمات','اختبرت كلمة في دماغ الذكاء الاصطناعي'],['🏆','تفوّقت على الذكاء الاصطناعي','أصبت مثله أو أكثر في السباق'],['🔧','المُصلِح','أصلحت الذكاء الاصطناعي بعد حيلة ماكرة'],['⚖️','حارس متوازن','أنجزت مهمة الضبط']],dl:'نزّل نتائجي (تُفتح في Excel)',again:'العب مرة أخرى',think:'فكّر',qs:['ما الكلمات الدالة التي فاجأتك؟','لماذا لا تكفي كلمة واحدة للحكم؟','ما الحيلة الجديدة التي قد يخترعها المحتال، وكيف تعلّمها للذكاء الاصطناعي؟','من يتضرر أكثر: احتيال يمرّ، أم رسالة حقيقية تُحجب؟'],
+ csv:['الرسالة','هل هي احتيال فعلًا؟ (1=نعم)','احتمال الاحتيال عند الذكاء الاصطناعي %','القرار عند صرامتك','هل أصاب؟ (1=نعم)'],verdict:['محجوبة','وصلت'],lock:'أنهِ المستوى السابق أولًا.',autoPatched:'(تعلّمها)'},
+he:{dir:'rtl',name:'עברית',brand:'שומר התיבה',title:'שומר התיבה',
+ tag:'נוכלים מציפים את תיבת הדואר של בית הספר בפרסים מזויפים ובמלכודות סיסמה. אתם שומרי התיבה: למדו בינה מלאכותית לחסום הודעות הונאה ולהעביר הודעות אמיתיות — ואז נצחו את הנוכלים הערמומיים!',
+ lv:['לימוד','למידה','מרוץ','בוס','כיוונון','דוח'],
+ h1:'שלב 1 · מלמדים את השומר',p1:'הבינה המלאכותית מתחילה בלי לדעת כלום. הנה הודעות שסומנו כהונאה או כבטוחות. אחר כך כתבו כמה הודעות בעצמכם!',colSpam:'🚫 הודעות הונאה',colSafe:'✅ הודעות בטוחות',yours:'שלכם',write:'כתבו הודעה משלכם כדי ללמד את הבינה המלאכותית',ph:'הקלידו הודעה…',addSpam:'הוסיפו כהונאה',addSafe:'הוסיפו כבטוחה',train:'🧠 אמנו את הבינה המלאכותית',trained:'הבינה המלאכותית קראה {n} הודעות ולמדה {w} מילים שונות.',next:'לשלב הבא ▶',
+ h2:'שלב 2 · מה הבינה המלאכותית למדה?',p2:'הבינה המלאכותית סופרת כמה פעמים כל מילה מופיעה בהודעות הונאה ובהודעות בטוחות. מילים שמופיעות בעיקר בהונאות מקבלות רמז אדום, ומילים שמופיעות בעיקר בהודעות בטוחות מקבלות רמז ירוק.',topSpam:'רמזי ההונאה החזקים',topSafe:'הרמזים החזקים לבטוח',search:'בדקו מילה במוח של הבינה המלאכותית',searchPh:'הקלידו מילה…',sIn:'מופיעה ב-{a} הודעות הונאה וב-{b} הודעות בטוחות',lean:{spam:'← נוטה להונאה',safe:'← נוטה לבטוח',none:'← בלי נטייה'},unknown:'הבינה המלאכותית מעולם לא ראתה את המילה הזאת, ולכן היא מתעלמת ממנה.',both:'טיפ: מילים כמו “חינם” ו“לנצח” מופיעות בשני סוגי ההודעות. מילה אחת אף פעם לא מספיקה — הבינה המלאכותית מחברת את כל הרמזים בהודעה.',
+ h3:'שלב 3 · מרוץ התיבה',p3:'הודעות חדשות מגיעות. קודם אתם מחליטים: הונאה או בטוחה? אחר כך צפו בבינה המלאכותית מחברת את הרמזים שלה.',you:'אתם',ai:'בינה מלאכותית',scam:'🚫 הונאה',safe:'✅ בטוחה',truth:'האמת',aiSays:'הבינה המלאכותית אומרת',chance:'{p}% סיכוי להונאה',why:'למה? כל מילה דוחפת את הציון: אדום = רמז להונאה, ירוק = רמז לבטוח, אפור = אין רמז.',right:'נכון',wrong:'שגוי',nextMsg:'ההודעה הבאה ▶',msgOf:'הודעה {n} מתוך {t}',
+ h4:'שלב 4 · בוס: הנוכלים הערמומיים',p4:'נוכלים משנים את התעלולים שלהם: מילים עם שגיאות, מילים מנומסות, והודעות אמיתיות שנשמעות מפחידות. נצחו את הבינה המלאכותית — ואז תקנו אותה בכך שתלמדו אותה את ההודעות שפספסה.',hp:'ההגנה של הבינה המלאכותית: ניצחה {a} מתוך {t} תעלולים',patch:'🔧 למדו את הבינה המלאכותית את ההודעה הזאת',patched:'תוקן! עכשיו הבינה המלאכותית אומרת',patchNote:'שימו לב: ללמד הודעה אחת מתקן רק את ההודעה הזאת. נוכלים ימציאו תעלולים חדשים, ולכן מסנני דואר אמיתיים לומדים כל הזמן מדוגמאות חדשות.',
+ h5:'שלב 5 · מכווננים את השומר',p5:'כמה בטוחה הבינה המלאכותית צריכה להיות לפני שהיא חוסמת הודעה? הזיזו וצפו בשני מספרים שנאבקים זה בזה.',th:'חסמו הודעה כשהבינה המלאכותית בטוחה לפחות {p}% שהיא הונאה',caught:'הונאות שנתפסו',falseAl:'הודעות אמיתיות שנחסמו בטעות',matrix:['הונאה נחסמה ✔','אמיתית נחסמה ✘ (אזעקת שווא)','הונאה פוספסה ✘','אמיתית נמסרה ✔'],mission:'משימה: תפסו לפחות 85% מההונאות וחסמו בטעות לכל היותר 10% מההודעות האמיתיות.',missionOk:'המשימה הושלמה! 🎉',missionNo:'עדיין לא — נסו רמת קפדנות אחרת.',trade:'שומר קפדן מעביר פחות הונאות אבל חוסם יותר הודעות אמיתיות. שומר מקל עושה את ההפך. אין הגדרה מושלמת — אנשים בוחרים מה חשוב להם יותר.',evalN:'נמדד על {n} הודעות שהבינה המלאכותית לא למדה.',
+ h6:'שלב 6 · דוח הישגים',p6:'עבודה נהדרת, שומרים!',scoreRace:'מרוץ: אתם {a}/{n} · בינה מלאכותית {b}/{n}',scoreBoss:'בוס: הבינה המלאכותית ניצחה {a}/{t} תעלולים · אתם תיקנתם {p}',badgesH:'התגים שלכם',badges:[['🛡️','מאמן שומרים','הוספתם 2 הודעות משלכם'],['🔍','בלש מילים','בדקתם מילה במוח של הבינה המלאכותית'],['🏆','ניצחתם את הבינה המלאכותית','הצלחתם לפחות כמוה במרוץ'],['🔧','מתקן','תיקנתם את הבינה המלאכותית אחרי תעלול ערמומי'],['⚖️','שומר מאוזן','השלמתם את משימת הכיוונון']],dl:'הורדת התוצאות שלי (נפתח באקסל)',again:'משחקים שוב',think:'חשבו על זה',qs:['אילו מילות רמז הפתיעו אתכם?','למה מילה אחת אף פעם לא מכריעה?','איזה תעלול חדש נוכל יכול להמציא, ואיך תלמדו את הבינה המלאכותית?','מי ניזוק יותר: הונאה שעוברת, או הודעה אמיתית שנחסמת?'],
+ csv:['הודעה','האם באמת הונאה? (1=כן)','סיכוי להונאה לפי הבינה המלאכותית %','החלטה ברמת הקפדנות שלכם','האם צדקה? (1=כן)'],verdict:['נחסמה','נמסרה'],lock:'קודם סיימו את השלב הקודם.',autoPatched:'(נלמדה)'}
+};
+const $ = id => document.getElementById(id);
+const qs = new URLSearchParams(location.search);
+let lang = qs.get('lang'); if (!T[lang]) { const n = (navigator.language||'en').toLowerCase(); lang = n.startsWith('ar')?'ar':(n.startsWith('he')||n.startsWith('iw'))?'he':'en'; }
+const L = () => T[lang], M = () => MSG[lang], fmt = (s,o) => s.replace(/\{(\w+)\}/g,(m,k)=>o[k]!=null?o[k]:m);
+const esc = s => s.replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const shuffle = a => { for (let i=a.length-1;i>0;i--) { const j = Math.floor(Math.random()*(i+1)); [a[i],a[j]] = [a[j],a[i]]; } return a; };
+
+// ---------------------------------------------------------------- the AI: count words, add up clues (naive Bayes)
+function tok(s) {
+  s = s.toLowerCase().replace(/[֑-ׇً-ٟـ]/g, '').replace(/[أإآ]/g, 'ا');
+  let w = s.match(/[\p{L}\p{N}]+/gu) || [];
+  if (lang === 'ar') w = w.map(x => x.startsWith('ال') && x.length > 4 ? x.slice(2) : x);
+  return w;
+}
+function trainModel(items) {            // items: [{t, y}] y=1 scam
+  const c = [{}, {}], n = [0, 0];
+  items.forEach(it => { n[it.y]++; new Set(tok(it.t)).forEach(w => { c[it.y][w] = (c[it.y][w] || 0) + 1; }); });
+  const vocab = new Set([...Object.keys(c[0]), ...Object.keys(c[1])]);
+  return { c, n, vocab };
+}
+const lo = (m, w) => Math.log(((m.c[1][w]||0)+1)/(m.n[1]+2)) - Math.log(((m.c[0][w]||0)+1)/(m.n[0]+2));
+function scoreMsg(m, text) {
+  let s = Math.log((m.n[1]+1)/(m.n[0]+1)); new Set(tok(text)).forEach(w => { if (m.vocab.has(w)) s += lo(m, w); });
+  return 1/(1+Math.exp(-s));
+}
+const S = {};
+function reset() {
+  Object.assign(S, { lvl: 1, max: 1, custom: [], patches: [], model: null, searched: 0, q: '',
+    test: shuffle([...M().spam_test.map(t=>({t,y:1})), ...M().safe_test.map(t=>({t,y:0}))]), ti: 0, tAns: [], tShown: false,
+    tricky: M().tricky.map(x => ({ t: x.t, y: x.y })), bi: 0, bAns: [], bShown: false, th: 0.5, mission: false });
+}
+const baseTrain = () => [...M().spam_train.map(t=>({t,y:1})), ...M().safe_train.map(t=>({t,y:0}))];
+const allTrain = () => [...baseTrain(), ...S.custom, ...S.patches];
+function train() { S.model = trainModel(allTrain()); S.max = Math.max(S.max, 2); }
+const pct = p => Math.round(p*100);
+
+// ---------------------------------------------------------------- views
+const lvDone = i => i < S.max;
+function stepper() { const t = L(); return `<div class="stepper">${t.lv.map((n,i)=>`<button class="st ${S.lvl===i+1?'on':(lvDone(i+1)&&i+1<S.max?'done':'')}" id="st${i+1}" ${i+1>S.max?'disabled':''} onclick="go(${i+1})">${i+1} · ${n}</button>`).join('')}</div>`; }
+function chips(text) {                    // colour every word by the clue it gives the AI
+  if (!S.model) return esc(text);
+  return `<span class="chips">` + text.split(/(\s+)/).map(chunk => {
+    if (/^\s+$/.test(chunk) || !chunk) return chunk;
+    const ws = tok(chunk).filter(w => S.model.vocab.has(w)); const v = ws.reduce((a,w)=>a+lo(S.model,w),0);
+    const a = Math.min(0.75, Math.abs(v)/3); const bg = ws.length ? (v>0?`rgba(220,38,38,${a})`:`rgba(22,163,74,${a})`) : 'transparent';
+    return `<span style="background:${bg}" title="${ws.length?(v>0?'+':'')+v.toFixed(1):''}">${esc(chunk)}</span>`; }).join('') + `</span>`;
+}
+function gauge(p) { return `<div class="gauge"><div class="pin" style="left:${p*100}%"></div><div class="thp" style="left:${S.th*100}%"></div></div><div class="gl"><span>${L().safe}</span><span>${L().scam}</span></div>`; }
+function v1() {
+  const t = L(), m = M(), cs = S.custom.filter(x=>x.y), cf = S.custom.filter(x=>!x.y);
+  const list = (arr, mine) => arr.map(x => `<div class="msg ${mine?'mine':''}">${mine?`<span class="tag">${t.yours}</span> `:''}${esc(x.t||x)}</div>`).join('');
+  return `<div class="card"><h2>${t.h1}</h2><p class="sub">${t.p1}</p>
+   <div class="cols2"><div class="col sp"><h3>${t.colSpam}</h3>${list(cs,true)}${list(m.spam_train,false)}</div><div class="col sf"><h3>${t.colSafe}</h3>${list(cf,true)}${list(m.safe_train,false)}</div></div>
+   <h3>${t.write}</h3><textarea id="own" placeholder="${t.ph}"></textarea>
+   <div class="row"><button class="btn spam sm" id="btnAddSpam" onclick="addOwn(1)">🚫 ${t.addSpam}</button><button class="btn safe sm" id="btnAddSafe" onclick="addOwn(0)">✅ ${t.addSafe}</button></div>
+   <div class="row"><button class="btn" id="btnTrain" onclick="doTrain()">${t.train}</button><b id="trainmsg">${S.model?fmt(t.trained,{n:allTrain().length,w:S.model.vocab.size}):''}</b>${S.model?`<button class="btn alt" id="btnNext" onclick="adv(2)">${t.next}</button>`:''}</div></div>`;
+}
+function v2() {
+  const t = L(), m = S.model; if (!m) return '';
+  const words = [...m.vocab].map(w => ({ w, v: lo(m,w), n: (m.c[0][w]||0)+(m.c[1][w]||0) })).filter(x => x.n >= 2);
+  const sp = words.sort((a,b)=>b.v-a.v).slice(0,8), sf = [...words].sort((a,b)=>a.v-b.v).slice(0,8), mx = Math.max(...words.map(x=>Math.abs(x.v)));
+  const bars = (arr, cls) => arr.map(x=>`<div class="bar ${cls}"><span class="w">${esc(x.w)}</span><span class="t"><i style="width:${Math.abs(x.v)/mx*100}%"></i></span></div>`).join('');
+  let res = '';
+  if (S.q) { const w = tok(S.q)[0]; if (w) { if (!m.vocab.has(w)) res = `<div class="note">${t.unknown}</div>`; else { const a = m.c[1][w]||0, b = m.c[0][w]||0, v = lo(m,w), k = v>0.4?'spam':v<-0.4?'safe':'none'; res = `<div class="note"><b>${esc(w)}</b> ${fmt(t.sIn,{a,b})} <b>${t.lean[k]}</b></div>`; } } }
+  return `<div class="card"><h2>${t.h2}</h2><p class="sub">${t.p2}</p><div class="cols2"><div><h3>🚫 ${t.topSpam}</h3>${bars(sp,'sp')}</div><div><h3>✅ ${t.topSafe}</h3>${bars(sf,'sf')}</div></div>
+   <h3>🔍 ${t.search}</h3><div class="row" style="margin-top:0"><input type="text" id="wq" placeholder="${t.searchPh}" value="${esc(S.q)}" onkeydown="if(event.key==='Enter')searchWord()"><button class="btn sm" id="btnSearch" onclick="searchWord()">🔍</button></div>${res}
+   <div class="note">${t.both}</div><div class="row"><button class="btn" id="btnNext" onclick="adv(3)">${t.next}</button></div></div>`;
+}
+function raceCard(round) {                 // shared by level 3 (test) and 4 (boss)
+  const t = L(), isT = round === 'test', arr = isT ? S.test : S.tricky, i = isT ? S.ti : S.bi, shown = isT ? S.tShown : S.bShown, ans = isT ? S.tAns : S.bAns;
+  const it = arr[i], p = scoreMsg(S.model, it.t), aiSpam = p >= 0.5;
+  const sc = (a, f) => arr.reduce((n,x,k)=> n + (k<i+(shown?1:0) && f(x,k) ? 1 : 0), 0);
+  const you = sc(arr, (x,k)=>ans[k]===x.y), ai = sc(arr, (x,k)=>(scoreMsg(S.model,x.t)>=0.5?1:0)===x.y);
+  let rev = '';
+  if (shown) {
+    const mine = ans[i], okAi = (aiSpam?1:0) === it.y, okU = mine === it.y;
+    rev = `<div class="verdict ${okAi?'ok':'no'}">${t.truth}: ${it.y?t.scam:t.safe} · ${okU?'✅':'❌'} ${t.you}: ${mine?t.scam:t.safe}<br>${okAi?'✅':'❌'} ${t.aiSays}: ${aiSpam?t.scam:t.safe} <small>(${fmt(t.chance,{p:pct(p)})})</small></div>${gauge(p)}<p class="sub" style="font-size:14px">${t.why}</p>`;
+    if (!isT && !okAi) rev += `<div class="row"><button class="btn" id="btnPatch" onclick="patch()">${t.patch}</button></div>`;
+    if (!isT && S.patches.some(x=>x.t===it.t)) { const p2 = scoreMsg(S.model, it.t); rev += `<div class="verdict ok">${t.patched}: ${p2>=0.5?t.scam:t.safe} <small>(${fmt(t.chance,{p:pct(p2)})})</small></div><div class="note">${t.patchNote}</div>`; }
+    rev += `<div class="row"><button class="btn" id="btnNextMsg" onclick="${isT?'nextTest()':'nextBoss()'}">${(i+1<arr.length)?t.nextMsg:t.next}</button></div>`;
+  }
+  const hp = !isT ? `<div class="hp"><i style="width:${S.tricky.reduce((n,x,k)=>n+(k<=i&&shown&&(scoreMsg(S.model,x.t)>=0.5?1:0)===x.y&&!S.patches.some(q=>q.t===x.t)?1:0),0)/S.tricky.length*100}%"></i></div>` : '';
+  return `<div class="card"><h2>${isT?t.h3:t.h4}</h2><p class="sub">${isT?t.p3:t.p4}</p>
+   <div><span class="pill">${t.you} ${you}</span><span class="pill r">${t.ai} ${ai}</span> <span class="sub">${fmt(t.msgOf,{n:i+1,t:arr.length})}</span></div>${hp}
+   <div class="msgbig" id="msgbox">${shown?chips(it.t):esc(it.t)}</div>
+   <div class="row"><button class="btn spam" id="btnSpam" ${shown?'disabled':''} onclick="guess(1)">${t.scam}</button><button class="btn safe" id="btnSafe" ${shown?'disabled':''} onclick="guess(0)">${t.safe}</button></div>${rev}</div>`;
+}
+function evalAll(th) {
+  const base = trainModel([...baseTrain(), ...S.custom]), items = [...S.test, ...S.tricky.filter(x => !S.patches.some(q => q.t === x.t))];
+  let tp=0, fp=0, fn=0, tn=0; const rows = items.map(x => { const p = scoreMsg(S.model, x.t); const bl = p >= th; if (x.y) { bl ? tp++ : fn++; } else { bl ? fp++ : tn++; } return { t: x.t, y: x.y, p, bl }; });
+  return { tp, fp, fn, tn, rows, n: items.length };
+}
+function v5dyn() {
+  const t = L(), e = evalAll(S.th), caught = (e.tp+e.fn)? e.tp/(e.tp+e.fn):0, fal = (e.fp+e.tn)? e.fp/(e.fp+e.tn):0, ok = caught >= 0.85 && fal <= 0.10;
+  if (ok) S.mission = true;
+  return `<div class="mat"><div class="g">${t.matrix[0]}<b>${e.tp}</b></div><div class="b">${t.matrix[1]}<b>${e.fp}</b></div><div class="b">${t.matrix[2]}<b>${e.fn}</b></div><div class="g">${t.matrix[3]}<b>${e.tn}</b></div></div>
+   <div class="row" style="gap:28px"><div><div class="big" id="caughtv">${pct(caught)}%</div>${t.caught}</div><div><div class="big" id="falsev">${pct(fal)}%</div>${t.falseAl}</div></div>
+   <div class="verdict ${ok?'ok':''}" style="margin-top:10px" id="missionv">${ok?t.missionOk:t.missionNo}</div><p class="sub" style="font-size:13px;margin-top:6px">${fmt(t.evalN,{n:e.n})}</p>`;
+}
+function v5() {
+  const t = L();
+  return `<div class="card"><h2>${t.h5}</h2><p class="sub">${t.p5}</p><div class="note" style="margin-top:0">${t.mission}</div>
+   <p style="margin:12px 0 2px"><b id="thlabel">${fmt(t.th,{p:Math.round(S.th*100)})}</b></p><input type="range" id="thRange" min="5" max="99" value="${Math.round(S.th*100)}" oninput="setTh(this.value)">
+   <div id="v5dyn">${v5dyn()}</div><div class="note">${t.trade}</div><div class="row"><button class="btn" id="btnNext" onclick="adv(6)">${t.next}</button></div></div>`;
+}
+function badgeFlags() { const a = S.test.filter((x,k)=>S.tAns[k]===x.y).length, b = S.test.filter(x=>(scoreMsg(S.model,x.t)>=0.5?1:0)===x.y).length;
+  return [S.custom.length >= 2, S.searched > 0, S.tAns.length === S.test.length && a >= b, S.patches.length > 0, S.mission]; }
+function v6() {
+  const t = L(), a = S.test.filter((x,k)=>S.tAns[k]===x.y).length, b = S.test.filter(x=>(scoreMsg(S.model,x.t)>=0.5?1:0)===x.y).length, bossOk = S.tricky.filter(x=>(scoreMsg(trainModel([...baseTrain(), ...S.custom]),x.t)>=0.5?1:0)===x.y).length;
+  const fl = badgeFlags();
+  return `<div class="card"><h2>${t.h6}</h2><p class="sub">${t.p6}</p><div class="row" style="margin-top:0"><span class="pill">${fmt(t.scoreRace,{a,b,n:S.test.length})}</span><span class="pill r">${fmt(t.scoreBoss,{a:bossOk,t:S.tricky.length,p:S.patches.length})}</span></div>
+   <h3>🏅 ${t.badgesH}</h3><div class="badges">${t.badges.map((g,i)=>`<div class="bd ${fl[i]?'got':''}"><div class="e">${g[0]}</div><b>${g[1]}</b><small>${g[2]}</small></div>`).join('')}</div>
+   <h3>🤔 ${t.think}</h3><ul>${t.qs.map(q=>`<li>${q}</li>`).join('')}</ul>
+   <div class="row"><button class="btn" id="btnCsv" onclick="downloadCsv()">⬇ ${t.dl}</button><button class="btn alt" onclick="reset();render()">↺ ${t.again}</button></div></div>`;
+}
+function render() {
+  const t = L(); document.documentElement.lang = lang; document.documentElement.dir = t.dir; document.title = t.title; $('hb').textContent = t.brand;
+  $('langs').innerHTML = Object.keys(T).map(k => `<button class="${k===lang?'on':''}" onclick="setLang('${k}')">${T[k].name}</button>`).join('');
+  const body = { 1: v1, 2: v2, 3: () => raceCard('test'), 4: () => raceCard('boss'), 5: v5, 6: v6 }[S.lvl]();
+  const intro = S.lvl === 1 ? `<div class="card"><h1>🛡️ ${t.title}</h1><p class="sub" style="font-size:17px;margin:0">${t.tag}</p></div>` : '';
+  $('app').innerHTML = stepper() + intro + body;
+}
+function setLang(k) { lang = k; reset(); render(); }
+function go(n) { if (n > S.max) return; if (n >= 2 && !S.model) train(); S.lvl = n; render(); window.scrollTo(0,0); }
+function adv(n) { S.max = Math.max(S.max, n); go(n); }
+function addOwn(y) { const el = $('own'), v = el.value.trim(); if (!v) return; S.custom.push({ t: v, y }); S.model = null; render(); }
+function doTrain() { train(); render(); }
+function searchWord() { S.q = $('wq').value.trim(); if (S.q) S.searched++; render(); }
+function guess(y) { const round = S.lvl === 3 ? 'test' : 'boss'; if (round === 'test') { if (S.tShown) return; S.tAns[S.ti] = y; S.tShown = true; } else { if (S.bShown) return; S.bAns[S.bi] = y; S.bShown = true; } render(); }
+function nextTest() { if (S.ti + 1 < S.test.length) { S.ti++; S.tShown = false; render(); } else { adv(4); } }
+function nextBoss() { if (S.bi + 1 < S.tricky.length) { S.bi++; S.bShown = false; render(); } else { adv(5); } }
+function patch() { const it = S.tricky[S.bi]; if (S.patches.some(x=>x.t===it.t)) return; S.patches.push({ t: it.t, y: it.y }); S.model = trainModel(allTrain()); render(); }
+function setTh(v) { S.th = v/100; $('thlabel').textContent = fmt(L().th, { p: Math.round(S.th*100) }); $('v5dyn').innerHTML = v5dyn(); }
+function downloadCsv() {
+  const t = L(), th = S.th, e = evalAll(th), rows = [t.csv, ...e.rows.map(r => [r.t, r.y, Math.round(r.p*100), t.verdict[r.bl?0:1], (r.bl?1:0)===r.y?1:0])];
+  const csv = '﻿' + rows.map(r => r.map(x => '"' + String(x).replace(/"/g,'""') + '"').join(',')).join('\r\n');
+  const u = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8' })); const a = document.createElement('a'); a.href = u; a.download = 'inbox_defender_results.csv'; document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(u), 2000);
+}
+window.Inbox = { S, go, addOwn, doTrain, searchWord, guess, nextTest, nextBoss, patch, setTh, evalAll, scoreMsg, trainModel, baseTrain, allTrain, downloadCsv, render, setLang, tok, M };
+reset(); render();
+</script>
+</body></html>

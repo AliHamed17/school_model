@@ -11,10 +11,10 @@ access; the lesson files travel entirely over the local network.
 This repository holds the finished, tested package: the student-facing pages, the
 lesson ZIPs, and the two Windows server implementations behind them.
 
-## Curriculum overview (Phases 0–12)
+## Curriculum overview (Phases 0–13)
 
 The core lesson is phases 1–7, scheduled minute-by-minute across 90 minutes. Phase 0 is an
-easy game to start with, and phases 8–12 are optional extensions.
+easy game to start with, and phases 8–13 are optional extensions.
 
 | Phase | Time | Focus | What students get |
 |---|---|---|---|
@@ -31,6 +31,7 @@ easy game to start with, and phases 8–12 are optional extensions.
 | **10** | Follow-up, ~45 min | Excel Data Lab | Turn the Phase 3 numbers into formulas and five charts in Excel, with an illustrated guide in English, Arabic and Hebrew. |
 | **11** | Creative, ~35 min | Doodle Lab | Students invent their own categories, draw the training examples, teach an in-browser AI (nearest neighbour on 16×16 pixel grids), try to fool it, log accuracy to a CSV for Excel, and swap drawings with a friend to see bias. Offline, English/Arabic/Hebrew. |
 | **12** | Concept simulation, ~35 min (best after Phase 3) | Detective Map | Answers *how does an AI predict?* Pictures become clue numbers, training pictures land as dots on a map, a new picture lands among them and its k nearest neighbours vote. Students pick the clues, switch on the AI's decision map, compare clue pairs and see why tricky pictures fool it. Real fruit pictures plus generated cats and dogs (drawn from their clue numbers, with two deliberately useless clues). Offline, English/Arabic/Hebrew. |
+| **13** | XL challenge, 45–60 min | Inbox Defender | A challenge with no pictures: text. Students train a word-counting AI (naive Bayes) to stop scam messages in their own language (English, Arabic or Hebrew), see which words it treats as clues, beat 'sneaky scammers' (misspellings, dots between letters, polite scams, scary-sounding real messages) and patch the AI, tune how strict the guard is with a live 2×2 table, earn badges and export a CSV for Excel. Comes with a 3-minute captioned video of the real game and a step-by-step guide. |
 
 **Phase 10 — Excel Data Lab.** Students type the percentages Teachable Machine gave them
 into a spreadsheet, calculate accuracy and confidence with formulas (`IF`, `INDEX/MATCH`,
@@ -103,12 +104,13 @@ endpoint and no way to browse or modify anything else on the laptop.
 | `server.ps1` | A from-scratch HTTP file server (`System.Net.HttpListener`) used only when Python is unavailable. Needs Administrator rights once (self-elevates via UAC) because Windows restricts non-loopback `HttpListener` binding to admins — Python's raw sockets don't have this restriction, which is why Python is the preferred path. |
 | `index.html` / `index-ar.html` | The student hub in English and Arabic (RTL), with the phase cards, filter tabs and the Red Team simulator. |
 | `index-he.html` | The student download page in Hebrew (RTL). It uses a simpler layout and does not include the Red Team simulator. |
+| `inbox/` | Phase 13 Inbox Defender: `index.html` (the game), `guide-en/ar/he.html` (student guides with the video), `video/` (three ~12 MB captioned videos of the real game, posters, chapter times). Zipped without the videos as `downloads/Phase_13_Inbox_Defender_XL.zip`. |
 | `sim/` | Phase 12 Detective Map: `index.html` (one page) plus `img/` (119 pictures); zipped with teacher notes as `downloads/Phase_12_Detective_Map_HOW_AI_PREDICTS.zip`. |
 | `lab/` | Phase 11 Doodle Lab: one self-contained page (`index.html`), also zipped with teacher notes as `downloads/Phase_11_Doodle_Lab_CREATIVE.zip`. |
 | `game/` | Phase 0 game: `index.html` (one self-contained page, English/Arabic/Hebrew) and `img/` (25 pictures). Also zipped, with notes, as `downloads/Phase_00_Easy_Game_Human_vs_Robot.zip` so it can be played from a file. |
 | `excel/` | Phase 10 as web pages: `guide-en/ar/he.html` (click a formula to copy it), `START_HERE.html` language chooser, `img/` (illustrations + real Excel charts), `files/` (starter and example workbooks), `video/` (the three tutorial videos, posters and chapter times). The guides and files are zipped into `downloads/Phase_10_Excel_Data_Lab_FOLLOWUP.zip`; the videos are too large for that ZIP, so the ZIP's guides point to the class server instead. |
 | `teacher_qr.html` | An optional, offline, teacher-only page that generates a QR code for whatever address the server is actually running on, so students can scan instead of typing. |
-| `downloads/` | The lesson ZIPs: a MASTER bundle, an already-expanded "Expanded" bundle, one ZIP per phase (0–12). |
+| `downloads/` | The lesson ZIPs: a MASTER bundle, an already-expanded "Expanded" bundle, one ZIP per phase (0–13). |
 | `preview/` | Preview pictures for Phases 8 and 9, used by the student hub's inspect dialogs and the simulator. |
 | `server.js`, `package.json`, `api/`, `vercel.json`, `.vercelignore`, `.env.example`, `metadata.json` | Optional Node.js/Express server and the settings for the online copy on Vercel. Not needed for the Windows launcher; see "Running it". |
 | `scripts/` | Generators for the Phase 9 attack images and ZIP. |
