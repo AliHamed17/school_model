@@ -1,0 +1,40 @@
+{
+ "duration": 235.87973304473334,
+ "chapters": [
+  {
+   "t": 6.5,
+   "n": 1,
+   "title": "Meet the Excel window"
+  },
+  {
+   "t": 37.699999999999996,
+   "n": 2,
+   "title": "Type your numbers"
+  },
+  {
+   "t": 59.11,
+   "n": 3,
+   "title": "Formulas: let Excel find the answer"
+  },
+  {
+   "t": 87.84409090909088,
+   "n": 4,
+   "title": "Count, average and percent"
+  },
+  {
+   "t": 118.47973304473297,
+   "n": 5,
+   "title": "Draw 5 charts"
+  },
+  {
+   "t": 195.87973304473326,
+   "n": 6,
+   "title": "Make charts easy to read"
+  },
+  {
+   "t": 215.37973304473334,
+   "n": 7,
+   "title": "Save and share"
+  }
+ ]
+}

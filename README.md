@@ -11,13 +11,14 @@ access; the lesson files travel entirely over the local network.
 This repository holds the finished, tested package: the student-facing pages, the
 lesson ZIPs, and the two Windows server implementations behind them.
 
-## Curriculum overview (Phases 1–10)
+## Curriculum overview (Phases 0–10)
 
-The core lesson is phases 1–7, scheduled minute-by-minute across 90 minutes. Phases 8–10
-are optional extensions.
+The core lesson is phases 1–7, scheduled minute-by-minute across 90 minutes. Phase 0 is an
+easy game to start with, and phases 8–10 are optional extensions.
 
 | Phase | Time | Focus | What students get |
 |---|---|---|---|
+| **0** | Easy start, ~10 min | Human vs Robot (game) | A browser game: teach a tiny colour-based "robot" with 9 pictures, race it on 12 new ones, then try to trick it. Works offline in English, Arabic and Hebrew and exports the scores as a CSV for Excel. |
 | **1** | 0–15 min | Warm-up | Quick, Draw! pattern-recognition intro. |
 | **2** | 15–47 min | Baseline training | 90 curated fruit images (Apple, Banana, Orange) for Teachable Machine. |
 | **3** | 47–57 min | Easy test | 24 unseen test images and a results sheet that records all three percentages per image. |
@@ -36,6 +37,16 @@ It comes with an illustrated step-by-step guide in **English, Arabic and Hebrew*
 (right-to-left pages), a starter `.xlsx` and a finished answer-key `.xlsx` per language,
 a printable results sheet, and teacher notes. Everything in it was checked against real
 Microsoft Excel, not just written from memory (see "How Phase 10 was verified" below).
+Each guide opens with a **4-minute captioned video** (one per language) that walks through
+every step, with chapter buttons and a "watch this part" link on every section.
+
+**Phase 0 — Human vs Robot.** The "robot" is a real, very small machine-learning model:
+from the labels the student gives it, it remembers one average colour per fruit and
+classifies a new picture by the nearest colour. Because it only sees colour, it is fooled
+by the orange-coloured and green apples while a person is not, which is the lesson: a model
+learns from the examples it is given, and a model that only sees colour is not enough. With
+correct labels it gets 9 of 12 on the quiz and 1 of 4 on the trick round; if it is taught
+wrong names on purpose it gets 2 of 12.
 
 The English and Arabic student pages also include an in-browser **Red Team simulator**
 for Phase 9: it shows why a softmax classifier with no "unknown" class answers with high
@@ -90,9 +101,10 @@ endpoint and no way to browse or modify anything else on the laptop.
 | `server.ps1` | A from-scratch HTTP file server (`System.Net.HttpListener`) used only when Python is unavailable. Needs Administrator rights once (self-elevates via UAC) because Windows restricts non-loopback `HttpListener` binding to admins — Python's raw sockets don't have this restriction, which is why Python is the preferred path. |
 | `index.html` / `index-ar.html` | The student hub in English and Arabic (RTL), with the phase cards, filter tabs and the Red Team simulator. |
 | `index-he.html` | The student download page in Hebrew (RTL). It uses a simpler layout and does not include the Red Team simulator. |
-| `excel/` | Phase 10 as web pages: `guide-en/ar/he.html` (click a formula to copy it), `START_HERE.html` language chooser, `img/` (illustrations + real Excel charts), `files/` (starter and example workbooks). The same folder is zipped into `downloads/Phase_10_Excel_Data_Lab_FOLLOWUP.zip`. |
+| `game/` | Phase 0 game: `index.html` (one self-contained page, English/Arabic/Hebrew) and `img/` (25 pictures). Also zipped, with notes, as `downloads/Phase_00_Easy_Game_Human_vs_Robot.zip` so it can be played from a file. |
+| `excel/` | Phase 10 as web pages: `guide-en/ar/he.html` (click a formula to copy it), `START_HERE.html` language chooser, `img/` (illustrations + real Excel charts), `files/` (starter and example workbooks), `video/` (the three tutorial videos, posters and chapter times). The guides and files are zipped into `downloads/Phase_10_Excel_Data_Lab_FOLLOWUP.zip`; the videos are too large for that ZIP, so the ZIP's guides point to the class server instead. |
 | `teacher_qr.html` | An optional, offline, teacher-only page that generates a QR code for whatever address the server is actually running on, so students can scan instead of typing. |
-| `downloads/` | The lesson ZIPs: a MASTER bundle, an already-expanded "Expanded" bundle, one ZIP per phase (1–10). |
+| `downloads/` | The lesson ZIPs: a MASTER bundle, an already-expanded "Expanded" bundle, one ZIP per phase (0–10). |
 | `preview/` | Preview pictures for Phases 8 and 9, used by the student hub's inspect dialogs and the simulator. |
 | `server.js`, `package.json`, `api/`, `vercel.json`, `.vercelignore`, `.env.example`, `metadata.json` | Optional Node.js/Express server and the settings for the online copy on Vercel. Not needed for the Windows launcher; see "Running it". |
 | `scripts/` | Generators for the Phase 9 attack images and ZIP. |
@@ -153,6 +165,22 @@ against real Excel rather than assumed:
   correctly; the guide labels them as illustrations. Arabic/Hebrew menu names follow
   Microsoft's terminology as closely as possible, but were not checked against an
   Arabic-language Excel — worth a native-speaker skim.
+
+## About the tutorial videos
+
+The three videos (`excel/video/excel-lab-en|ar|he.mp4`, 1280×720, about 4 minutes, about
+20 MB each) are **animated walkthroughs, not screen recordings**, and they have **no
+voice-over** (no Arabic or Hebrew voice was available on the build machine, so every step is
+explained with large on-screen captions instead). They show a simulated Excel window with a
+moving cursor, typed formulas, zoom, menus and the Insert-chart dropdown; the numbers and
+formulas are exactly the ones in the example workbooks, and the five charts that pop up are
+the real charts exported from Excel. Because it is a simulation, the same video can show
+English, Arabic (right-to-left) and Hebrew (right-to-left) menus consistently. They were
+generated by rendering an HTML animation frame by frame in headless Chrome and encoding it
+as H.264 with Windows' built-in media encoder; the source is not part of the student
+package. The wording of the Arabic and Hebrew captions follows the written guide and is
+worth a native-speaker skim. If you later record a voice-over, the chapter times used by the
+guides are in `excel/video/chapters-*.json`.
 
 ## Security model
 

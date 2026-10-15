@@ -597,6 +597,23 @@ body {
 .card-phase10 .btn-zip {
   background: #334155;
 }
+.card-phase0 {
+  border-color: #c7d2fe;
+  background: linear-gradient(180deg, #eef2ff 0%, #ffffff 40%);
+}
+.card-phase0 .card-kicker {
+  color: #4338ca;
+}
+.card-phase0 .btn-download {
+  background: #4f46e5;
+}
+.card-phase0 .btn-download:hover {
+  background: #4338ca;
+}
+.card-phase0 a.btn-inspect {
+  text-decoration: none;
+  display: inline-block;
+}
 .card-master {
   border-color: #93c5fd;
   background: linear-gradient(180deg, #eff6ff 0%, #ffffff 35%);
@@ -845,7 +862,7 @@ body {
 
     <div class="hero-actions">
       <a class="btn-primary" href="downloads/AI_90min_All_Phases_MASTER.zip" download>
-        Download All Phases (Master Bundle · 4.7 MB)
+        Download All Phases (Master Bundle · 4.8 MB)
       </a>
       <a class="btn-secondary" href="downloads/AI_90min_All_Data_Expanded.zip" download>
         Download Expanded Folders
@@ -987,8 +1004,8 @@ body {
     <div class="section-header">
       <h2 class="section-title">Lesson Phases &amp; Challenge Datasets</h2>
       <div class="filter-tabs">
-        <button class="filter-btn active" onclick="filterPhases('all', this)">All (1–10)</button>
-        <button class="filter-btn" onclick="filterPhases('core', this)">Core 90-Min (1–7)</button>
+        <button class="filter-btn active" onclick="filterPhases('all', this)">All (0–10)</button>
+        <button class="filter-btn" onclick="filterPhases('core', this)">Core Lesson (0–7)</button>
         <button class="filter-btn" onclick="filterPhases('hardcore', this)">Advanced (8–10)</button>
         <button class="filter-btn" onclick="filterPhases('bundles', this)">Bundles</button>
       </div>
@@ -1001,14 +1018,14 @@ body {
         <div>
           <div class="card-kicker">Phase 10 · Follow-up Lesson · ~45 min</div>
           <h2>Excel Data Lab: Turn Your AI Results into Charts</h2>
-          <div class="card-meta">2.5 MB · Step-by-step guide with pictures · English / العربية / עברית</div>
+          <div class="card-meta">2.5 MB · Step-by-step guide with pictures · English · <bdi>العربية</bdi> · <bdi>עברית</bdi></div>
           <p>
-            Type the percentages Teachable Machine gave you (Apple / Banana / Orange) into Excel, calculate accuracy with formulas, and draw five charts: pie, column, line, XY scatter and XYZ bubble. Includes a starter workbook and a finished example in every language.
+            Type the percentages Teachable Machine gave you (Apple / Banana / Orange) into Excel, calculate accuracy with formulas, and draw five charts: pie, column, line, XY scatter and XYZ bubble. Includes a starter workbook and a finished example in every language, plus a 4-minute video that shows every step.
           </p>
         </div>
         <div>
           <div class="card-actions">
-            <a class="btn-download" href="excel/guide-en.html">Open the Guide</a>
+            <a class="btn-download" href="excel/guide-en.html#video">Guide + Video</a>
             <a class="btn-inspect" href="excel/guide-ar.html">العربية</a>
             <a class="btn-inspect" href="excel/guide-he.html">עברית</a>
           </div>
@@ -1054,10 +1071,10 @@ body {
       <div class="card card-master" data-category="bundles">
         <div>
           <div class="card-kicker">Bundle Package</div>
-          <h2>MASTER — Complete All Phases <span style="white-space:nowrap">(1–10)</span></h2>
-          <div class="card-meta">4.7 MB · All ZIP Archives Included · Teacher Master Guide</div>
+          <h2>MASTER — Complete All Phases <span style="white-space:nowrap">(0–10)</span></h2>
+          <div class="card-meta">4.8 MB · All ZIP Archives Included · Teacher Master Guide</div>
           <p>
-            One single archive containing all 10 lesson phases, teacher guides, answer keys, and bonus challenges. Perfect for keeping a local copy on a USB flash drive.
+            One single archive containing all 11 lesson phases, teacher guides, answer keys, and bonus challenges. Perfect for keeping a local copy on a USB flash drive.
           </p>
         </div>
         <div class="card-actions">
@@ -1071,7 +1088,7 @@ body {
         <div>
           <div class="card-kicker">Bundle Package</div>
           <h2>Expanded — All Folders Extracted</h2>
-          <div class="card-meta">4.7 MB · Ready-to-Upload Directories · No Extraction Needed</div>
+          <div class="card-meta">4.9 MB · Ready-to-Upload Directories · No Extraction Needed</div>
           <p>
             All training and test images already organized into clean subfolders. Ideal for systems where extracting ZIP archives is disabled by school IT.
           </p>
@@ -1079,6 +1096,22 @@ body {
         <div class="card-actions">
           <a class="btn-download" href="downloads/AI_90min_All_Data_Expanded.zip" download>Download ZIP</a>
           <button class="btn-inspect" onclick="openPhaseModal('expanded')">Inspect Details</button>
+        </div>
+      </div>
+
+      <!-- PHASE 00 - EASY START GAME -->
+      <div class="card card-phase0" data-category="core">
+        <div>
+          <div class="card-kicker">Phase 00 · Easy Start · ~10 min</div>
+          <h2>Human vs Robot (Game)</h2>
+          <div class="card-meta">195 KB · Plays in the browser · English · <bdi>العربية</bdi> · <bdi>עברית</bdi> · No camera, no internet needed</div>
+          <p>
+            Teach a robot to sort fruit, then try to beat it! You show the robot 9 pictures, race it on 12 new ones, and try to trick it with tricky pictures. A friendly first step before Teachable Machine — and you can download your score as a file for Excel.
+          </p>
+        </div>
+        <div class="card-actions">
+          <a class="btn-download" href="game/index.html?lang=en">Play now</a>
+          <a class="btn-inspect" href="downloads/Phase_00_Easy_Game_Human_vs_Robot.zip" download>ZIP</a>
         </div>
       </div>
 
@@ -1402,8 +1435,8 @@ const PHASE_DETAILS = {
     title: "MASTER — Complete 9-Phase Package",
     zip: "downloads/AI_90min_All_Phases_MASTER.zip",
     body: `
-      <p>The single master distribution file containing every lesson phase (1 through 9), student worksheets, and teacher guidance.</p>
-      <p>Size: <b>4.7 MB</b>. Extract once on the teacher workstation.</p>
+      <p>The single master distribution file containing every lesson phase (0 through 10), student worksheets, and teacher guidance.</p>
+      <p>Size: <b>4.8 MB</b>. Extract once on the teacher workstation.</p>
     `
   },
   expanded: {

@@ -595,6 +595,23 @@ body {
 .card-phase10 .btn-zip {
   background: #334155;
 }
+.card-phase0 {
+  border-color: #c7d2fe;
+  background: linear-gradient(180deg, #eef2ff 0%, #ffffff 40%);
+}
+.card-phase0 .card-kicker {
+  color: #4338ca;
+}
+.card-phase0 .btn-download {
+  background: #4f46e5;
+}
+.card-phase0 .btn-download:hover {
+  background: #4338ca;
+}
+.card-phase0 a.btn-inspect {
+  text-decoration: none;
+  display: inline-block;
+}
 .card-master {
   border-color: #93c5fd;
   background: linear-gradient(180deg, #eff6ff 0%, #ffffff 35%);
@@ -845,7 +862,7 @@ body {
 
     <div class="hero-actions">
       <a class="btn-primary" href="downloads/AI_90min_All_Phases_MASTER.zip" download>
-        تنزيل كل المراحل (الحزمة الكاملة 1–10 · 4.7 ميجابايت)
+        تنزيل كل المراحل (الحزمة الكاملة 0–10 · 4.8 ميجابايت)
       </a>
       <a class="btn-secondary" href="downloads/AI_90min_All_Data_Expanded.zip" download>
         تنزيل المجلدات المفككة مسبقًا
@@ -987,8 +1004,8 @@ body {
     <div class="section-header">
       <h2 class="section-title">مراحل الدرس ومجموعات التحدي</h2>
       <div class="filter-tabs">
-        <button class="filter-btn active" onclick="filterPhases('all', this)">كل الملفات <span dir="ltr">(1–10)</span></button>
-        <button class="filter-btn" onclick="filterPhases('core', this)">الدرس الأساسي (1–7)</button>
+        <button class="filter-btn active" onclick="filterPhases('all', this)">كل الملفات <span dir="ltr">(0–10)</span></button>
+        <button class="filter-btn" onclick="filterPhases('core', this)">الدرس الأساسي (0–7)</button>
         <button class="filter-btn" onclick="filterPhases('hardcore', this)">المتقدم (8 – 10)</button>
         <button class="filter-btn" onclick="filterPhases('bundles', this)">الحزم المجمعة</button>
       </div>
@@ -1001,14 +1018,14 @@ body {
         <div>
           <div class="card-kicker">المرحلة 10 · درس متابعة · حوالي 45 دقيقة</div>
           <h2>مختبر البيانات في Excel: حوّل نتائج الذكاء الاصطناعي إلى رسوم بيانية</h2>
-          <div class="card-meta">2.5 ميجابايت · دليل خطوة بخطوة مع صور · العربية / English / עברית</div>
+          <div class="card-meta">2.5 ميجابايت · دليل خطوة بخطوة مع صور · <bdi>العربية</bdi> · English · <bdi>עברית</bdi></div>
           <p>
-            اكتب النسب المئوية التي أعطاها Teachable Machine (تفاح / موز / برتقال) في Excel، واحسب الدقة بالمعادلات، وارسم خمسة رسوم: دائري وأعمدة وخطي وانتشار XY وفقاعات XYZ. يتضمن ملف بداية ومثالاً جاهزاً بكل اللغات.
+            اكتب النسب المئوية التي أعطاها Teachable Machine (تفاح / موز / برتقال) في Excel، واحسب الدقة بالمعادلات، وارسم خمسة رسوم: دائري وأعمدة وخطي وانتشار XY وفقاعات XYZ. يتضمن ملف بداية ومثالاً جاهزاً بكل اللغات، مع فيديو مدته 4 دقائق يشرح كل خطوة.
           </p>
         </div>
         <div>
           <div class="card-actions">
-            <a class="btn-download" href="excel/guide-ar.html">افتح الدليل</a>
+            <a class="btn-download" href="excel/guide-ar.html#video">الدليل + الفيديو</a>
             <a class="btn-inspect" href="excel/guide-en.html">English</a>
             <a class="btn-inspect" href="excel/guide-he.html">עברית</a>
           </div>
@@ -1054,10 +1071,10 @@ body {
       <div class="card card-master" data-category="bundles">
         <div>
           <div class="card-kicker">الحزمة الكاملة</div>
-          <h2>الحزمة الشاملة — كل المراحل <span dir="ltr" style="white-space:nowrap">(1–10)</span></h2>
-          <div class="card-meta">4.7 ميجابايت · يشمل جميع الملفات المضغوطة · دليل المعلم الشامل</div>
+          <h2>الحزمة الشاملة — كل المراحل <span dir="ltr" style="white-space:nowrap">(0–10)</span></h2>
+          <div class="card-meta">4.8 ميجابايت · يشمل جميع الملفات المضغوطة · دليل المعلم الشامل</div>
           <p>
-            ملف واحد يضم كل مراحل الدرس العشر مع أوراق العمل ونماذج الإجابة للمعلم، وهو ممتاز للحفظ على ذاكرة فلاش في الفصل.
+            ملف واحد يضم كل مراحل الدرس (11 مرحلة) مع أوراق العمل ونماذج الإجابة للمعلم، وهو ممتاز للحفظ على ذاكرة فلاش في الفصل.
           </p>
         </div>
         <div class="card-actions">
@@ -1071,7 +1088,7 @@ body {
         <div>
           <div class="card-kicker">الحزمة الكاملة</div>
           <h2>الملفات الموسّعة — مجلدات مفككة مسبقًا</h2>
-          <div class="card-meta">4.7 ميجابايت · مجلدات جاهزة للرفع مباشرة دون فك ضغط</div>
+          <div class="card-meta">4.9 ميجابايت · مجلدات جاهزة للرفع مباشرة دون فك ضغط</div>
           <p>
             جميع صور التدريب والاختبار والتحدي مفككة وجاهزة في مجلدات مرتبة؛ لتسهيل العمل في المدارس التي تحظر فتح ملفات ZIP.
           </p>
@@ -1079,6 +1096,22 @@ body {
         <div class="card-actions">
           <a class="btn-download" href="downloads/AI_90min_All_Data_Expanded.zip" download>تنزيل ملف ZIP</a>
           <button class="btn-inspect" onclick="openPhaseModal('expanded')">تفاصيل الحزمة</button>
+        </div>
+      </div>
+
+      <!-- PHASE 00 - EASY START GAME -->
+      <div class="card card-phase0" data-category="core">
+        <div>
+          <div class="card-kicker">المرحلة 00 · بداية سهلة · حوالي 10 دقائق</div>
+          <h2>الإنسان ضد الروبوت (لعبة)</h2>
+          <div class="card-meta">195 كيلوبايت · تُلعب في المتصفح · <bdi>العربية</bdi> · English · <bdi>עברית</bdi> · بدون كاميرا وبدون إنترنت</div>
+          <p>
+            علّم روبوتًا ترتيب الفاكهة ثم حاول أن تتفوّق عليه! تعرض عليه 9 صور، ثم تتسابق معه على 12 صورة جديدة، ثم تحاول خداعه بصور صعبة. خطوة أولى ممتعة قبل Teachable Machine — ويمكنك تنزيل نتيجتك كملف لفتحه في Excel.
+          </p>
+        </div>
+        <div class="card-actions">
+          <a class="btn-download" href="game/index.html?lang=ar">العب الآن</a>
+          <a class="btn-inspect" href="downloads/Phase_00_Easy_Game_Human_vs_Robot.zip" download>ZIP</a>
         </div>
       </div>
 
@@ -1393,11 +1426,11 @@ const PHASE_DETAILS = {
     `
   },
   master: {
-    title: "الحزمة الشاملة — كل المراحل (1–10)",
+    title: "الحزمة الشاملة — كل المراحل (0–10)",
     zip: "downloads/AI_90min_All_Phases_MASTER.zip",
     body: `
-      <p>ملف التحميل الرئيسي الذي يحتوي على كل مراحل الدرس العشر مع أوراق العمل ونماذج المعلم.</p>
-      <p>الحجم: <b>4.7 ميجابايت</b>. يُفك ضغطه مرة واحدة على جهاز المعلم.</p>
+      <p>ملف التحميل الرئيسي الذي يحتوي على كل مراحل الدرس (11 مرحلة) مع أوراق العمل ونماذج المعلم.</p>
+      <p>الحجم: <b>4.8 ميجابايت</b>. يُفك ضغطه مرة واحدة على جهاز المعلم.</p>
     `
   },
   expanded: {

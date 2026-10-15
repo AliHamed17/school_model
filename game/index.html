@@ -1,0 +1,319 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Human vs Robot</title>
+<style>
+:root{--ink:#16181d;--mut:#5b6270;--bg:#f4f6fb;--card:#fff;--line:#e3e7ef;--apple:#d9382b;--banana:#e7b800;--orange:#ee7f1a;--good:#1f9d57;--bad:#d64545;--brand:#4f46e5}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Segoe UI",Tahoma,Arial,sans-serif;line-height:1.5}
+header{background:#111827;color:#fff;padding:12px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+header .brand{font-weight:800;font-size:19px;display:flex;align-items:center;gap:10px}
+.langs{display:flex;gap:6px}
+.langs button{background:transparent;border:1px solid #374151;color:#cbd2e0;padding:5px 12px;border-radius:8px;cursor:pointer;font-size:14px;font-family:inherit}
+.langs button.on{background:#374151;color:#fff}
+main{max-width:940px;margin:0 auto;padding:22px 16px 60px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:26px;box-shadow:0 2px 10px rgba(20,24,40,.05)}
+h1{margin:0 0 6px;font-size:40px;line-height:1.15}
+h2{margin:0 0 4px;font-size:26px}
+.sub{color:var(--mut);margin:0 0 18px;font-size:18px}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;margin:20px 0}
+.step{border:1px solid var(--line);border-radius:16px;padding:16px;background:#fafbff}
+.step .em{font-size:34px}
+.step b{display:block;font-size:19px;margin:4px 0}
+.step span{color:var(--mut);font-size:15px}
+.btn{display:inline-block;background:var(--brand);color:#fff;border:0;border-radius:14px;padding:14px 28px;font-size:20px;font-weight:700;cursor:pointer;font-family:inherit}
+.btn:hover{filter:brightness(1.08)}
+.btn.alt{background:#fff;color:var(--ink);border:2px solid var(--ink)}
+.btn.sm{font-size:16px;padding:10px 18px;border-radius:12px}
+.bar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+.dots{display:flex;gap:6px;flex-wrap:wrap}
+.dot{width:12px;height:12px;border-radius:50%;background:#d6dbe6}
+.dot.done{background:var(--brand)}
+.dot.now{background:#fff;border:3px solid var(--brand);width:14px;height:14px}
+.score{display:flex;gap:10px;font-weight:700}
+.pill{border-radius:999px;padding:6px 16px;font-size:17px;background:#eef0fb}
+.pill.r{background:#fdecea}
+.stage{display:grid;grid-template-columns:minmax(240px,320px) 1fr;gap:26px;align-items:start}
+@media(max-width:700px){.stage{grid-template-columns:1fr}}
+.pic{width:100%;aspect-ratio:1;border-radius:18px;border:1px solid var(--line);background:#eee;display:block}
+.fruits{display:grid;gap:12px}
+.fb{display:flex;align-items:center;gap:14px;border:3px solid var(--line);background:#fff;border-radius:16px;padding:14px 18px;font-size:24px;font-weight:700;cursor:pointer;font-family:inherit;color:var(--ink);text-align:start}
+.fb:hover:not(:disabled){transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,0,0,.1)}
+.fb .em{font-size:34px}
+.fb .k{margin-inline-start:auto;font-size:14px;color:var(--mut);border:1px solid var(--line);border-radius:6px;padding:0 8px}
+.fb.p0{border-color:#f3b4ae}.fb.p1{border-color:#f1dc84}.fb.p2{border-color:#f6c99b}
+.fb.mine{outline:4px solid var(--brand)}
+.fb:disabled{cursor:default;opacity:.85}
+.reveal{margin-top:16px;border-radius:16px;padding:16px 18px;background:#f6f8ff;border:1px solid var(--line)}
+.row3{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin:10px 0}
+.who{border-radius:14px;padding:12px 14px;background:#fff;border:2px solid var(--line)}
+.who.ok{border-color:var(--good);background:#effaf3}
+.who.no{border-color:var(--bad);background:#fdf0ef}
+.who small{display:block;color:var(--mut);font-size:14px}
+.who b{font-size:20px}
+.sw{display:inline-block;width:22px;height:22px;border-radius:50%;border:2px solid #fff;box-shadow:0 0 0 1px #aab;vertical-align:middle;margin:0 4px}
+.think{font-size:16px;color:#33384a}
+.mem{display:flex;gap:22px;justify-content:center;flex-wrap:wrap;margin:22px 0}
+.mem div{text-align:center;font-weight:700;font-size:20px}
+.mem .sw{width:86px;height:86px;display:block;margin:0 auto 8px;border:4px solid #fff;box-shadow:0 0 0 2px #aab}
+table{border-collapse:collapse;width:100%;font-size:16px}
+th,td{border-bottom:1px solid var(--line);padding:8px 10px;text-align:start}
+th{background:#f4f6fb}
+.big{font-size:56px;font-weight:800;line-height:1}
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin:16px 0}
+.res{border:1px solid var(--line);border-radius:16px;padding:16px;background:#fafbff}
+.res h3{margin:0 0 8px;font-size:18px}
+.res .line{display:flex;justify-content:space-between;align-items:baseline;gap:8px;padding:4px 0}
+.mis{display:flex;gap:14px;align-items:center;border:1px solid var(--line);border-radius:14px;padding:10px;margin:8px 0;background:#fff}
+.mis img{width:84px;height:84px;border-radius:12px;flex:none}
+ul.l{margin:6px 0 0;padding-inline-start:22px}
+ul.l li{margin:6px 0}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.note{background:#fff8db;border:1px solid #ead887;border-radius:14px;padding:12px 16px;margin-top:14px}
+.banner{font-size:30px;font-weight:800;margin:4px 0 10px}
+.hide{display:none}
+</style></head>
+<body>
+<header><div class="brand">🤖 <span id="hb">Human vs Robot</span></div><div class="langs" id="langs"></div></header>
+<main><div id="app"></div></main>
+<script>
+const DATA = {"train":[{"file":"img/p01.png","truth":0,"rgb":[179.1,39.0,41.5]},{"file":"img/p02.png","truth":0,"rgb":[226.8,69.7,54.8]},{"file":"img/p03.png","truth":0,"rgb":[205.4,48.3,49.2]},{"file":"img/p04.png","truth":1,"rgb":[230.1,196.0,40.0]},{"file":"img/p05.png","truth":1,"rgb":[229.1,195.0,39.9]},{"file":"img/p06.png","truth":1,"rgb":[228.2,194.1,39.8]},{"file":"img/p07.png","truth":2,"rgb":[249.3,153.2,27.5]},{"file":"img/p08.png","truth":2,"rgb":[224.5,114.9,14.3]},{"file":"img/p09.png","truth":2,"rgb":[220.6,101.4,10.2]}],"test":[{"file":"img/p10.png","truth":0,"rgb":[217.9,95.9,47.1]},{"file":"img/p11.png","truth":0,"rgb":[160.7,180.2,56.5]},{"file":"img/p12.png","truth":0,"rgb":[204.2,48.7,49.1]},{"file":"img/p13.png","truth":0,"rgb":[217.3,95.9,47.2]},{"file":"img/p14.png","truth":1,"rgb":[230.3,196.1,40.0]},{"file":"img/p15.png","truth":1,"rgb":[227.0,192.9,39.7]},{"file":"img/p16.png","truth":1,"rgb":[226.8,192.8,39.8]},{"file":"img/p17.png","truth":1,"rgb":[231.4,197.2,40.2]},{"file":"img/p18.png","truth":2,"rgb":[230.4,115.0,13.1]},{"file":"img/p19.png","truth":2,"rgb":[244.1,152.4,28.1]},{"file":"img/p20.png","truth":2,"rgb":[243.0,136.2,19.8]},{"file":"img/p21.png","truth":2,"rgb":[220.1,101.1,10.2]}],"trick":[{"file":"img/p22.png","truth":0,"rgb":[92.1,166.4,70.7]},{"file":"img/p23.png","truth":0,"rgb":[222.0,95.6,47.4]},{"file":"img/p24.png","truth":0,"rgb":[211.1,95.0,47.3]},{"file":"img/p25.png","truth":2,"rgb":[235.0,180.0,110.0]}]};
+
+const T = {
+en: { dir:'ltr', name:'English', brand:'Human vs Robot',
+  title:'Human vs Robot', tag:'Teach a robot to sort fruit — then try to beat it!',
+  how:[['🧑‍🏫','Teach the robot','Show it 9 pictures and tell it what each one is.'],['⚔️','Human vs Robot','12 new pictures. Who gets more right?'],['🎭','Trick the robot','4 tricky pictures. Can you still get them right?']],
+  time:'About 10 minutes · No camera · No internet needed', start:'Start',
+  fruits:['Apple','Banana','Orange'],
+  s1:'Step 1 · Teach the robot', s1sub:'The robot knows nothing yet. Tell it what each picture is.', pic:'Picture {n} of {t}',
+  oops:'Careful! The right answer is “{x}”. The robot will remember what you told it.', good:'Nice! That is right.',
+  learned:'The robot has learned!', learned2:'It did not memorise the pictures. It only remembered the AVERAGE COLOUR of each fruit:',
+  next:'Next', toTest:'Next: Human vs Robot', toTrick:'Next: Trick the robot', toRes:'See the results',
+  s2:'Step 2 · Human vs Robot', s2sub:'Pick the fruit first. Then we show what the robot thinks.',
+  s3:'Step 3 · Trick the robot', s3sub:'These pictures are tricky on purpose. Can you still get them right? And the robot?',
+  you:'You', robot:'Robot', real:'Right answer', yourAns:'Your answer', robotAns:'Robot’s answer',
+  think:'How the robot decided:', thinkTxt:'The average colour of this picture {sw} is closest to what the robot remembers about “{c}” {sw2}.',
+  right:'Right', wrong:'Wrong',
+  res:'Results', testRes:'Human vs Robot (12 pictures)', trickRes:'Trick round (4 pictures)', acc:'Accuracy',
+  accNote:'Accuracy = correct answers ÷ all pictures. In Phase 10 you will calculate and chart numbers like this in Excel!',
+  winYou:'You beat the robot! 🎉', winRobot:'The robot won this time.', tie:'It is a tie!',
+  mistakes:'What did the robot get wrong?', none:'Nothing — the robot got everything right this time!',
+  whyWrong:'The robot said “{r}”, but the right answer is “{x}”. The robot only looks at colour — you can see {clue}.',
+  clue:['a stem and a leaf','a long, curved shape','a round shape with rough skin'],
+  learnt:'What we learned', l1:'A robot learns from examples — the examples YOU gave it.', l2:'This robot only looked at colour. Colour is not enough: an orange-coloured apple fools it.', l3:'Better AI also sees shapes and learns from many more pictures. That is what Teachable Machine does — it is next!',
+  dl:'Download my results (opens in Excel)', wrongBtn:'Teach the robot WRONG on purpose', again:'Play again', back:'Back to the downloads page',
+  exp:'Experiment', expTxt:'We gave the robot the wrong names (Apple→Banana, Banana→Orange, Orange→Apple). Now it got {n} of 12 right. A robot is only as good as the examples it learns from!',
+  csv:['Round','Picture','Real fruit','Your answer','Robot answer','You correct (1=yes)','Robot correct (1=yes)'], rounds:['Human vs Robot','Trick'], keyhint:'Key' },
+ar: { dir:'rtl', name:'العربية', brand:'الإنسان ضد الروبوت',
+  title:'الإنسان ضد الروبوت', tag:'علّم روبوتًا ترتيب الفاكهة — ثم حاول أن تتفوّق عليه!',
+  how:[['🧑‍🏫','علّم الروبوت','اعرض عليه 9 صور وقل له ما هي كل صورة.'],['⚔️','الإنسان ضد الروبوت','12 صورة جديدة. من يُصيب أكثر؟'],['🎭','اخدع الروبوت','4 صور صعبة. هل تستطيع الإجابة عنها بشكل صحيح؟']],
+  time:'حوالي 10 دقائق · بدون كاميرا · بدون إنترنت', start:'ابدأ',
+  fruits:['تفاح','موز','برتقال'],
+  s1:'الخطوة 1 · علّم الروبوت', s1sub:'الروبوت لا يعرف شيئًا بعد. أخبره ما هي كل صورة.', pic:'الصورة {n} من {t}',
+  oops:'انتبه! الإجابة الصحيحة هي «{x}». سيتذكر الروبوت ما قلته له.', good:'أحسنت! إجابة صحيحة.',
+  learned:'تعلّم الروبوت!', learned2:'لم يحفظ الصور. تذكّر فقط «اللون المتوسط» لكل فاكهة:',
+  next:'التالي', toTest:'التالي: الإنسان ضد الروبوت', toTrick:'التالي: اخدع الروبوت', toRes:'اعرض النتائج',
+  s2:'الخطوة 2 · الإنسان ضد الروبوت', s2sub:'اختر الفاكهة أولًا. ثم نعرض ما يظنه الروبوت.',
+  s3:'الخطوة 3 · اخدع الروبوت', s3sub:'هذه الصور صعبة عن قصد. هل ما زلت قادرًا على الإجابة بشكل صحيح؟ وماذا عن الروبوت؟',
+  you:'أنت', robot:'الروبوت', real:'الإجابة الصحيحة', yourAns:'إجابتك', robotAns:'إجابة الروبوت',
+  think:'كيف قرّر الروبوت؟', thinkTxt:'اللون المتوسط لهذه الصورة {sw} هو الأقرب إلى ما يتذكره الروبوت عن «{c}» {sw2}.',
+  right:'صحيح', wrong:'خطأ',
+  res:'النتائج', testRes:'الإنسان ضد الروبوت (12 صورة)', trickRes:'جولة الخداع (4 صور)', acc:'الدقة',
+  accNote:'الدقة = الإجابات الصحيحة ÷ كل الصور. في المرحلة 10 ستحسب أرقامًا مثل هذه وترسمها في Excel!',
+  winYou:'تفوّقت على الروبوت! 🎉', winRobot:'فاز الروبوت هذه المرة.', tie:'تعادل!',
+  mistakes:'ما الذي أخطأ فيه الروبوت؟', none:'لا شيء — أصاب الروبوت في كل شيء هذه المرة!',
+  whyWrong:'قال الروبوت «{r}» لكن الإجابة الصحيحة هي «{x}». الروبوت ينظر إلى اللون فقط، أما أنت فترى {clue}.',
+  clue:['عنقًا وورقة','شكلًا طويلًا ومقوّسًا','شكلًا مستديرًا وقشرة خشنة'],
+  learnt:'ماذا تعلّمنا؟', l1:'الروبوت يتعلّم من الأمثلة — الأمثلة التي أعطيتها له أنت.', l2:'هذا الروبوت نظر إلى اللون فقط. اللون لا يكفي: التفاحة ذات اللون البرتقالي تخدعه.', l3:'الذكاء الاصطناعي الأفضل يرى الأشكال أيضًا ويتعلّم من صور أكثر بكثير. وهذا ما يفعله Teachable Machine — وهو التالي!',
+  dl:'نزّل نتائجي (تُفتح في Excel)', wrongBtn:'علّم الروبوت خطأً عن قصد', again:'العب مرة أخرى', back:'العودة إلى صفحة التحميل',
+  exp:'تجربة', expTxt:'أعطينا الروبوت أسماء خاطئة (تفاح←موز، موز←برتقال، برتقال←تفاح). الآن أصاب في {n} من 12. الروبوت جيد بقدر جودة الأمثلة التي يتعلّم منها!',
+  csv:['الجولة','الصورة','الفاكهة الحقيقية','إجابتك','إجابة الروبوت','أصبتَ (1=نعم)','أصاب الروبوت (1=نعم)'], rounds:['الإنسان ضد الروبوت','الخداع'], keyhint:'مفتاح' },
+he: { dir:'rtl', name:'עברית', brand:'אדם נגד רובוט',
+  title:'אדם נגד רובוט', tag:'למדו רובוט למיין פירות — ואז נסו לנצח אותו!',
+  how:[['🧑‍🏫','מלמדים את הרובוט','מראים לו 9 תמונות ואומרים לו מה כל אחת.'],['⚔️','אדם נגד רובוט','12 תמונות חדשות. מי צודק יותר?'],['🎭','מרמים את הרובוט','4 תמונות מתעתעות. האם עדיין תצליחו?']],
+  time:'כ-10 דקות · בלי מצלמה · בלי אינטרנט', start:'מתחילים',
+  fruits:['תפוח','בננה','תפוז'],
+  s1:'שלב 1 · מלמדים את הרובוט', s1sub:'הרובוט עדיין לא יודע כלום. אמרו לו מה כל תמונה.', pic:'תמונה {n} מתוך {t}',
+  oops:'שימו לב! התשובה הנכונה היא “{x}”. הרובוט יזכור את מה שאמרתם לו.', good:'יפה! תשובה נכונה.',
+  learned:'הרובוט למד!', learned2:'הוא לא שינן את התמונות. הוא זכר רק את הצבע הממוצע של כל פרי:',
+  next:'הבא', toTest:'הבא: אדם נגד רובוט', toTrick:'הבא: מרמים את הרובוט', toRes:'מציגים תוצאות',
+  s2:'שלב 2 · אדם נגד רובוט', s2sub:'בחרו קודם את הפרי. אחר כך נראה מה הרובוט חושב.',
+  s3:'שלב 3 · מרמים את הרובוט', s3sub:'התמונות האלה מתעתעות בכוונה. האם עדיין תצליחו? והרובוט?',
+  you:'אתם', robot:'הרובוט', real:'התשובה הנכונה', yourAns:'התשובה שלכם', robotAns:'התשובה של הרובוט',
+  think:'איך הרובוט החליט?', thinkTxt:'הצבע הממוצע של התמונה הזאת {sw} קרוב ביותר למה שהרובוט זוכר על “{c}” {sw2}.',
+  right:'נכון', wrong:'שגוי',
+  res:'תוצאות', testRes:'אדם נגד רובוט (12 תמונות)', trickRes:'סבב ההטעיה (4 תמונות)', acc:'דיוק',
+  accNote:'דיוק = תשובות נכונות ÷ כל התמונות. בשלב 10 תחשבו ותציירו מספרים כאלה באקסל!',
+  winYou:'ניצחתם את הרובוט! 🎉', winRobot:'הרובוט ניצח הפעם.', tie:'תיקו!',
+  mistakes:'במה הרובוט טעה?', none:'בכלום — הפעם הרובוט צדק בהכול!',
+  whyWrong:'הרובוט אמר “{r}” אבל התשובה הנכונה היא “{x}”. הרובוט מסתכל רק על צבע, ואתם רואים {clue}.',
+  clue:['גבעול ועלה','צורה ארוכה ומעוקלת','צורה עגולה וקליפה מחוספסת'],
+  learnt:'מה למדנו?', l1:'רובוט לומד מדוגמאות — הדוגמאות שאתם נתתם לו.', l2:'הרובוט הזה הסתכל רק על צבע. צבע לא מספיק: תפוח בצבע כתום מטעה אותו.', l3:'בינה מלאכותית טובה יותר רואה גם צורות ולומדת מהרבה יותר תמונות. זה מה ש-Teachable Machine עושה — וזה הבא!',
+  dl:'הורדת התוצאות שלי (נפתח באקסל)', wrongBtn:'מלמדים את הרובוט לא נכון בכוונה', again:'משחקים שוב', back:'חזרה לדף ההורדות',
+  exp:'ניסוי', expTxt:'נתנו לרובוט שמות לא נכונים (תפוח←בננה, בננה←תפוז, תפוז←תפוח). עכשיו הוא צדק ב-{n} מתוך 12. רובוט טוב רק כמו הדוגמאות שהוא לומד מהן!',
+  csv:['סבב','תמונה','הפרי האמיתי','התשובה שלכם','תשובת הרובוט','צדקתם (1=כן)','הרובוט צדק (1=כן)'], rounds:['אדם נגד רובוט','הטעיה'], keyhint:'מקש' }
+};
+const EMOJI = ['🍎','🍌','🍊'];
+
+// ---------------------------------------------------------------- state
+const qs = new URLSearchParams(location.search);
+let lang = qs.get('lang');
+if (!T[lang]) { const nl = (navigator.language || 'en').toLowerCase(); lang = nl.startsWith('ar') ? 'ar' : (nl.startsWith('he') || nl.startsWith('iw')) ? 'he' : 'en'; }
+let S;
+const shuffle = a => { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+function newGame() {
+  S = { screen: 'start', i: 0, train: shuffle(DATA.train.slice()), test: shuffle(DATA.test.slice()), trick: shuffle(DATA.trick.slice()),
+        labels: [], ans: { test: [], trick: [] }, rob: { test: [], trick: [] }, revealed: false, cent: null, exp: null };
+}
+newGame();
+
+// ---------------------------------------------------------------- the robot: nearest average colour (a tiny machine-learning model)
+function trainRobot(labels, items) {
+  const sum = [[0, 0, 0], [0, 0, 0], [0, 0, 0]], n = [0, 0, 0];
+  items.forEach((im, k) => { const c = labels[k]; n[c]++; for (let j = 0; j < 3; j++) sum[c][j] += im.rgb[j]; });
+  return sum.map((s, c) => n[c] ? s.map(v => v / n[c]) : null);
+}
+function robotGuess(cent, rgb) {
+  let best = -1, bd = Infinity;
+  cent.forEach((c, i) => { if (!c) return; const d = Math.hypot(rgb[0] - c[0], rgb[1] - c[1], rgb[2] - c[2]); if (d < bd) { bd = d; best = i; } });
+  return best;
+}
+
+// ---------------------------------------------------------------- helpers
+const L = () => T[lang];
+const fmt = (s, o) => s.replace(/\{(\w+)\}/g, (m, k) => o[k] != null ? o[k] : m);
+const sw = rgb => `<span class="sw" style="background:rgb(${rgb.map(Math.round).join(',')})"></span>`;
+const dots = (n, cur) => '<div class="dots">' + Array.from({ length: n }, (_, k) => `<div class="dot ${k < cur ? 'done' : k === cur ? 'now' : ''}"></div>`).join('') + '</div>';
+const sum = a => a.reduce((x, y) => x + y, 0);
+function scores(round) {
+  const items = S[round], a = S.ans[round], r = S.rob[round];
+  return { you: sum(items.map((im, k) => a[k] === im.truth ? 1 : 0)), rob: sum(items.map((im, k) => r[k] === im.truth ? 1 : 0)), n: items.length };
+}
+
+// ---------------------------------------------------------------- screens
+function fruitButtons(onclickName, chosen, locked) {
+  const t = L();
+  return '<div class="fruits">' + [0, 1, 2].map(c =>
+    `<button class="fb p${c}${chosen === c ? ' mine' : ''}" ${locked ? 'disabled' : ''} onclick="${onclickName}(${c})"><span class="em">${EMOJI[c]}</span><span>${t.fruits[c]}</span><span class="k">${c + 1}</span></button>`).join('') + '</div>';
+}
+function viewStart() {
+  const t = L();
+  return `<div class="card"><h1>🤖 ${t.title}</h1><p class="sub">${t.tag}</p>
+    <div class="steps">${t.how.map((h, k) => `<div class="step"><div class="em">${h[0]}</div><b>${k + 1}. ${h[1]}</b><span>${h[2]}</span></div>`).join('')}</div>
+    <p class="sub" style="font-size:16px">${t.time}</p><button class="btn" onclick="go('teach')">${t.start} ▶</button></div>`;
+}
+function viewTeach() {
+  const t = L(), k = S.i, im = S.train[k], done = S.revealed;
+  const mine = S.labels[k];
+  let fb = '';
+  if (done) fb = mine === im.truth ? `<div class="reveal" style="background:#effaf3;border-color:#b8e3c8">✅ ${t.good}</div>` : `<div class="reveal" style="background:#fdf0ef;border-color:#f1c2bf">⚠️ ${fmt(t.oops, { x: t.fruits[im.truth] })}</div>`;
+  return `<div class="card"><div class="bar"><div><h2>${t.s1}</h2><div class="sub" style="margin:0;font-size:16px">${t.s1sub}</div></div>${dots(S.train.length, k)}</div>
+    <div class="stage"><div><img class="pic" src="${im.file}" alt=""><div class="sub" style="text-align:center;margin:8px 0 0;font-size:15px">${fmt(t.pic, { n: k + 1, t: S.train.length })}</div></div>
+    <div>${fruitButtons('teachAns', done ? mine : -1, done)}${fb}${done ? `<div class="actions"><button class="btn" onclick="teachNext()">${t.next} ▶</button></div>` : ''}</div></div></div>`;
+}
+function viewLearned() {
+  const t = L();
+  return `<div class="card"><h2>🧠 ${t.learned}</h2><p class="sub">${t.learned2}</p>
+    <div class="mem">${S.cent.map((c, i) => `<div><span class="sw" style="background:${c ? `rgb(${c.map(Math.round)})` : '#ddd'}"></span>${EMOJI[i]} ${t.fruits[i]}</div>`).join('')}</div>
+    <div class="actions"><button class="btn" onclick="go('test')">${t.toTest} ▶</button></div></div>`;
+}
+function viewQuiz(round) {
+  const t = L(), items = S[round], k = S.i, im = items[k], total = items.length;
+  const sc = scores(round), shown = S.revealed ? k + 1 : k;
+  const a = S.ans[round][k], r = S.rob[round][k];
+  let reveal = '';
+  if (S.revealed) {
+    const yok = a === im.truth, rok = r === im.truth, cr = S.cent[r];
+    reveal = `<div class="reveal"><div class="row3">
+        <div class="who ok"><small>${t.real}</small><b>${EMOJI[im.truth]} ${t.fruits[im.truth]}</b></div>
+        <div class="who ${yok ? 'ok' : 'no'}"><small>${t.you}</small><b>${yok ? '✅' : '❌'} ${EMOJI[a]} ${t.fruits[a]}</b></div>
+        <div class="who ${rok ? 'ok' : 'no'}"><small>${t.robot}</small><b>${rok ? '✅' : '❌'} ${EMOJI[r]} ${t.fruits[r]}</b></div></div>
+      <div class="think"><b>${t.think}</b> ${fmt(t.thinkTxt, { sw: sw(im.rgb), c: t.fruits[r], sw2: sw(cr) })}</div>
+      <div class="actions"><button class="btn" onclick="quizNext('${round}')">${k + 1 < total ? t.next : (round === 'test' ? t.toTrick : t.toRes)} ▶</button></div></div>`;
+  }
+  const done = S.revealed;
+  return `<div class="card"><div class="bar"><div><h2>${round === 'test' ? t.s2 : t.s3}</h2><div class="sub" style="margin:0;font-size:16px">${round === 'test' ? t.s2sub : t.s3sub}</div></div>
+      <div class="score"><span class="pill">${t.you} ${sc.you}</span><span class="pill r">${t.robot} ${sc.rob}</span></div></div>
+    <div class="bar">${dots(total, k)}<span class="sub" style="margin:0;font-size:15px">${fmt(t.pic, { n: k + 1, t: total })}</span></div>
+    <div class="stage"><div><img class="pic" src="${im.file}" alt=""></div><div>${fruitButtons('quizAns', done ? a : -1, done)}${reveal}</div></div></div>`;
+}
+function accPct(x, n) { return Math.round(100 * x / n) + '%'; }
+function viewResults() {
+  const t = L(), a = scores('test'), b = scores('trick');
+  const head = a.you > a.rob ? t.winYou : a.you < a.rob ? t.winRobot : t.tie;
+  const miss = [];
+  ['test', 'trick'].forEach(round => S[round].forEach((im, k) => { if (S.rob[round][k] !== im.truth) miss.push({ im, r: S.rob[round][k] }); }));
+  const missHtml = miss.length ? miss.map(m => `<div class="mis"><img src="${m.im.file}" alt=""><div>${fmt(t.whyWrong, { r: t.fruits[m.r], x: t.fruits[m.im.truth], clue: t.clue[m.im.truth] })}</div></div>`).join('') : `<p>${t.none}</p>`;
+  const exp = S.exp != null ? `<div class="note"><b>🧪 ${t.exp}:</b> ${fmt(t.expTxt, { n: S.exp })}</div>` : '';
+  const back = location.protocol.startsWith('http') ? `<a class="btn alt sm" href="../${lang === 'en' ? 'index' : 'index-' + lang}.html">${t.back}</a>` : '';
+  return `<div class="card"><div class="banner">${head}</div>
+    <div class="cols">
+      <div class="res"><h3>${t.testRes}</h3><div class="line"><span>${t.you}</span><b class="big">${a.you}/${a.n}</b></div><div class="line"><span>${t.acc}</span><b>${accPct(a.you, a.n)}</b></div>
+        <hr style="border:0;border-top:1px solid var(--line)"><div class="line"><span>${t.robot}</span><b class="big">${a.rob}/${a.n}</b></div><div class="line"><span>${t.acc}</span><b>${accPct(a.rob, a.n)}</b></div></div>
+      <div class="res"><h3>${t.trickRes}</h3><div class="line"><span>${t.you}</span><b class="big">${b.you}/${b.n}</b></div><div class="line"><span>${t.acc}</span><b>${accPct(b.you, b.n)}</b></div>
+        <hr style="border:0;border-top:1px solid var(--line)"><div class="line"><span>${t.robot}</span><b class="big">${b.rob}/${b.n}</b></div><div class="line"><span>${t.acc}</span><b>${accPct(b.rob, b.n)}</b></div></div></div>
+    <p class="sub" style="font-size:15px">${t.accNote}</p>
+    <h2>${t.mistakes}</h2>${missHtml}
+    <h2 style="margin-top:20px">💡 ${t.learnt}</h2><ul class="l"><li>${t.l1}</li><li>${t.l2}</li><li>${t.l3}</li></ul>${exp}
+    <div class="actions"><button class="btn sm" onclick="downloadCsv()">⬇ ${t.dl}</button><button class="btn alt sm" onclick="wrongExperiment()">🧪 ${t.wrongBtn}</button><button class="btn alt sm" onclick="newGame();go('start')">↺ ${t.again}</button>${back}</div></div>`;
+}
+
+// ---------------------------------------------------------------- actions
+function render() {
+  const t = L();
+  document.documentElement.lang = lang; document.documentElement.dir = t.dir; document.title = t.title;
+  document.getElementById('hb').textContent = t.brand;
+  document.getElementById('langs').innerHTML = Object.keys(T).map(k => `<button class="${k === lang ? 'on' : ''}" onclick="setLang('${k}')">${T[k].name}</button>`).join('');
+  const v = { start: viewStart, teach: viewTeach, learned: viewLearned, test: () => viewQuiz('test'), trick: () => viewQuiz('trick'), results: viewResults }[S.screen];
+  document.getElementById('app').innerHTML = v();
+  window.scrollTo(0, 0);
+}
+function setLang(k) { lang = k; render(); }
+function go(screen) { S.screen = screen; S.i = 0; S.revealed = false; render(); }
+function teachAns(c) { if (S.revealed) return; S.labels[S.i] = c; S.revealed = true; render(); }
+function teachNext() {
+  if (S.i + 1 < S.train.length) { S.i++; S.revealed = false; render(); } else { S.cent = trainRobot(S.labels, S.train); go('learned'); }
+}
+function quizAns(c) {
+  if (S.revealed) return;
+  const round = S.screen, im = S[round][S.i];
+  S.ans[round][S.i] = c; S.rob[round][S.i] = robotGuess(S.cent, im.rgb); S.revealed = true; render();
+}
+function quizNext(round) {
+  if (S.i + 1 < S[round].length) { S.i++; S.revealed = false; render(); }
+  else go(round === 'test' ? 'trick' : 'results');
+}
+function wrongExperiment() {
+  const wrongLabels = S.labels.map(c => (c + 1) % 3);
+  const cent = trainRobot(wrongLabels, S.train);
+  S.exp = sum(S.test.map(im => robotGuess(cent, im.rgb) === im.truth ? 1 : 0));
+  render();
+}
+function downloadCsv() {
+  const t = L(), rows = [t.csv];
+  ['test', 'trick'].forEach((round, ri) => S[round].forEach((im, k) => {
+    const a = S.ans[round][k], r = S.rob[round][k];
+    rows.push([t.rounds[ri], k + 1, t.fruits[im.truth], t.fruits[a], t.fruits[r], a === im.truth ? 1 : 0, r === im.truth ? 1 : 0]);
+  }));
+  const csv = '﻿' + rows.map(r => r.map(x => '"' + String(x).replace(/"/g, '""') + '"').join(',')).join('\r\n');
+  const url = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8' }));
+  const a = document.createElement('a'); a.href = url; a.download = 'human_vs_robot_results.csv'; document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 2000);
+}
+document.addEventListener('keydown', e => {
+  if (['1', '2', '3'].includes(e.key)) {
+    const c = +e.key - 1;
+    if (S.screen === 'teach') teachAns(c); else if (S.screen === 'test' || S.screen === 'trick') quizAns(c);
+  } else if (e.key === 'Enter' || e.key === ' ') {
+    if (e.target && e.target.tagName === 'BUTTON') return;
+    e.preventDefault();
+    if (S.screen === 'start') go('teach');
+    else if (S.screen === 'teach' && S.revealed) teachNext();
+    else if (S.screen === 'learned') go('test');
+    else if ((S.screen === 'test' || S.screen === 'trick') && S.revealed) quizNext(S.screen);
+  }
+});
+render();
+</script>
+</body></html>

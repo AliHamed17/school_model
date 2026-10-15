@@ -50,12 +50,12 @@ elif command -v python3 >/dev/null 2>&1; then
     echo "[OK] Python 3 detected. Starting HTTP server on 0.0.0.0:$PORT..."
     echo "Keep this terminal open during class. Press Ctrl+C to stop."
     echo
-    python3 -m http.server "$PORT" --bind 0.0.0.0
+    if [ -f serve.py ]; then python3 serve.py "$PORT"; else python3 -m http.server "$PORT" --bind 0.0.0.0; fi
 elif command -v python >/dev/null 2>&1; then
     echo "[OK] Python detected. Starting HTTP server on 0.0.0.0:$PORT..."
     echo "Keep this terminal open during class. Press Ctrl+C to stop."
     echo
-    python -m http.server "$PORT" --bind 0.0.0.0
+    if [ -f serve.py ]; then python serve.py "$PORT"; else python -m http.server "$PORT" --bind 0.0.0.0; fi
 else
     echo "[ERROR] Neither Node.js nor Python was found. Please install one and try again."
     exit 1

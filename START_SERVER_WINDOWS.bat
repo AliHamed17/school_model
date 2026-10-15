@@ -57,7 +57,11 @@ exit /b
 :run_python
 call :banner
 start "" "http://127.0.0.1:8000"
-%PYCMD% -m http.server 8000 --bind 0.0.0.0
+if exist "%~dp0serve.py" (
+    %PYCMD% "%~dp0serve.py" 8000
+) else (
+    %PYCMD% -m http.server 8000 --bind 0.0.0.0
+)
 goto :eof
 
 :run_powershell_elevated

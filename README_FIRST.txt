@@ -32,6 +32,15 @@ WHAT STUDENTS DO
 4. Go to https://teachablemachine.withgoogle.com/ and upload the extracted
    files (no camera needed).
 
+Phase 0 is an easy start (about 10 minutes): a game called "Human vs Robot".
+Students teach a very simple robot to sort fruit, race it, and try to trick
+it. No camera and no internet needed, in English, Arabic and Hebrew. Play it
+on the class server (students open the Phase 0 card, or go to
+   http://YOUR-IP:8000/game/ ) or give them the ZIP and let them double-click
+PLAY_THE_GAME.html. At the end they can download their results as a file that
+opens in Excel. Good for the first 10 minutes, and for students who find the
+rest hard.
+
 Phase 8 is an optional bonus (not part of the 90-minute timeline) for
 students who finish early, or for a follow-up session: 8 tricky images,
 each designed to test a specific way the AI model can be fooled.
@@ -46,8 +55,11 @@ Phase 10 is a follow-up lesson (about 45 minutes) in Excel: students type in
 the numbers from their AI tests, calculate accuracy with formulas, and draw
 five charts (pie, column, line, XY scatter, XYZ bubble). The step-by-step
 guide with pictures is in English, Arabic and Hebrew, with a starter Excel
-file for each language. Open it from the Phase 10 card ("Open the Guide"),
-or directly:
+file for each language. Every guide starts with a 4-minute captioned video
+(no sound - every step is written on the screen) with chapter buttons, so
+students can watch and follow along. The video files are big, so they are
+only on the class server and online, not inside the Phase 10 ZIP. Open it
+from the Phase 10 card ("Guide + Video"), or directly:
    http://YOUR-IP:8000/excel/START_HERE.html
 Phase 3's results sheet now asks students to write down all three
 percentages per image - that is the data Phase 10 uses (if they didn't, the
@@ -148,7 +160,8 @@ FILES
 index.html                  Student download page (English)
 index-ar.html                Student download page (Arabic, right-to-left)
 index-he.html                Student download page (Hebrew, right-to-left)
-excel/                      Phase 10 Excel guide (EN/AR/HE), pictures and Excel files
+game/                       Phase 0 game "Human vs Robot" (EN/AR/HE)
+excel/                      Phase 10 Excel guide (EN/AR/HE), pictures, Excel files and videos
 server.js, package.json     Optional Node.js server (see above), also used by the online copy
 vercel.json, api/           Settings for the online copy (not needed in class)
 preview/                    Preview pictures used by the Red Team simulator

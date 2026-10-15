@@ -51,6 +51,9 @@ $Mime = @{
     ".ico" ="image/x-icon"
     ".json"="application/json; charset=utf-8"
     ".xlsx"="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    ".mp4" ="video/mp4"
+    ".csv" ="text/csv; charset=utf-8"
+    ".svg" ="image/svg+xml"
 }
 
 while ($Listener.IsListening) {
@@ -89,13 +92,50 @@ while ($Listener.IsListening) {
 
         if (Test-Path -LiteralPath $FullPath -PathType Leaf) {
             try {
-                $Bytes = [System.IO.File]::ReadAllBytes($FullPath)
                 $Ext = [System.IO.Path]::GetExtension($FullPath).ToLowerInvariant()
                 if ($Mime.ContainsKey($Ext)) { $Response.ContentType = $Mime[$Ext] }
                 else { $Response.ContentType = "application/octet-stream" }
-                $Response.ContentLength64 = $Bytes.Length
+                $Response.AddHeader('Accept-Ranges', 'bytes')
+
+                # HTTP Range support (browsers need it to jump around inside a video)
+                $Len = (Get-Item -LiteralPath $FullPath).Length
+                $Start = [int64]0
+                $End = $Len - 1
+                $Partial = $false
+                $RangeHeader = $Request.Headers['Range']
+                if ($RangeHeader -and ($RangeHeader.Trim() -match '^bytes=(\d*)-(\d*)$') -and ($Matches[1] -ne '' -or $Matches[2] -ne '')) {
+                    if ($Matches[1] -ne '') {
+                        $Start = [int64]$Matches[1]
+                        if ($Matches[2] -ne '') { $End = [Math]::Min([int64]$Matches[2], $Len - 1) }
+                    } else {
+                        $Start = [Math]::Max([int64]0, $Len - [int64]$Matches[2])
+                    }
+                    if ($Start -ge $Len -or $Start -gt $End) {
+                        $Response.StatusCode = 416
+                        $Response.AddHeader('Content-Range', "bytes */$Len")
+                        continue
+                    }
+                    $Partial = $true
+                }
+                $Count = $End - $Start + 1
+                if ($Partial) {
+                    $Response.StatusCode = 206
+                    $Response.AddHeader('Content-Range', "bytes $Start-$End/$Len")
+                }
+                $Response.ContentLength64 = $Count
                 if ($Request.HttpMethod -eq 'GET') {
-                    $Response.OutputStream.Write($Bytes, 0, $Bytes.Length)
+                    $FS = [System.IO.File]::Open($FullPath, [System.IO.FileMode]::Open, [System.IO.FileAccess]::Read, [System.IO.FileShare]::ReadWrite)
+                    try {
+                        [void]$FS.Seek($Start, [System.IO.SeekOrigin]::Begin)
+                        $Buf = New-Object byte[] 65536
+                        $Left = $Count
+                        while ($Left -gt 0) {
+                            $N = $FS.Read($Buf, 0, [int][Math]::Min([int64]$Buf.Length, $Left))
+                            if ($N -le 0) { break }
+                            $Response.OutputStream.Write($Buf, 0, $N)
+                            $Left -= $N
+                        }
+                    } finally { $FS.Dispose() }
                 }
             } catch {
                 $Response.StatusCode = 500
