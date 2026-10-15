@@ -73,6 +73,26 @@ ul.l li{margin:6px 0}
 .note{background:#fff8db;border:1px solid #ead887;border-radius:14px;padding:12px 16px;margin-top:14px}
 .banner{font-size:30px;font-weight:800;margin:4px 0 10px}
 .hide{display:none}
+.botrow{display:flex;align-items:center;gap:14px;margin:4px 0 14px}
+.bot{font-size:58px;line-height:1;display:inline-block;animation:bob 2.4s ease-in-out infinite}
+.bot.ok{animation:hop .6s ease}.bot.no{animation:shake .6s ease}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+@keyframes hop{0%{transform:translateY(0)}35%{transform:translateY(-22px) rotate(-8deg)}70%{transform:translateY(0) rotate(6deg)}100%{transform:none}}
+@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-10px) rotate(-6deg)}40%{transform:translateX(10px) rotate(6deg)}60%{transform:translateX(-8px)}80%{transform:translateX(8px)}}
+.say{position:relative;background:#fff;border:2px solid var(--line);border-radius:16px;padding:8px 14px;font-weight:700;font-size:17px}
+.brain{margin-top:16px;border:2px dashed #c7d2fe;border-radius:16px;padding:10px 14px;background:#f7f8ff}
+.brain h4{margin:0 0 6px;font-size:14px;color:#4338ca}
+.brain .mem{margin:8px 0 2px;gap:16px}.brain .mem div{font-size:15px}.brain .mem .sw{width:44px;height:44px;border-width:3px;margin-bottom:4px}
+.bars{margin:8px 0}.bar1{display:flex;align-items:center;gap:8px;font-size:14px;margin:3px 0}
+.bar1 .t{flex:1;height:12px;border-radius:99px;background:#e7eaf3;overflow:hidden}.bar1 .t i{display:block;height:100%;border-radius:99px;background:#a5b4fc}
+.bar1.pick .t i{background:var(--brand)}.bar1 span.l{width:96px}
+.pill.f{background:#fff1d6;color:#9a4d00}
+.badges{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px;margin:10px 0}
+.badge1{border:2px solid var(--line);border-radius:14px;padding:10px 12px;background:#fff;text-align:center;opacity:.45;filter:grayscale(1)}
+.badge1.got{opacity:1;filter:none;border-color:#facc15;background:#fffbe6;animation:hop .7s ease}
+.badge1 .e{font-size:34px}.badge1 b{display:block;font-size:15px}.badge1 small{color:var(--mut)}
+.cf{position:fixed;top:-30px;font-size:28px;pointer-events:none;z-index:50;animation:fall 2.6s linear forwards}
+@keyframes fall{to{transform:translateY(110vh) rotate(540deg);opacity:.9}}
 </style></head>
 <body>
 <header><div class="brand">🤖 <span id="hb">Human vs Robot</span></div><div class="langs" id="langs"></div></header>
@@ -104,7 +124,10 @@ en: { dir:'ltr', name:'English', brand:'Human vs Robot',
   learnt:'What we learned', l1:'A robot learns from examples — the examples YOU gave it.', l2:'This robot only looked at colour. Colour is not enough: an orange-coloured apple fools it.', l3:'Better AI also sees shapes and learns from many more pictures. That is what Teachable Machine does — it is next!',
   dl:'Download my results (opens in Excel)', wrongBtn:'Teach the robot WRONG on purpose', again:'Play again', back:'Back to the downloads page',
   exp:'Experiment', expTxt:'We gave the robot the wrong names (Apple→Banana, Banana→Orange, Orange→Apple). Now it got {n} of 12 right. A robot is only as good as the examples it learns from!',
-  csv:['Round','Picture','Real fruit','Your answer','Robot answer','You correct (1=yes)','Robot correct (1=yes)'], rounds:['Human vs Robot','Trick'], keyhint:'Key' },
+  csv:['Round','Picture','Real fruit','Your answer','Robot answer','You correct (1=yes)','Robot correct (1=yes)'], rounds:['Human vs Robot','Trick'], keyhint:'Key',
+  botThink:'Hmm… let me look at the colour…', botOk:['Yes! Got it!','Easy one!','Boom!'], botNo:['Oops… I only see colour!','Hmm, that fooled me!','I was fooled!'], botHi:'I am your robot. Teach me!',
+  brain:'🧠 The robot’s brain so far (average colours)', brainEmpty:'empty', closeness:'How close each memory is:', streak:'streak', streakBig:'🔥 {n} in a row!',
+  badgesH:'Your badges', badgeNew:'Unlocked!', badges:[['🧠','Robot Teacher','Taught all 9 pictures correctly'],['🏆','Perfect Human','Got every picture right'],['🕵️','Shape Detective','Beat the robot in the trick round'],['🔥','Hot Streak','8 correct answers in a row'],['🧪','Mad Scientist','Taught the robot wrong on purpose']] },
 ar: { dir:'rtl', name:'العربية', brand:'الإنسان ضد الروبوت',
   title:'الإنسان ضد الروبوت', tag:'علّم روبوتًا ترتيب الفاكهة — ثم حاول أن تتفوّق عليه!',
   how:[['🧑‍🏫','علّم الروبوت','اعرض عليه 9 صور وقل له ما هي كل صورة.'],['⚔️','الإنسان ضد الروبوت','12 صورة جديدة. من يُصيب أكثر؟'],['🎭','اخدع الروبوت','4 صور صعبة. هل تستطيع الإجابة عنها بشكل صحيح؟']],
@@ -128,7 +151,10 @@ ar: { dir:'rtl', name:'العربية', brand:'الإنسان ضد الروبو�
   learnt:'ماذا تعلّمنا؟', l1:'الروبوت يتعلّم من الأمثلة — الأمثلة التي أعطيتها له أنت.', l2:'هذا الروبوت نظر إلى اللون فقط. اللون لا يكفي: التفاحة ذات اللون البرتقالي تخدعه.', l3:'الذكاء الاصطناعي الأفضل يرى الأشكال أيضًا ويتعلّم من صور أكثر بكثير. وهذا ما يفعله Teachable Machine — وهو التالي!',
   dl:'نزّل نتائجي (تُفتح في Excel)', wrongBtn:'علّم الروبوت خطأً عن قصد', again:'العب مرة أخرى', back:'العودة إلى صفحة التحميل',
   exp:'تجربة', expTxt:'أعطينا الروبوت أسماء خاطئة (تفاح←موز، موز←برتقال، برتقال←تفاح). الآن أصاب في {n} من 12. الروبوت جيد بقدر جودة الأمثلة التي يتعلّم منها!',
-  csv:['الجولة','الصورة','الفاكهة الحقيقية','إجابتك','إجابة الروبوت','أصبتَ (1=نعم)','أصاب الروبوت (1=نعم)'], rounds:['الإنسان ضد الروبوت','الخداع'], keyhint:'مفتاح' },
+  csv:['الجولة','الصورة','الفاكهة الحقيقية','إجابتك','إجابة الروبوت','أصبتَ (1=نعم)','أصاب الروبوت (1=نعم)'], rounds:['الإنسان ضد الروبوت','الخداع'], keyhint:'مفتاح',
+  botThink:'همم… دعني أنظر إلى اللون…', botOk:['نعم! أصبت!','سهلة!','رائع!'], botNo:['أوه… أنا أرى اللون فقط!','هذه خدعتني!','لقد خُدعت!'], botHi:'أنا روبوتك. علّمني!',
+  brain:'🧠 دماغ الروبوت حتى الآن (الألوان المتوسطة)', brainEmpty:'فارغ', closeness:'مدى قرب كل ذاكرة:', streak:'متتالية', streakBig:'🔥 {n} متتالية!',
+  badgesH:'أوسمتك', badgeNew:'تم الفتح!', badges:[['🧠','معلّم الروبوت','علّمت الصور التسع كلها بشكل صحيح'],['🏆','إنسان مثالي','أصبت في كل الصور'],['🕵️','محقّق الأشكال','تفوّقت على الروبوت في جولة الخداع'],['🔥','سلسلة ساخنة','8 إجابات صحيحة متتالية'],['🧪','عالم مجنون','علّمت الروبوت خطأً عن قصد']] },
 he: { dir:'rtl', name:'עברית', brand:'אדם נגד רובוט',
   title:'אדם נגד רובוט', tag:'למדו רובוט למיין פירות — ואז נסו לנצח אותו!',
   how:[['🧑‍🏫','מלמדים את הרובוט','מראים לו 9 תמונות ואומרים לו מה כל אחת.'],['⚔️','אדם נגד רובוט','12 תמונות חדשות. מי צודק יותר?'],['🎭','מרמים את הרובוט','4 תמונות מתעתעות. האם עדיין תצליחו?']],
@@ -152,7 +178,10 @@ he: { dir:'rtl', name:'עברית', brand:'אדם נגד רובוט',
   learnt:'מה למדנו?', l1:'רובוט לומד מדוגמאות — הדוגמאות שאתם נתתם לו.', l2:'הרובוט הזה הסתכל רק על צבע. צבע לא מספיק: תפוח בצבע כתום מטעה אותו.', l3:'בינה מלאכותית טובה יותר רואה גם צורות ולומדת מהרבה יותר תמונות. זה מה ש-Teachable Machine עושה — וזה הבא!',
   dl:'הורדת התוצאות שלי (נפתח באקסל)', wrongBtn:'מלמדים את הרובוט לא נכון בכוונה', again:'משחקים שוב', back:'חזרה לדף ההורדות',
   exp:'ניסוי', expTxt:'נתנו לרובוט שמות לא נכונים (תפוח←בננה, בננה←תפוז, תפוז←תפוח). עכשיו הוא צדק ב-{n} מתוך 12. רובוט טוב רק כמו הדוגמאות שהוא לומד מהן!',
-  csv:['סבב','תמונה','הפרי האמיתי','התשובה שלכם','תשובת הרובוט','צדקתם (1=כן)','הרובוט צדק (1=כן)'], rounds:['אדם נגד רובוט','הטעיה'], keyhint:'מקש' }
+  csv:['סבב','תמונה','הפרי האמיתי','התשובה שלכם','תשובת הרובוט','צדקתם (1=כן)','הרובוט צדק (1=כן)'], rounds:['אדם נגד רובוט','הטעיה'], keyhint:'מקש',
+  botThink:'הממ… אני מסתכל על הצבע…', botOk:['כן! צדקתי!','קלי קלות!','בום!'], botNo:['אופס… אני רואה רק צבע!','זה הטעה אותי!','הוטעיתי!'], botHi:'אני הרובוט שלכם. למדו אותי!',
+  brain:'🧠 המוח של הרובוט עד עכשיו (צבעים ממוצעים)', brainEmpty:'ריק', closeness:'כמה קרוב כל זיכרון:', streak:'רצף', streakBig:'🔥 {n} ברצף!',
+  badgesH:'התגים שלכם', badgeNew:'נפתח!', badges:[['🧠','מורה לרובוטים','לימדתם נכון את כל 9 התמונות'],['🏆','אדם מושלם','צדקתם בכל התמונות'],['🕵️','בלש צורות','ניצחתם את הרובוט בסבב ההטעיה'],['🔥','רצף חם','8 תשובות נכונות ברצף'],['🧪','מדען מטורף','לימדתם את הרובוט לא נכון בכוונה']] }
 };
 const EMOJI = ['🍎','🍌','🍊'];
 
@@ -164,7 +193,7 @@ let S;
 const shuffle = a => { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
 function newGame() {
   S = { screen: 'start', i: 0, train: shuffle(DATA.train.slice()), test: shuffle(DATA.test.slice()), trick: shuffle(DATA.trick.slice()),
-        labels: [], ans: { test: [], trick: [] }, rob: { test: [], trick: [] }, revealed: false, cent: null, exp: null };
+        labels: [], streak: 0, best: 0, mad: false, ans: { test: [], trick: [] }, rob: { test: [], trick: [] }, revealed: false, cent: null, exp: null };
 }
 newGame();
 
@@ -180,6 +209,16 @@ function robotGuess(cent, rgb) {
   return best;
 }
 
+function robotDists(cent, rgb) { return cent.map(c => c ? Math.hypot(rgb[0] - c[0], rgb[1] - c[1], rgb[2] - c[2]) : null); }
+const pickOne = a => a[Math.floor(Math.random() * a.length)];
+function confetti(n) {
+  const em = ['🎉', '⭐', '🍎', '🍌', '🍊', '✨', '🤖'];
+  for (let i = 0; i < (n || 36); i++) {
+    const s = document.createElement('span'); s.className = 'cf'; s.textContent = pickOne(em);
+    s.style.left = Math.random() * 100 + 'vw'; s.style.animationDelay = (Math.random() * 0.8) + 's'; s.style.fontSize = (20 + Math.random() * 22) + 'px';
+    document.body.appendChild(s); setTimeout(() => s.remove(), 3800);
+  }
+}
 // ---------------------------------------------------------------- helpers
 const L = () => T[lang];
 const fmt = (s, o) => s.replace(/\{(\w+)\}/g, (m, k) => o[k] != null ? o[k] : m);
@@ -203,14 +242,20 @@ function viewStart() {
     <div class="steps">${t.how.map((h, k) => `<div class="step"><div class="em">${h[0]}</div><b>${k + 1}. ${h[1]}</b><span>${h[2]}</span></div>`).join('')}</div>
     <p class="sub" style="font-size:16px">${t.time}</p><button class="btn" onclick="go('teach')">${t.start} ▶</button></div>`;
 }
+function brainHtml(k, done) {
+  const t = L(), upto = done ? k + 1 : k;
+  const c = upto > 0 ? trainRobot(S.labels.slice(0, upto), S.train.slice(0, upto)) : [null, null, null];
+  return `<div class="brain"><h4>${t.brain}</h4><div class="mem">${c.map((v, i) => `<div><span class="sw" style="background:${v ? `rgb(${v.map(Math.round)})` : '#e5e7eb'}"></span>${EMOJI[i]} ${v ? '' : t.brainEmpty}</div>`).join('')}</div></div>`;
+}
 function viewTeach() {
   const t = L(), k = S.i, im = S.train[k], done = S.revealed;
   const mine = S.labels[k];
   let fb = '';
   if (done) fb = mine === im.truth ? `<div class="reveal" style="background:#effaf3;border-color:#b8e3c8">✅ ${t.good}</div>` : `<div class="reveal" style="background:#fdf0ef;border-color:#f1c2bf">⚠️ ${fmt(t.oops, { x: t.fruits[im.truth] })}</div>`;
   return `<div class="card"><div class="bar"><div><h2>${t.s1}</h2><div class="sub" style="margin:0;font-size:16px">${t.s1sub}</div></div>${dots(S.train.length, k)}</div>
+    <div class="botrow"><span class="bot ${done ? (mine === im.truth ? 'ok' : 'no') : ''}">${done ? (mine === im.truth ? '🤩' : '🤨') : '🤖'}</span><span class="say">${done ? (mine === im.truth ? pickOne(t.botOk) : pickOne(t.botNo)) : t.botHi}</span></div>
     <div class="stage"><div><img class="pic" src="${im.file}" alt=""><div class="sub" style="text-align:center;margin:8px 0 0;font-size:15px">${fmt(t.pic, { n: k + 1, t: S.train.length })}</div></div>
-    <div>${fruitButtons('teachAns', done ? mine : -1, done)}${fb}${done ? `<div class="actions"><button class="btn" onclick="teachNext()">${t.next} ▶</button></div>` : ''}</div></div></div>`;
+    <div>${fruitButtons('teachAns', done ? mine : -1, done)}${fb}${brainHtml(k, done)}${done ? `<div class="actions"><button class="btn" onclick="teachNext()">${t.next} ▶</button></div>` : ''}</div></div></div>`;
 }
 function viewLearned() {
   const t = L();
@@ -230,13 +275,24 @@ function viewQuiz(round) {
         <div class="who ${yok ? 'ok' : 'no'}"><small>${t.you}</small><b>${yok ? '✅' : '❌'} ${EMOJI[a]} ${t.fruits[a]}</b></div>
         <div class="who ${rok ? 'ok' : 'no'}"><small>${t.robot}</small><b>${rok ? '✅' : '❌'} ${EMOJI[r]} ${t.fruits[r]}</b></div></div>
       <div class="think"><b>${t.think}</b> ${fmt(t.thinkTxt, { sw: sw(im.rgb), c: t.fruits[r], sw2: sw(cr) })}</div>
-      <div class="actions"><button class="btn" onclick="quizNext('${round}')">${k + 1 < total ? t.next : (round === 'test' ? t.toTrick : t.toRes)} ▶</button></div></div>`;
+      ${barsHtml(im, r)}<div class="actions"><button class="btn" onclick="quizNext('${round}')">${k + 1 < total ? t.next : (round === 'test' ? t.toTrick : t.toRes)} ▶</button></div></div>`;
   }
   const done = S.revealed;
   return `<div class="card"><div class="bar"><div><h2>${round === 'test' ? t.s2 : t.s3}</h2><div class="sub" style="margin:0;font-size:16px">${round === 'test' ? t.s2sub : t.s3sub}</div></div>
-      <div class="score"><span class="pill">${t.you} ${sc.you}</span><span class="pill r">${t.robot} ${sc.rob}</span></div></div>
+      <div class="score">${S.streak >= 2 ? `<span class="pill f">${fmt(t.streakBig, { n: S.streak })}</span>` : ''}<span class="pill">${t.you} ${sc.you}</span><span class="pill r">${t.robot} ${sc.rob}</span></div></div>
     <div class="bar">${dots(total, k)}<span class="sub" style="margin:0;font-size:15px">${fmt(t.pic, { n: k + 1, t: total })}</span></div>
+    <div class="botrow"><span class="bot ${S.revealed ? (r === im.truth ? 'ok' : 'no') : ''}">${S.revealed ? (r === im.truth ? '😎' : '😵') : '🤖'}</span><span class="say">${S.revealed ? pickOne(r === im.truth ? t.botOk : t.botNo) : t.botThink}</span></div>
     <div class="stage"><div><img class="pic" src="${im.file}" alt=""></div><div>${fruitButtons('quizAns', done ? a : -1, done)}${reveal}</div></div></div>`;
+}
+function barsHtml(im, r) {
+  const t = L(), d = robotDists(S.cent, im.rgb), mx = Math.max(...d.filter(x => x != null));
+  return `<div class="bars"><div class="think"><b>${t.closeness}</b></div>` + d.map((v, i) => v == null ? '' :
+    `<div class="bar1 ${i === r ? 'pick' : ''}"><span class="l">${EMOJI[i]} ${t.fruits[i]}</span><span class="t"><i style="width:${Math.max(6, Math.round(100 * (1 - v / (mx * 1.08))))}%"></i></span></div>`).join('') + '</div>';
+}
+function badgeList() {
+  const a = scores('test'), b = scores('trick');
+  const taught = S.labels.every((c, k) => c === S.train[k].truth);
+  return [taught, a.you === a.n && b.you === b.n, b.you > b.rob, S.best >= 8, S.mad];
 }
 function accPct(x, n) { return Math.round(100 * x / n) + '%'; }
 function viewResults() {
@@ -255,6 +311,7 @@ function viewResults() {
         <hr style="border:0;border-top:1px solid var(--line)"><div class="line"><span>${t.robot}</span><b class="big">${b.rob}/${b.n}</b></div><div class="line"><span>${t.acc}</span><b>${accPct(b.rob, b.n)}</b></div></div></div>
     <p class="sub" style="font-size:15px">${t.accNote}</p>
     <h2>${t.mistakes}</h2>${missHtml}
+    <h2 style="margin-top:20px">🏅 ${t.badgesH}</h2><div class="badges">${badgeList().map((g, i) => `<div class="badge1 ${g ? 'got' : ''}"><div class="e">${t.badges[i][0]}</div><b>${t.badges[i][1]}</b><small>${t.badges[i][2]}</small></div>`).join('')}</div>
     <h2 style="margin-top:20px">💡 ${t.learnt}</h2><ul class="l"><li>${t.l1}</li><li>${t.l2}</li><li>${t.l3}</li></ul>${exp}
     <div class="actions"><button class="btn sm" onclick="downloadCsv()">⬇ ${t.dl}</button><button class="btn alt sm" onclick="wrongExperiment()">🧪 ${t.wrongBtn}</button><button class="btn alt sm" onclick="newGame();go('start')">↺ ${t.again}</button>${back}</div></div>`;
 }
@@ -267,6 +324,7 @@ function render() {
   document.getElementById('langs').innerHTML = Object.keys(T).map(k => `<button class="${k === lang ? 'on' : ''}" onclick="setLang('${k}')">${T[k].name}</button>`).join('');
   const v = { start: viewStart, teach: viewTeach, learned: viewLearned, test: () => viewQuiz('test'), trick: () => viewQuiz('trick'), results: viewResults }[S.screen];
   document.getElementById('app').innerHTML = v();
+  if (S.screen === 'results' && !S.cf) { S.cf = true; const a = scores('test'); if (a.you >= a.rob) confetti(44); }
   window.scrollTo(0, 0);
 }
 function setLang(k) { lang = k; render(); }
@@ -278,7 +336,9 @@ function teachNext() {
 function quizAns(c) {
   if (S.revealed) return;
   const round = S.screen, im = S[round][S.i];
-  S.ans[round][S.i] = c; S.rob[round][S.i] = robotGuess(S.cent, im.rgb); S.revealed = true; render();
+  S.ans[round][S.i] = c; S.rob[round][S.i] = robotGuess(S.cent, im.rgb); S.revealed = true;
+  if (c === im.truth) { S.streak++; S.best = Math.max(S.best, S.streak); } else S.streak = 0;
+  render(); if (c === im.truth && (S.streak === 5 || S.streak === 8 || S.streak === 12)) confetti(18);
 }
 function quizNext(round) {
   if (S.i + 1 < S[round].length) { S.i++; S.revealed = false; render(); }
@@ -287,7 +347,7 @@ function quizNext(round) {
 function wrongExperiment() {
   const wrongLabels = S.labels.map(c => (c + 1) % 3);
   const cent = trainRobot(wrongLabels, S.train);
-  S.exp = sum(S.test.map(im => robotGuess(cent, im.rgb) === im.truth ? 1 : 0));
+  S.exp = sum(S.test.map(im => robotGuess(cent, im.rgb) === im.truth ? 1 : 0)); S.mad = true;
   render();
 }
 function downloadCsv() {
