@@ -622,6 +622,14 @@ body {
 .card-phase11 .btn-download { background: #7c3aed; }
 .card-phase11 .btn-download:hover { background: #6d28d9; }
 .card-phase11 a.btn-inspect { text-decoration: none; display: inline-block; }
+.card-phase12 {
+  border-color: #5eead4;
+  background: linear-gradient(180deg, #f0fdfa 0%, #ffffff 40%);
+}
+.card-phase12 .card-kicker { color: #0f766e; }
+.card-phase12 .btn-download { background: #0f766e; }
+.card-phase12 .btn-download:hover { background: #115e59; }
+.card-phase12 a.btn-inspect { text-decoration: none; display: inline-block; }
 .card-master {
   border-color: #93c5fd;
   background: linear-gradient(180deg, #eff6ff 0%, #ffffff 35%);
@@ -870,7 +878,7 @@ body {
 
     <div class="hero-actions">
       <a class="btn-primary" href="downloads/AI_90min_All_Phases_MASTER.zip" download>
-        Download All Phases (Master Bundle · 4.9 MB)
+        Download All Phases (Master Bundle · 5.8 MB)
       </a>
       <a class="btn-secondary" href="downloads/AI_90min_All_Data_Expanded.zip" download>
         Download Expanded Folders
@@ -1012,14 +1020,30 @@ body {
     <div class="section-header">
       <h2 class="section-title">Lesson Phases &amp; Challenge Datasets</h2>
       <div class="filter-tabs">
-        <button class="filter-btn active" onclick="filterPhases('all', this)">All (0–11)</button>
+        <button class="filter-btn active" onclick="filterPhases('all', this)">All (0–12)</button>
         <button class="filter-btn" onclick="filterPhases('core', this)">Core Lesson (0–7)</button>
-        <button class="filter-btn" onclick="filterPhases('hardcore', this)">Advanced (8–11)</button>
+        <button class="filter-btn" onclick="filterPhases('hardcore', this)">Advanced (8–12)</button>
         <button class="filter-btn" onclick="filterPhases('bundles', this)">Bundles</button>
       </div>
     </div>
 
     <div class="grid" id="phase-grid">
+
+      <!-- PHASE 12 - DETECTIVE MAP (HOW AN AI PREDICTS) -->
+      <div class="card card-phase12" data-category="hardcore">
+        <div>
+          <div class="card-kicker">Phase 12 · Concept Simulation · ~35 min · best after Phase 3</div>
+          <h2>Detective Map: How Does an AI Predict?</h2>
+          <div class="card-meta">1 MB · Plays in the browser · English · <bdi>العربية</bdi> · <bdi>עברית</bdi> · Real fruit pictures + drawn cats &amp; dogs</div>
+          <p>
+            What really happens between training and testing? Watch pictures turn into numbers, training pictures land on a map of clues, and a new picture land among them — the closest neighbours vote. Switch on the AI's "brain" map, choose the clues, and see why some pictures fool it.
+          </p>
+        </div>
+        <div class="card-actions">
+          <a class="btn-download" href="sim/index.html?lang=en">Open the Simulation</a>
+          <a class="btn-inspect" href="downloads/Phase_12_Detective_Map_HOW_AI_PREDICTS.zip" download>ZIP</a>
+        </div>
+      </div>
 
       <!-- PHASE 11 - DOODLE LAB (CREATIVE) -->
       <div class="card card-phase11" data-category="hardcore">
@@ -1095,10 +1119,10 @@ body {
       <div class="card card-master" data-category="bundles">
         <div>
           <div class="card-kicker">Bundle Package</div>
-          <h2>MASTER — Complete All Phases <span style="white-space:nowrap">(0–11)</span></h2>
-          <div class="card-meta">4.9 MB · All ZIP Archives Included · Teacher Master Guide</div>
+          <h2>MASTER — Complete All Phases <span style="white-space:nowrap">(0–12)</span></h2>
+          <div class="card-meta">5.8 MB · All ZIP Archives Included · Teacher Master Guide</div>
           <p>
-            One single archive containing all 12 lesson phases, teacher guides, answer keys, and bonus challenges. Perfect for keeping a local copy on a USB flash drive.
+            One single archive containing all 13 lesson phases, teacher guides, answer keys, and bonus challenges. Perfect for keeping a local copy on a USB flash drive.
           </p>
         </div>
         <div class="card-actions">
@@ -1112,7 +1136,7 @@ body {
         <div>
           <div class="card-kicker">Bundle Package</div>
           <h2>Expanded — All Folders Extracted</h2>
-          <div class="card-meta">4.9 MB · Ready-to-Upload Directories · No Extraction Needed</div>
+          <div class="card-meta">5.9 MB · Ready-to-Upload Directories · No Extraction Needed</div>
           <p>
             All training and test images already organized into clean subfolders. Ideal for systems where extracting ZIP archives is disabled by school IT.
           </p>
@@ -1459,8 +1483,8 @@ const PHASE_DETAILS = {
     title: "MASTER — Complete 9-Phase Package",
     zip: "downloads/AI_90min_All_Phases_MASTER.zip",
     body: `
-      <p>The single master distribution file containing every lesson phase (0 through 11), student worksheets, and teacher guidance.</p>
-      <p>Size: <b>4.9 MB</b>. Extract once on the teacher workstation.</p>
+      <p>The single master distribution file containing every lesson phase (0 through 12), student worksheets, and teacher guidance.</p>
+      <p>Size: <b>5.8 MB</b>. Extract once on the teacher workstation.</p>
     `
   },
   expanded: {
