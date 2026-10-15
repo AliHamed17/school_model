@@ -51,7 +51,7 @@ answers with high confidence even for things that are not fruit, and the
 students then design a 4th "Other" class to defend it. The student page also
 has an in-browser Red Team simulator for this.
 
-Phase 10 is a follow-up lesson (about 45 minutes) in Excel: students type in
+Phase 11 is a creative lab (about 35 minutes), the Doodle Lab: students invent their own\ncategories, draw examples, teach an AI, try to fool it and swap drawings with a friend. Works\noffline, in English, Arabic and Hebrew:   http://YOUR-IP:8000/lab/\nIt can save the results as a file that opens in Excel.\n\nPhase 10 is a follow-up lesson (about 45 minutes) in Excel: students type in
 the numbers from their AI tests, calculate accuracy with formulas, and draw
 five charts (pie, column, line, XY scatter, XYZ bubble). The step-by-step
 guide with pictures is in English, Arabic and Hebrew, with a starter Excel
@@ -160,6 +160,7 @@ FILES
 index.html                  Student download page (English)
 index-ar.html                Student download page (Arabic, right-to-left)
 index-he.html                Student download page (Hebrew, right-to-left)
+lab/                        Phase 11 Doodle Lab (EN/AR/HE)
 game/                       Phase 0 game "Human vs Robot" (EN/AR/HE)
 excel/                      Phase 10 Excel guide (EN/AR/HE), pictures, Excel files and videos
 server.js, package.json     Optional Node.js server (see above), also used by the online copy

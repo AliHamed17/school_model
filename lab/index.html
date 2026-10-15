@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Doodle Lab</title>
+<style>
+:root{--ink:#16181d;--mut:#5b6270;--bg:#f4f6fb;--line:#e3e7ef;--brand:#7c3aed;--good:#1f9d57;--bad:#d64545}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Segoe UI",Tahoma,Arial,sans-serif;line-height:1.5}
+header{background:#1e1b4b;color:#fff;padding:12px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+header .brand{font-weight:800;font-size:19px}
+.langs{display:flex;gap:6px}.langs button{background:transparent;border:1px solid #4c4a8a;color:#d8d6ff;padding:5px 12px;border-radius:8px;cursor:pointer;font:inherit;font-size:14px}.langs button.on{background:#4c4a8a;color:#fff}
+main{max-width:1060px;margin:0 auto;padding:18px 16px 60px}
+.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px 20px;box-shadow:0 2px 10px rgba(20,24,40,.05);margin-bottom:16px}
+h1{margin:0 0 4px;font-size:34px}h2{margin:0 0 8px;font-size:21px}.sub{color:var(--mut);margin:0 0 10px}
+.grid{display:grid;grid-template-columns:minmax(280px,340px) 1fr;gap:16px;align-items:start}@media(max-width:760px){.grid{grid-template-columns:1fr}}
+canvas#pad{width:100%;max-width:320px;aspect-ratio:1;border:3px solid #c4b5fd;border-radius:16px;background:#fff;touch-action:none;cursor:crosshair;display:block}
+.btn{background:var(--brand);color:#fff;border:0;border-radius:12px;padding:9px 16px;font:inherit;font-weight:700;cursor:pointer;font-size:15px}.btn.alt{background:#fff;color:var(--ink);border:2px solid var(--ink)}.btn.sm{padding:6px 11px;font-size:14px}.btn:disabled{opacity:.4;cursor:default}
+.row{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.cls{border:2px solid var(--line);border-radius:14px;padding:10px 12px;margin-bottom:10px;background:#fafaff}
+.cls .top{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.cls input{font:inherit;font-size:16px;font-weight:700;border:2px solid var(--line);border-radius:10px;padding:4px 10px;width:150px}
+.em{font-size:28px}.cnt{margin-inline-start:auto;color:var(--mut);font-size:14px}
+.thumbs{display:flex;gap:4px;flex-wrap:wrap;margin-top:6px;min-height:34px}.thumbs canvas{width:34px;height:34px;border:1px solid var(--line);border-radius:6px;background:#fff;image-rendering:pixelated}
+.bar{display:flex;align-items:center;gap:8px;margin:5px 0;font-weight:700}.bar .l{width:130px}.bar .t{flex:1;height:18px;border-radius:99px;background:#ece9fe;overflow:hidden}.bar .t i{display:block;height:100%;background:#a78bfa;border-radius:99px;transition:width .15s}.bar.top .t i{background:var(--brand)}.bar .p{width:46px;text-align:end}
+.big{font-size:26px;font-weight:800}
+table{border-collapse:collapse;width:100%;font-size:15px}th,td{border-bottom:1px solid var(--line);padding:6px 8px;text-align:start}th{background:#f4f1ff}
+.chal{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px}.chal div{border:2px dashed #c4b5fd;border-radius:12px;padding:10px;background:#faf8ff}
+.note{background:#fff8db;border:1px solid #ead887;border-radius:12px;padding:10px 14px;margin-top:10px}
+.ok{color:var(--good);font-weight:700}.no{color:var(--bad);font-weight:700}
+.spark{display:flex;align-items:flex-end;gap:3px;height:48px;margin-top:6px}.spark i{width:10px;background:#a78bfa;border-radius:3px 3px 0 0;min-height:3px}
+</style></head>
+<body>
+<header><div class="brand">🎨 <span id="hb"></span></div><div class="langs" id="langs"></div></header>
+<main id="app"></main>
+<script>
+const T = {
+en:{dir:'ltr',name:'English',title:'Doodle Lab',tag:'Teach the AI your own drawings — then try to fool it!',
+ s1:'1 · Name what you will draw',s1p:'Pick 2 to 4 things (a circle, a house, a smiley…). Click a name to change it.',addc:'+ Add a class',del:'Remove',
+ s2:'2 · Draw and teach',s2p:'Draw one thing on the board, then press the button of its class. Add at least 5 drawings of each — make them different (big, small, tilted)!',
+ clear:'Clear board',add:'Add to “{c}”',undo:'Undo last',count:'{n} drawings',
+ s3:'3 · Test the AI',s3p:'Draw something new. The AI guesses while you draw. Then tell it if it was right.',guess:'The AI thinks it is',sure:'confident',needMore:'Teach the AI first: at least 2 classes with 2 drawings each.',
+ right:'✔ AI was right',wrong:'✘ AI was wrong',
+ s4:'4 · Your results',tests:'Tests',acc:'Accuracy',selfcheck:'The AI’s own check (each drawing vs the others)',history:'Accuracy as you add drawings',dl:'Download results (opens in Excel)',
+ colT:['Test','Examples taught','AI guess','Confidence %','AI right? (1=yes)'],
+ s5:'5 · Swap with a friend',s5p:'Download your drawings, give the file to a friend, and load theirs. Your AI will try to recognise THEIR drawings.',dlset:'Download my drawings',loadset:'Load a friend’s drawings',
+ swapRes:'Your AI got {a} of {n} of your friend’s drawings right ({p}).',swapMap:'Class names did not match, so we matched them by order.',swapWhy:'Why is it lower than on your own drawings? Your friend draws differently — the AI learned only YOUR style. More varied examples make an AI fairer and stronger.',
+ chH:'Challenges',ch:['Fool the AI: draw a circle that looks a bit like a square.','Draw your thing very small, in a corner.','Draw it upside down or tilted. Does the AI still know it?','Add 5 more drawings. Did the accuracy go up?'],
+ bad:'That file is not a Doodle Lab file.'},
+ar:{dir:'rtl',name:'العربية',title:'مختبر الرسم',tag:'علّم الذكاء الاصطناعي رسوماتك — ثم حاول أن تخدعه!',
+ s1:'1 · سمِّ ما ستَرسمه',s1p:'اختر من 2 إلى 4 أشياء (دائرة، بيت، وجه مبتسم…). انقر على الاسم لتغييره.',addc:'+ أضف فئة',del:'احذف',
+ s2:'2 · ارسم وعلّم',s2p:'ارسم شيئًا واحدًا على اللوحة ثم اضغط زر فئته. أضف 5 رسومات على الأقل لكل فئة — واجعلها مختلفة (كبيرة، صغيرة، مائلة)!',
+ clear:'امسح اللوحة',add:'أضف إلى «{c}»',undo:'تراجع عن الأخيرة',count:'{n} رسومات',
+ s3:'3 · اختبر الذكاء الاصطناعي',s3p:'ارسم شيئًا جديدًا. يخمّن الذكاء الاصطناعي أثناء الرسم. ثم أخبره إن كان مصيبًا.',guess:'الذكاء الاصطناعي يظن أنها',sure:'ثقة',needMore:'علّمه أولًا: فئتان على الأقل وفي كل منهما رسمتان.',
+ right:'✔ أصاب',wrong:'✘ أخطأ',
+ s4:'4 · نتائجك',tests:'الاختبارات',acc:'الدقة',selfcheck:'فحص الذكاء الاصطناعي لنفسه (كل رسمة مقابل البقية)',history:'الدقة مع إضافة الرسومات',dl:'نزّل النتائج (تُفتح في Excel)',
+ colT:['الاختبار','عدد الأمثلة','تخمين الذكاء الاصطناعي','الثقة %','هل أصاب؟ (1=نعم)'],
+ s5:'5 · تبادل مع صديق',s5p:'نزّل رسوماتك وأعطِ الملف لصديق وافتح ملفه. سيحاول ذكاؤك الاصطناعي التعرّف على رسوماته هو.',dlset:'نزّل رسوماتي',loadset:'افتح رسومات صديق',
+ swapRes:'أصاب ذكاؤك الاصطناعي في {a} من {n} من رسومات صديقك ({p}).',swapMap:'أسماء الفئات لم تتطابق فطابقناها حسب الترتيب.',swapWhy:'لماذا النتيجة أقل من رسوماتك؟ صديقك يرسم بشكل مختلف — والذكاء الاصطناعي تعلّم أسلوبك أنت فقط. الأمثلة المتنوعة تجعل الذكاء الاصطناعي أعدل وأقوى.',
+ chH:'تحديات',ch:['اخدع الذكاء الاصطناعي: ارسم دائرة تشبه المربع قليلًا.','ارسم شيئك صغيرًا جدًا في زاوية.','ارسمه مقلوبًا أو مائلًا. هل ما زال يعرفه؟','أضف 5 رسومات أخرى. هل ارتفعت الدقة؟'],
+ bad:'هذا الملف ليس ملف مختبر الرسم.'},
+he:{dir:'rtl',name:'עברית',title:'מעבדת ציור',tag:'מלמדים את הבינה המלאכותית את הציורים שלכם — ואז מנסים להטעות אותה!',
+ s1:'1 · נותנים שם למה שמציירים',s1p:'בחרו 2 עד 4 דברים (עיגול, בית, סמיילי…). לחצו על שם כדי לשנות אותו.',addc:'+ הוסיפו קבוצה',del:'מחקו',
+ s2:'2 · מציירים ומלמדים',s2p:'ציירו דבר אחד על הלוח ואז לחצו על הכפתור של הקבוצה שלו. הוסיפו לפחות 5 ציורים לכל קבוצה — ושיהיו שונים (גדול, קטן, נטוי)!',
+ clear:'נקו לוח',add:'הוסיפו ל“{c}”',undo:'בטלו אחרון',count:'{n} ציורים',
+ s3:'3 · בודקים את הבינה המלאכותית',s3p:'ציירו משהו חדש. הבינה המלאכותית מנחשת בזמן שאתם מציירים. אחר כך אמרו לה אם צדקה.',guess:'הבינה המלאכותית חושבת שזה',sure:'ביטחון',needMore:'קודם למדו אותה: לפחות 2 קבוצות עם 2 ציורים בכל אחת.',
+ right:'✔ צדקה',wrong:'✘ טעתה',
+ s4:'4 · התוצאות שלכם',tests:'בדיקות',acc:'דיוק',selfcheck:'הבדיקה של הבינה המלאכותית את עצמה (כל ציור מול האחרים)',history:'דיוק כשמוסיפים ציורים',dl:'הורדת התוצאות (נפתח באקסל)',
+ colT:['בדיקה','דוגמאות שנלמדו','ניחוש הבינה המלאכותית','ביטחון %','האם צדקה? (1=כן)'],
+ s5:'5 · מחליפים עם חבר',s5p:'הורידו את הציורים שלכם, תנו את הקובץ לחבר וטענו את שלו. הבינה המלאכותית שלכם תנסה לזהות את הציורים של החבר.',dlset:'הורדת הציורים שלי',loadset:'טעינת ציורים של חבר',
+ swapRes:'הבינה המלאכותית שלכם צדקה ב-{a} מתוך {n} מהציורים של החבר ({p}).',swapMap:'שמות הקבוצות לא התאימו, אז התאמנו לפי הסדר.',swapWhy:'למה זה נמוך יותר מהציורים שלכם? החבר מצייר אחרת — והבינה המלאכותית למדה רק את הסגנון שלכם. דוגמאות מגוונות הופכות בינה מלאכותית להוגנת וחזקה יותר.',
+ chH:'אתגרים',ch:['הטעו את הבינה המלאכותית: ציירו עיגול שנראה קצת כמו ריבוע.','ציירו את הדבר שלכם קטן מאוד, בפינה.','ציירו אותו הפוך או נטוי. האם היא עדיין מזהה?','הוסיפו עוד 5 ציורים. האם הדיוק עלה?'],
+ bad:'הקובץ הזה אינו קובץ של מעבדת ציור.'}
+};
+const DEFAULTS = { en:[['⭕','Circle'],['⬜','Square'],['🔺','Triangle']], ar:[['⭕','دائرة'],['⬜','مربع'],['🔺','مثلث']], he:[['⭕','עיגול'],['⬜','ריבוע'],['🔺','משולש']] };
+const EMO = ['⭕','⬜','🔺','⭐','🏠','😀'];
+const qs = new URLSearchParams(location.search);
+let lang = qs.get('lang'); if (!T[lang]) { const n = (navigator.language||'en').toLowerCase(); lang = n.startsWith('ar')?'ar':(n.startsWith('he')||n.startsWith('iw'))?'he':'en'; }
+const S = { classes: DEFAULTS[lang].map(([e,n]) => ({ e, n, ex: [] })), tests: [], hist: [], swap: null, mapped: false, cur: null };
+const N = 16;                       // each drawing becomes a 16x16 grid of ink values
+const L = () => T[lang]; const fmt = (s,o) => s.replace(/\{(\w+)\}/g,(m,k)=>o[k]!=null?o[k]:m);
+const $ = id => document.getElementById(id);
+
+// ---------------------------------------------------------------- drawing pad
+let pad, ctx, drawing = false, last = null, lastPredict = 0;
+function setupPad() {
+  pad = $('pad'); pad.width = 320; pad.height = 320; ctx = pad.getContext('2d'); clearPad();
+  const pt = e => { const r = pad.getBoundingClientRect(); return [(e.clientX-r.left)*320/r.width, (e.clientY-r.top)*320/r.height]; };
+  pad.addEventListener('pointerdown', e => { drawing = true; last = pt(e); dot(last); pad.setPointerCapture(e.pointerId); e.preventDefault(); });
+  pad.addEventListener('pointermove', e => { if (!drawing) return; const p = pt(e); seg(last, p); last = p; const now = Date.now(); if (now - lastPredict > 120) { lastPredict = now; predict(); } });
+  const up = () => { if (drawing) { drawing = false; predict(); } };
+  pad.addEventListener('pointerup', up); pad.addEventListener('pointercancel', up);
+}
+function clearPad() { ctx.fillStyle = '#fff'; ctx.fillRect(0,0,320,320); ctx.strokeStyle = '#111'; ctx.fillStyle = '#111'; ctx.lineWidth = 13; ctx.lineCap = 'round'; ctx.lineJoin = 'round'; }
+function dot(p) { ctx.beginPath(); ctx.arc(p[0],p[1],6.5,0,7); ctx.fill(); }
+function seg(a,b) { ctx.beginPath(); ctx.moveTo(a[0],a[1]); ctx.lineTo(b[0],b[1]); ctx.stroke(); }
+// used by the automatic tests as well as by people
+function drawPoly(pts, close) { dot(pts[0]); for (let i=1;i<pts.length;i++) seg(pts[i-1],pts[i]); if (close) seg(pts[pts.length-1],pts[0]); predict(); }
+
+// ---------------------------------------------------------------- features: crop to the ink, fit into 16x16, centre
+function vecFromPad() {
+  const d = ctx.getImageData(0,0,320,320).data; let x0=320,y0=320,x1=-1,y1=-1;
+  for (let y=0;y<320;y++) for (let x=0;x<320;x++) if (d[(y*320+x)*4] < 128) { if (x<x0)x0=x; if (x>x1)x1=x; if (y<y0)y0=y; if (y>y1)y1=y; }
+  if (x1 < 0) return null;
+  const w = x1-x0+1, h = y1-y0+1, s = Math.max(w,h), box = N-2, sc = box/s;
+  const off = document.createElement('canvas'); off.width = N; off.height = N; const o = off.getContext('2d');
+  o.fillStyle = '#fff'; o.fillRect(0,0,N,N); o.imageSmoothingEnabled = true; o.imageSmoothingQuality = 'high';
+  o.drawImage(pad, x0, y0, w, h, (N-w*sc)/2, (N-h*sc)/2, w*sc, h*sc);
+  const px = o.getImageData(0,0,N,N).data, v = new Array(N*N);
+  for (let i=0;i<N*N;i++) v[i] = 255 - px[i*4];
+  return v;
+}
+const dist = (a,b) => { let s=0; for (let i=0;i<a.length;i++) { const d=a[i]-b[i]; s+=d*d; } return Math.sqrt(s); };
+// the "AI": nearest drawing for each class; closer = more votes (inverse square of distance)
+function scoresFor(v, ex) {
+  const raw = S.classes.map((c, ci) => { let best = Infinity; ex.forEach(e => { if (e.c === ci) { const d = dist(v, e.v); if (d < best) best = d; } }); return best; });
+  const w = raw.map(d => isFinite(d) ? 1/Math.pow(d+1,2) : 0), t = w.reduce((a,b)=>a+b,0) || 1;
+  return w.map(x => x/t);
+}
+const allEx = () => S.classes.flatMap((c,ci) => c.ex.map(v => ({ c: ci, v })));
+const ready = () => S.classes.filter(c => c.ex.length >= 2).length >= 2;
+function loo() {                      // leave-one-out: each drawing is guessed using all the others
+  const ex = allEx(); if (!ready()) return null; let ok = 0;
+  ex.forEach((e,i) => { const rest = ex.filter((_,j) => j!==i), s = scoresFor(e.v, rest); if (s.indexOf(Math.max(...s)) === e.c) ok++; });
+  return ok/ex.length;
+}
+
+// ---------------------------------------------------------------- UI
+function thumb(v) { const c = document.createElement('canvas'); c.width = N; c.height = N; const g = c.getContext('2d'), im = g.createImageData(N,N); for (let i=0;i<N*N;i++) { const k = 255-v[i]; im.data[i*4]=k; im.data[i*4+1]=k; im.data[i*4+2]=k; im.data[i*4+3]=255; } g.putImageData(im,0,0); return c; }
+function render() {
+  const t = L(); document.documentElement.lang = lang; document.documentElement.dir = t.dir; document.title = t.title; $('hb').textContent = t.title;
+  $('langs').innerHTML = Object.keys(T).map(k => `<button class="${k===lang?'on':''}" onclick="setLang('${k}')">${T[k].name}</button>`).join('');
+  const keepCanvas = pad && pad.parentNode ? ctx.getImageData(0,0,320,320) : null;
+  $('app').innerHTML = `
+  <div class="card"><h1>🎨 ${t.title}</h1><p class="sub" style="font-size:18px;margin:0">${t.tag}</p></div>
+  <div class="card"><h2>${t.s1}</h2><p class="sub">${t.s1p}</p><div id="clsrow"></div>
+    <div class="row">${S.classes.length<4?`<button class="btn alt sm" onclick="addClass()">${t.addc}</button>`:''}</div></div>
+  <div class="grid"><div class="card"><h2>${t.s2}</h2><p class="sub">${t.s2p}</p><canvas id="pad"></canvas>
+    <div class="row"><button class="btn alt sm" onclick="clearPad();predict()">🧽 ${t.clear}</button>
+    ${S.classes.map((c,i)=>`<button class="btn sm" onclick="addEx(${i})">${c.e} ${fmt(t.add,{c:c.n})}</button>`).join('')}</div></div>
+    <div><div class="card"><h2>${t.s3}</h2><p class="sub">${t.s3p}</p><div id="pred"></div>
+      <div class="row"><button class="btn sm" id="bR" onclick="logTest(1)" disabled>${t.right}</button><button class="btn alt sm" id="bW" onclick="logTest(0)" disabled>${t.wrong}</button></div></div>
+    <div class="card"><h2>${t.chH}</h2><div class="chal">${t.ch.map(x=>`<div>🎯 ${x}</div>`).join('')}</div></div></div></div>
+  <div class="card"><h2>${t.s4}</h2><div id="res"></div></div>
+  <div class="card"><h2>${t.s5}</h2><p class="sub">${t.s5p}</p><div class="row"><button class="btn sm" onclick="dlSet()">⬇ ${t.dlset}</button>
+    <button class="btn alt sm" onclick="document.getElementById('f').click()">📂 ${t.loadset}</button><input id="f" type="file" accept=".json" style="display:none" onchange="loadSet(this.files[0])"></div><div id="swap"></div></div>`;
+  setupPad(); if (keepCanvas) ctx.putImageData(keepCanvas,0,0);
+  drawClasses(); drawPred(null); drawRes(); drawSwap();
+}
+function drawClasses() {
+  $('clsrow').innerHTML = ''; S.classes.forEach((c,i) => {
+    const d = document.createElement('div'); d.className = 'cls';
+    d.innerHTML = `<div class="top"><span class="em">${c.e}</span><input value="${c.n.replace(/"/g,'&quot;')}" oninput="S.classes[${i}].n=this.value;drawPred(S.cur);" onchange="drawRes();render()"><span class="cnt">${fmt(L().count,{n:c.ex.length})}</span>${S.classes.length>2?`<button class="btn alt sm" onclick="delClass(${i})">${L().del}</button>`:''}</div><div class="thumbs"></div>`;
+    const th = d.querySelector('.thumbs'); c.ex.forEach(v => th.appendChild(thumb(v))); $('clsrow').appendChild(d);
+  });
+}
+function setLang(k) { const isDef = S.classes.every((c,i) => DEFAULTS[lang][i] && c.n === DEFAULTS[lang][i][1]); lang = k; if (isDef) S.classes.forEach((c,i) => { c.n = DEFAULTS[k][i][1]; }); render(); }
+function addClass() { const i = S.classes.length; S.classes.push({ e: EMO[3+i-3]||'⭐', n: '', ex: [] }); S.classes[i].n = (lang==='en'?'Thing ':lang==='ar'?'شيء ':'דבר ')+(i+1); render(); }
+function delClass(i) { S.classes.splice(i,1); S.tests = []; render(); }
+function addEx(i) { const v = vecFromPad(); if (!v) return; S.classes[i].ex.push(v); const l = loo(); if (l!=null) S.hist.push(Math.round(l*100)); clearPad(); drawClasses(); drawRes(); predict(); }
+function predict() {
+  const v = vecFromPad(); S.cur = null; if (!v || !ready()) { drawPred(v ? 'need' : null); return; }
+  S.cur = { v, s: scoresFor(v, allEx()) }; drawPred(S.cur);
+}
+function drawPred(p) {
+  const t = L(), el = $('pred'); if (!el) return;
+  if (p === 'need') { el.innerHTML = `<div class="note">${t.needMore}</div>`; setBtns(false); return; }
+  if (!p) { el.innerHTML = ''; setBtns(false); return; }
+  const top = p.s.indexOf(Math.max(...p.s));
+  el.innerHTML = `<div class="big">${t.guess}: ${S.classes[top].e} ${S.classes[top].n} <small style="font-size:16px">(${Math.round(p.s[top]*100)}% ${t.sure})</small></div>` +
+    p.s.map((x,i)=>`<div class="bar ${i===top?'top':''}"><span class="l">${S.classes[i].e} ${S.classes[i].n}</span><span class="t"><i style="width:${Math.round(x*100)}%"></i></span><span class="p">${Math.round(x*100)}%</span></div>`).join('');
+  setBtns(true);
+}
+function setBtns(on) { const a = $('bR'), b = $('bW'); if (a) { a.disabled = !on; b.disabled = !on; } }
+function logTest(ok) {
+  if (!S.cur) return; const s = S.cur.s, top = s.indexOf(Math.max(...s));
+  S.tests.push({ n: S.tests.length+1, ex: allEx().length, g: S.classes[top].n, c: Math.round(s[top]*100), ok }); clearPad(); S.cur = null; drawPred(null); drawRes();
+}
+function drawRes() {
+  const t = L(), el = $('res'); if (!el) return; const n = S.tests.length, good = S.tests.filter(x=>x.ok).length, l = loo();
+  el.innerHTML = `<div class="row" style="margin:0 0 8px"><div><div class="big">${n}</div>${t.tests}</div><div style="width:24px"></div><div><div class="big">${n?Math.round(100*good/n)+'%':'—'}</div>${t.acc}</div><div style="width:24px"></div><div><div class="big">${l==null?'—':Math.round(l*100)+'%'}</div>${t.selfcheck}</div></div>
+    ${S.hist.length?`<div class="sub" style="margin:6px 0 0">${t.history}</div><div class="spark">${S.hist.map(h=>`<i title="${h}%" style="height:${Math.max(3,h*0.48)}px"></i>`).join('')}</div>`:''}
+    ${n?`<table style="margin-top:10px"><tr>${t.colT.map(h=>`<th>${h}</th>`).join('')}</tr>${S.tests.map(r=>`<tr><td>${r.n}</td><td>${r.ex}</td><td>${r.g}</td><td>${r.c}</td><td class="${r.ok?'ok':'no'}">${r.ok}</td></tr>`).join('')}</table><div class="row"><button class="btn sm" onclick="dlCsv()">⬇ ${t.dl}</button></div>`:''}`;
+}
+function download(name, text, type) { const u = URL.createObjectURL(new Blob([text],{type})); const a = document.createElement('a'); a.href = u; a.download = name; document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(u),2000); }
+function dlCsv() { const t = L(), rows = [t.colT, ...S.tests.map(r=>[r.n,r.ex,r.g,r.c,r.ok])]; download('doodle_lab_results.csv', '﻿'+rows.map(r=>r.map(x=>'"'+String(x).replace(/"/g,'""')+'"').join(',')).join('\r\n'), 'text/csv;charset=utf-8'); }
+function dlSet() { download('my_doodles.json', JSON.stringify({ doodle: 1, classes: S.classes.map(c => ({ e: c.e, n: c.n, ex: c.ex.map(v => v.map(Math.round)) })) }), 'application/json'); }
+function loadSet(f) {
+  if (!f) return; const r = new FileReader();
+  r.onload = () => { try {
+      const j = JSON.parse(r.result); if (!j.doodle || !Array.isArray(j.classes)) throw 0;
+      const mine = S.classes.map(c => c.n.trim().toLowerCase()), byName = j.classes.every(c => mine.includes(String(c.n).trim().toLowerCase()));
+      let a = 0, n = 0; j.classes.forEach((c,ci) => { const target = byName ? mine.indexOf(String(c.n).trim().toLowerCase()) : ci; (c.ex||[]).forEach(v => { if (target < 0 || target >= S.classes.length) return; n++; const s = scoresFor(v, allEx()); if (s.indexOf(Math.max(...s)) === target) a++; }); });
+      S.swap = { a, n, mapped: !byName }; drawSwap();
+    } catch (e) { alert(L().bad); } };
+  r.readAsText(f);
+}
+function drawSwap() { const el = $('swap'), t = L(); if (!el || !S.swap) return; const s = S.swap;
+  el.innerHTML = `<div class="note"><b>${fmt(t.swapRes,{a:s.a,n:s.n,p:s.n?Math.round(100*s.a/s.n)+'%':'—'})}</b>${s.mapped?`<br>${t.swapMap}`:''}<br>${t.swapWhy}</div>`; }
+window.Lab = { S, drawPoly, clearPad: () => clearPad(), addEx, predict, logTest, loo, ready };
+render();
+</script>
+</body></html>

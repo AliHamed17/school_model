@@ -612,6 +612,14 @@ body {
   text-decoration: none;
   display: inline-block;
 }
+.card-phase11 {
+  border-color: #d8b4fe;
+  background: linear-gradient(180deg, #faf5ff 0%, #ffffff 40%);
+}
+.card-phase11 .card-kicker { color: #7e22ce; }
+.card-phase11 .btn-download { background: #7c3aed; }
+.card-phase11 .btn-download:hover { background: #6d28d9; }
+.card-phase11 a.btn-inspect { text-decoration: none; display: inline-block; }
 .card-master {
   border-color: #93c5fd;
   background: linear-gradient(180deg, #eff6ff 0%, #ffffff 35%);
@@ -862,7 +870,7 @@ body {
 
     <div class="hero-actions">
       <a class="btn-primary" href="downloads/AI_90min_All_Phases_MASTER.zip" download>
-        تنزيل كل المراحل (الحزمة الكاملة 0–10 · 4.8 ميجابايت)
+        تنزيل كل المراحل (الحزمة الكاملة 0–11 · 4.9 ميجابايت)
       </a>
       <a class="btn-secondary" href="downloads/AI_90min_All_Data_Expanded.zip" download>
         تنزيل المجلدات المفككة مسبقًا
@@ -1004,14 +1012,30 @@ body {
     <div class="section-header">
       <h2 class="section-title">مراحل الدرس ومجموعات التحدي</h2>
       <div class="filter-tabs">
-        <button class="filter-btn active" onclick="filterPhases('all', this)">كل الملفات <span dir="ltr">(0–10)</span></button>
+        <button class="filter-btn active" onclick="filterPhases('all', this)">كل الملفات <span dir="ltr">(0–11)</span></button>
         <button class="filter-btn" onclick="filterPhases('core', this)">الدرس الأساسي (0–7)</button>
-        <button class="filter-btn" onclick="filterPhases('hardcore', this)">المتقدم (8 – 10)</button>
+        <button class="filter-btn" onclick="filterPhases('hardcore', this)">المتقدم (8 – 11)</button>
         <button class="filter-btn" onclick="filterPhases('bundles', this)">الحزم المجمعة</button>
       </div>
     </div>
 
     <div class="grid" id="phase-grid">
+
+      <!-- PHASE 11 - DOODLE LAB (CREATIVE) -->
+      <div class="card card-phase11" data-category="hardcore">
+        <div>
+          <div class="card-kicker">المرحلة 11 · مختبر إبداعي · حوالي 35 دقيقة</div>
+          <h2>مختبر الرسم: علّم الذكاء الاصطناعي رسوماتك</h2>
+          <div class="card-meta">23 كيلوبايت · يُلعب في المتصفح · <bdi>العربية</bdi> · English · <bdi>עברית</bdi> · بدون إنترنت</div>
+          <p>
+            اخترع فئاتك الخاصة وارسم أمثلة التدريب وشاهد ذكاءً اصطناعيًا يتعلّم منك أنت. ثم حاول خداعه وقِس دقته وتبادل الرسومات مع صديق لتكتشف لماذا يهم تنوّع الأمثلة.
+          </p>
+        </div>
+        <div class="card-actions">
+          <a class="btn-download" href="lab/index.html?lang=ar">افتح المختبر</a>
+          <a class="btn-inspect" href="downloads/Phase_11_Doodle_Lab_CREATIVE.zip" download>ZIP</a>
+        </div>
+      </div>
 
       <!-- PHASE 10 - EXCEL DATA LAB -->
       <div class="card card-phase10" data-category="hardcore">
@@ -1071,10 +1095,10 @@ body {
       <div class="card card-master" data-category="bundles">
         <div>
           <div class="card-kicker">الحزمة الكاملة</div>
-          <h2>الحزمة الشاملة — كل المراحل <span dir="ltr" style="white-space:nowrap">(0–10)</span></h2>
-          <div class="card-meta">4.8 ميجابايت · يشمل جميع الملفات المضغوطة · دليل المعلم الشامل</div>
+          <h2>الحزمة الشاملة — كل المراحل <span dir="ltr" style="white-space:nowrap">(0–11)</span></h2>
+          <div class="card-meta">4.9 ميجابايت · يشمل جميع الملفات المضغوطة · دليل المعلم الشامل</div>
           <p>
-            ملف واحد يضم كل مراحل الدرس (11 مرحلة) مع أوراق العمل ونماذج الإجابة للمعلم، وهو ممتاز للحفظ على ذاكرة فلاش في الفصل.
+            ملف واحد يضم كل مراحل الدرس (12 مرحلة) مع أوراق العمل ونماذج الإجابة للمعلم، وهو ممتاز للحفظ على ذاكرة فلاش في الفصل.
           </p>
         </div>
         <div class="card-actions">
@@ -1426,11 +1450,11 @@ const PHASE_DETAILS = {
     `
   },
   master: {
-    title: "الحزمة الشاملة — كل المراحل (0–10)",
+    title: "الحزمة الشاملة — كل المراحل (0–11)",
     zip: "downloads/AI_90min_All_Phases_MASTER.zip",
     body: `
-      <p>ملف التحميل الرئيسي الذي يحتوي على كل مراحل الدرس (11 مرحلة) مع أوراق العمل ونماذج المعلم.</p>
-      <p>الحجم: <b>4.8 ميجابايت</b>. يُفك ضغطه مرة واحدة على جهاز المعلم.</p>
+      <p>ملف التحميل الرئيسي الذي يحتوي على كل مراحل الدرس (12 مرحلة) مع أوراق العمل ونماذج المعلم.</p>
+      <p>الحجم: <b>4.9 ميجابايت</b>. يُفك ضغطه مرة واحدة على جهاز المعلم.</p>
     `
   },
   expanded: {
