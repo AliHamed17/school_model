@@ -1,0 +1,40 @@
+{
+ "duration": 249.0,
+ "chapters": [
+  {
+   "n": 1,
+   "title": "The idea",
+   "t": 7
+  },
+  {
+   "n": 2,
+   "title": "The workbook",
+   "t": 39
+  },
+  {
+   "n": 3,
+   "title": "Teach the brain",
+   "t": 52
+  },
+  {
+   "n": 4,
+   "title": "Watch it learn",
+   "t": 137
+  },
+  {
+   "n": 5,
+   "title": "Test the brain",
+   "t": 172
+  },
+  {
+   "n": 6,
+   "title": "Draw and fool it",
+   "t": 204
+  },
+  {
+   "n": 7,
+   "title": "The goal: 90%",
+   "t": 218
+  }
+ ]
+}

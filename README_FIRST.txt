@@ -24,6 +24,19 @@ wrong or you want more detail.
 
 ---------------------------------------------------------------------------
 
+THIS WEEK: FOUR PHASES
+-----------------------
+The main page now shows four phases (the earlier 14-phase lesson is still on the
+server as all-phases.html, but it is not linked from the main page):
+  Phase 1  Boss Pictures      (~60 min)  Teachable Machine with much harder pictures,
+                                         Fix Pack for Round 2. Guide + video in 3 languages.
+  Phase 2  Excel Data Lab     (~45 min)  The same Excel lab as last week, with the Boss numbers.
+  Phase 3  Excel Brain        (~60 min)  A tiny AI built only from Excel formulas. Goal: 90%.
+  Phase 4  Detective Map      (~35 min)  How an AI predicts a picture (simulation + challenge).
+Download "all 4 phases" on the main page, or give students the card links.
+Teacher key for Phase 1: downloads/Phase1_Boss_TEACHER_KEY.zip (do not give to students).
+Hand out the Fix Pack (downloads/Phase1_Boss_FIX_PACK.zip) only AFTER Round 1.
+
 WHAT STUDENTS DO
 -----------------
 1. Open the address you give them.

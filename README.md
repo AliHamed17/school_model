@@ -11,7 +11,24 @@ access; the lesson files travel entirely over the local network.
 This repository holds the finished, tested package: the student-facing pages, the
 lesson ZIPs, and the two Windows server implementations behind them.
 
-## Curriculum overview (Phases 0–13)
+## This week: the four phases (the main page)
+
+The main page (`index.html`, `index-ar.html`, `index-he.html`) now shows **exactly four phases**. The earlier 14-phase lesson is kept, unchanged and not linked from the main page, as `all-phases.html` / `all-phases-ar.html` / `all-phases-he.html`.
+
+| Phase | Time | What it is | Files |
+|---|---|---|---|
+| **1 — Boss Pictures** | ~60 min | Teachable Machine with much harder pictures. 120 training pictures (Apple, Banana, Orange) in which each fruit mostly sits on its own table (a hidden shortcut); a **Boss test** (12 pictures chosen where Teachable-Machine-style models struggle), a **Nightmare** set (blur, dark, tiny, cropped, sketch, mixed fruit), **Trap** pictures (tomato, lemon, peach, pumpkin, ball, corn, pepper) and a **Fix Pack** (every fruit on every table) for Round 2, plus an optional 4th class **Other**. Guide + captioned video in English, Arabic and Hebrew. | `boss/`, `downloads/Phase1_Boss_Pictures_STUDENT.zip`, `…FIX_PACK.zip`, `…TEACHER_KEY.zip` |
+| **2 — Excel Data Lab** | ~45 min | The same Excel lab as last week (formulas, accuracy, five charts), now applied to the Boss results. Boss starter/example workbooks (the example holds real Teachable Machine numbers). | `excel/`, `downloads/Phase2_Excel_Data_Lab.zip` |
+| **3 — Excel Brain** | ~60 min | A tiny AI built only from Excel formulas: 5×5-pixel pictures, 25 weights, logistic regression trained one picture at a time (192 learning steps), learning-rate experiment, weight "brain scan", test sheet, draw pad. Goal: 90% on the test. Guide + captioned video in three languages. | `brain/`, `downloads/Phase3_Excel_Brain.zip` |
+| **4 — Detective Map** | ~35 min | The simulation of how an AI predicts (the former Phase 12): k-nearest-neighbours on a map of clues, with a challenge. | `sim/`, `downloads/Phase4_Detective_Map.zip` |
+
+`downloads/Four_Phases_ALL.zip` bundles the four phase ZIPs, the teacher key and start-here notes.
+
+**How hard are the Boss pictures, really?** We measured instead of guessing. (a) Teachable-Machine-style models (a MobileNet image model with a small trained head) on three MobileNet versions, 3 seeds each: pictures like the training set 99%, Boss test 62% in Round 1 → 95% in Round 2, Nightmare 33% → 49%, and the models were over 80% sure about 84% of the traps. (b) The real Teachable Machine website, driven in headless Chrome: Boss test 7/12 in Round 1 → 10/12 in Round 2, 4th class Other: 11 of 12 traps called Other. Results vary from run to run. The Boss test pictures were *mined*: hundreds of candidate pictures were scored and the ones a person finds obvious but the models get wrong were kept, so the numbers are not an accident of the generator.
+
+**Excel Brain verification.** The workbook was opened in real Excel; the learning engine's weights match an independent Python simulation to 1e-6 in all three languages, and the student path (type five formulas, fill down) reproduces them. With the 4 hint pictures the test accuracy is 100% (learning rate 0.5 or 1), 90% (0.05, 0.1, 2) or 80% (5).
+
+## Previous lesson: curriculum overview (Phases 0–13, now in `all-phases.html`)
 
 The core lesson is phases 1–7, scheduled minute-by-minute across 90 minutes. Phase 0 is an
 easy game to start with, and phases 8–13 are optional extensions.
@@ -102,8 +119,10 @@ endpoint and no way to browse or modify anything else on the laptop.
 |---|---|
 | `START_SERVER_WINDOWS.bat` | The only file a teacher needs to run. Detects Python, starts the server, opens the page automatically, and detects/avoids starting a duplicate server if one is already running. Falls back to the PowerShell server below if Python isn't installed. |
 | `server.ps1` | A from-scratch HTTP file server (`System.Net.HttpListener`) used only when Python is unavailable. Needs Administrator rights once (self-elevates via UAC) because Windows restricts non-loopback `HttpListener` binding to admins — Python's raw sockets don't have this restriction, which is why Python is the preferred path. |
-| `index.html` / `index-ar.html` | The student hub in English and Arabic (RTL), with the phase cards, filter tabs and the Red Team simulator. |
-| `index-he.html` | The student download page in Hebrew (RTL). It uses a simpler layout and does not include the Red Team simulator. |
+| `index.html` / `index-ar.html` / `index-he.html` | The student hub (English, Arabic RTL, Hebrew RTL): exactly four phase cards, the student connection link and the teacher QR panel. |
+| `boss/` | Phase 1: `guide-en/ar/he.html`, `START_HERE.html`, `img/` (contact sheets + real Teachable Machine screenshots), `video/` (three ~13 MB captioned videos built from the real Teachable Machine screenshots and real results). |
+| `brain/` | Phase 3: `guide-en/ar/he.html`, `files/` (starter and example workbooks), `img/` (real exports of every step), `video/` (three ~17 MB captioned videos). |
+| `all-phases*.html` | The previous 14-phase hubs, kept as an archive and not linked from the main page. |
 | `inbox/` | Phase 13 Inbox Defender: `index.html` (the game), `guide-en/ar/he.html` (student guides with the video), `video/` (three ~12 MB captioned videos of the real game, posters, chapter times). Zipped without the videos as `downloads/Phase_13_Inbox_Defender_XL.zip`. |
 | `sim/` | Phase 12 Detective Map: `index.html` (one page) plus `img/` (119 pictures); zipped with teacher notes as `downloads/Phase_12_Detective_Map_HOW_AI_PREDICTS.zip`. |
 | `lab/` | Phase 11 Doodle Lab: one self-contained page (`index.html`), also zipped with teacher notes as `downloads/Phase_11_Doodle_Lab_CREATIVE.zip`. |

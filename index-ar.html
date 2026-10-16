@@ -3,11 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>فصل الذكاء الاصطناعي — تنزيلات الطلاب</title>
-<meta name="description" content="Local classroom distribution hub for Teachable Machine AI image classification lesson phases, datasets, and guides.">
-<meta property="og:title" content="فصل الذكاء الاصطناعي — تنزيلات الطلاب">
-<meta property="og:description" content="Local classroom distribution hub for Teachable Machine AI image classification lesson phases, datasets, and guides.">
+<title>فصل الذكاء الاصطناعي — 4 مراحل</title>
+<meta name="description" content="أربع مراحل: صور صعبة لـ Teachable Machine ومختبر Excel ودماغ في Excel وكيف يتنبأ الذكاء الاصطناعي.">
+<meta property="og:title" content="فصل الذكاء الاصطناعي — 4 مراحل">
+<meta property="og:description" content="أربع مراحل: صور صعبة لـ Teachable Machine ومختبر Excel ودماغ في Excel وكيف يتنبأ الذكاء الاصطناعي.">
 <style>
+
 *, *::before, *::after { box-sizing: border-box; }
 :root {
   --bg-canvas: #f8fafc;
@@ -831,766 +832,95 @@ body {
   font-size: 12px;
   color: var(--text-secondary);
 }
+
+.phase-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,520px),1fr));gap:18px}
+.pcard{position:relative;background:var(--bg-surface);border:1px solid var(--border-subtle);border-radius:var(--radius-lg);padding:22px 22px 20px;display:flex;flex-direction:column;justify-content:space-between;gap:14px;box-shadow:0 1px 3px rgba(15,23,42,.06)}
+.pnum{position:absolute;top:-16px;inset-inline-start:20px;width:46px;height:46px;border-radius:50%;color:#fff;font-weight:800;font-size:24px;display:flex;align-items:center;justify-content:center;box-shadow:0 3px 10px rgba(0,0,0,.25)}
+.pcard h2{margin:12px 0 6px;font-size:23px;line-height:1.25}
+.pcard p{margin:0;color:var(--text-secondary);font-size:15.5px}
+.pkick{font-size:12.5px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;margin-top:8px}
+.pmeta{font-size:13px;color:var(--text-muted);margin:4px 0 8px}
+.prow{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.pbtn{display:inline-block;text-decoration:none;font-weight:700;font-size:15px;padding:10px 16px;border-radius:9px;color:#fff;border:2px solid transparent}
+.pbtn.alt{background:#fff;border-width:2px}
+.pcard.c1 .pnum,.pcard.c1 .pbtn:not(.alt){background:#b91c1c}.pcard.c1 .pkick{color:#b91c1c}.pcard.c1 .pbtn.alt{color:#b91c1c;border-color:#b91c1c}
+.pcard.c2 .pnum,.pcard.c2 .pbtn:not(.alt){background:#217346}.pcard.c2 .pkick{color:#217346}.pcard.c2 .pbtn.alt{color:#217346;border-color:#217346}
+.pcard.c3 .pnum,.pcard.c3 .pbtn:not(.alt){background:#4f46e5}.pcard.c3 .pkick{color:#4f46e5}.pcard.c3 .pbtn.alt{color:#4f46e5;border-color:#4f46e5}
+.pcard.c4 .pnum,.pcard.c4 .pbtn:not(.alt){background:#0f766e}.pcard.c4 .pkick{color:#0f766e}.pcard.c4 .pbtn.alt{color:#0f766e;border-color:#0f766e}
+.flow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:14px 0 4px;font-size:14.5px;color:var(--text-secondary)}
+.flow span{background:#fff;border:1px solid var(--border-subtle);border-radius:999px;padding:4px 14px}
+@media (max-width:640px){.pcard h2{font-size:20px}}
+
 </style>
 </head>
 <body>
-
-<!-- 1. TOP BAR -->
 <header class="topbar">
   <div class="topbar-wrap">
-    <a href="index-ar.html" class="brand-zone">
-      <span class="brand-icon">AI</span>
-      <span>مختبر الرؤية الحاسوبية · منصة الفصل</span>
-    </a>
-    <nav class="nav-zone">
-      <a href="#curriculum" class="nav-link">المنهج الدراسي</a>
-      <a href="#simulator" class="nav-link">محاكي الفريق الأحمر</a>
-      <a href="#downloads" class="nav-link">التنزيلات</a>
-      <a href="teacher_qr.html" class="nav-link">رمز المعلم (QR)</a>
-    </nav>
+    <a href="/" class="brand-zone"><span class="brand-icon">AI</span><span>AI Class Vision Lab</span></a>
+    <nav class="nav-zone"><a href="#phases" class="nav-link">المراحل الأربع</a><a href="teacher_qr.html" class="nav-link">QR للمعلم</a></nav>
     <div class="action-zone">
-      <a href="https://teachablemachine.withgoogle.com/" target="_blank" rel="noopener" class="btn-top-tm">
-        افتح Teachable Machine ↗
-      </a>
-      <a href="index.html" class="lang-toggle">English</a>
-      <a href="index-he.html" class="lang-toggle">עברית</a>
+      <a href="https://teachablemachine.withgoogle.com/" target="_blank" rel="noopener" class="btn-top-tm">افتح Teachable Machine ↗</a>
+      <a href="index.html" class="lang-toggle">English</a><a href="index-he.html" class="lang-toggle">עברית</a>
     </div>
   </div>
 </header>
-
 <main class="container">
-
-  <!-- 2. HERO -->
   <section class="hero" id="curriculum">
-    <div class="hero-tagline">منهج الذكاء الاصطناعي والرؤية الحاسوبية · للطلاب من 14 إلى 16 سنة</div>
-    <h1>درّب نماذج الذكاء الاصطناعي، واختبر ثغراتها، وتعلّم حمايتها</h1>
-    <p>
-      منظومة توزيع محلية تعمل بالكامل دون الحاجة لاتصال بالإنترنت داخل الفصل المدرسي.
-      تعلّم تدريب شبكات التعلم العميق ونقل المعرفة، واكتشف سبب خداع النماذج تحت الهجمات العدائية وعيوب دالة الاحتمالات.
-    </p>
-
-    <div class="trust-strip">
-      <span class="trust-item">
-        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
-        لا حاجة إلى كاميرا · صور محلية مُنتقاة 100%
-      </span>
-      <span class="trust-item">
-        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
-        يعمل محليًا عبر شبكة الواي فاي بالفصل دون إنترنت
-      </span>
-      <span class="trust-item">
-        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
-        مُهيأ لمنصة Google Teachable Machine
-      </span>
-    </div>
-
+    <div class="hero-tagline">الأسبوع 2 · الرؤية الحاسوبية · 4 مراحل</div>
+    <h1>أربع مراحل: من الصور الصعبة إلى كيف يتنبأ الذكاء الاصطناعي حقًا</h1>
+    <p>درّب ذكاءً اصطناعيًا حقيقيًا على صور أصعب بكثير. حوّل نتائجه إلى أرقام ورسوم في Excel. ابنِ ذكاءً اصطناعيًا صغيرًا داخل Excel. ثم شاهد على خريطة كيف يقرر الذكاء الاصطناعي.</p>
+    <div class="trust-strip"><span class="trust-item"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>لا حاجة إلى كاميرا</span><span class="trust-item"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>واي فاي الصف أو عبر الإنترنت</span><span class="trust-item"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>أدلة وفيديوهات: English · العربية · עברית</span></div>
     <div class="hero-actions">
-      <a class="btn-primary" href="downloads/AI_90min_All_Phases_MASTER.zip" download>
-        تنزيل كل المراحل (الحزمة الكاملة 0–13 · 5.8 ميجابايت)
-      </a>
-      <a class="btn-secondary" href="downloads/AI_90min_All_Data_Expanded.zip" download>
-        تنزيل المجلدات المفككة مسبقًا
-      </a>
-      <a class="btn-secondary" href="https://teachablemachine.withgoogle.com/" target="_blank" rel="noopener">
-        افتح Teachable Machine ↗
-      </a>
+      <a class="btn-primary" href="downloads/Four_Phases_ALL.zip" download>نزّل المراحل الأربع كلها (ZIP)</a>
+      <a class="btn-secondary" href="https://teachablemachine.withgoogle.com/" target="_blank" rel="noopener">افتح مشروع Teachable Machine ↗</a>
     </div>
-
-    <!-- Live Multi-Network Student Share Hub (Arabic) -->
     <div class="network-connect-box">
       <div class="network-connect-main">
-        <div class="net-status-dot" title="الخادم نشط"></div>
+        <div class="net-status-dot"></div>
         <div style="flex:1; min-width:240px;">
-          <div style="font-size:12px; font-weight:700; color:var(--text-muted); margin-bottom:2px;">
-            رابط اتصال الطلاب المباشر (أي شبكة أو جهاز)
-          </div>
-          <div style="font-family:monospace; font-size:14px; font-weight:700; color:var(--text-primary); word-break:break-all; direction:ltr; text-align:right;" id="display-student-url">
-            جارٍ تحميل رابط الاتصال...
-          </div>
+          <div style="font-size:12px; font-weight:700; color:var(--text-muted); margin-bottom:2px;">رابط اتصال الطلاب المباشر (أي شبكة أو جهاز)</div>
+          <div style="font-family:monospace; font-size:14px; font-weight:700; color:var(--text-primary); word-break:break-all; direction:ltr; text-align:right;" id="display-student-url">جارٍ تحميل رابط الاتصال...</div>
         </div>
         <div style="display:flex; gap:8px;">
-          <button class="btn-copy-url" onclick="copyStudentUrl()">
-            <span id="copy-btn-text">نسخ الرابط</span>
-          </button>
-          <a href="teacher_qr.html" class="btn-qr-link">
-            عرض رمز QR
-          </a>
+          <button class="btn-copy-url" onclick="copyStudentUrl()"><span id="copy-btn-text">نسخ الرابط</span></button>
+          <a href="teacher_qr.html" class="btn-qr-link">عرض رمز QR</a>
         </div>
       </div>
-      <div class="network-tips">
-        <span><b>الاتصال عبر أي شبكة:</b> يمكن للطلاب الدخول عبر هواتف آيفون وأندرويد وأجهزة كروم بوك والحواسيب المحمولة على شبكة الواي فاي بالفصل، أو عبر نقطة اتصال الجوال (Hotspot)، أو الرابط السحابي المباشر.</span>
-      </div>
+      <div class="network-tips"><span><b>الاتصال عبر أي شبكة:</b> يمكن للطلاب فتح هذه الصفحة على الهواتف واللوحيات وأجهزة كروم بوك والحواسيب على واي فاي الصف أو نقطة اتصال أو الرابط العام — بدون تثبيت أي شيء.</span></div>
     </div>
   </section>
 
-  <!-- 3. SIMULATOR -->
-  <section class="sandbox-card" id="simulator">
-    <div class="sandbox-header">
-      <div>
-        <h2>منصة التشخيص التفاعلية (الفريق الأحمر)</h2>
-        <p>استكشف كيف تُقيّم الشبكات العصبية الصور واكتشف لماذا تُعطي دالة Softmax ثقة زائفة ومفرطة لمدخلات غريبة.</p>
-      </div>
-      <div style="font-size:12px; color:var(--text-muted); direction:ltr;">
-        MobileNet 224x224 Emulation
-      </div>
-    </div>
-
-    <div class="sandbox-grid">
-      <!-- Col 1 -->
-      <div>
-        <div class="sandbox-col-title">1. اختيار عينة الاختبار</div>
-        <div class="select-input-group">
-          <label for="sample-select">اختر الصورة المراد اختبارها:</label>
-          <select id="sample-select" class="select-styled" onchange="runSimulation()">
-            <option value="apple">تفاحة قياسية (صورة عادية)</option>
-            <option value="banana">موزة قياسية (صورة عادية)</option>
-            <option value="orange">برتقالة قياسية (صورة عادية)</option>
-            <option value="tennis">🎾 كرة تنس (خارج نطاق التدريب OOD)</option>
-            <option value="basketball">🏀 كرة سلة (فخ تشابه اللون والملمس)</option>
-            <option value="texture_swap">🍏 تفاحة بجلد الموز (صراع النسيج مقابل الشكل)</option>
-            <option value="patch">🛡️ ملصق تشويش عدائي بصري</option>
-            <option value="noise">⚡ تشويش شبكي عالي التردد</option>
-            <option value="traffic">🔴 إشارة مرور حمراء (خارج نطاق التدريب حرج)</option>
-          </select>
-        </div>
-        <div class="preview-box">
-          <img id="sim-preview-img" src="preview/phase_09/adv_01_ood_tennis_ball.png" alt="معاينة الصورة" referrerpolicy="no-referrer">
-        </div>
-      </div>
-
-      <!-- Col 2 -->
-      <div>
-        <div class="sandbox-col-title">2. متغيرات الدفاع الهندسي</div>
-        <div class="controls-deck">
-          <div class="control-item">
-            <div class="control-label-row">
-              <span>انحياز النسيج مقابل الشكل:</span>
-              <span class="control-val" id="val-texture-bias">70% نسيج</span>
-            </div>
-            <input type="range" id="slider-texture-bias" min="0" max="100" value="70" class="slider" oninput="runSimulation()">
-          </div>
-
-          <div class="control-item">
-            <div class="control-label-row">
-              <span>مستوى التشويش العدائي:</span>
-              <span class="control-val" id="val-noise-level">0%</span>
-            </div>
-            <input type="range" id="slider-noise" min="0" max="100" value="0" class="slider" oninput="runSimulation()">
-          </div>
-
-          <div class="control-item">
-            <label class="toggle-switch">
-              <input type="checkbox" id="check-threshold" onchange="runSimulation()">
-              <span>حارس عتبة الثقة (رفض التوقع إذا قل عن 75%)</span>
-            </label>
-          </div>
-
-          <div class="control-item">
-            <label class="toggle-switch">
-              <input type="checkbox" id="check-fourth-class" onchange="runSimulation()">
-              <span>تفعيل فئة الدفاع الرابعة ("أخرى / خلفية")</span>
-            </label>
-          </div>
-        </div>
-      </div>
-
-      <!-- Col 3 -->
-      <div>
-        <div class="sandbox-col-title">3. توزيع احتمالات النموذج</div>
-        <div class="prediction-deck">
-          <div class="prob-row">
-            <div class="prob-header"><span>تفاح (Apple)</span><span id="prob-val-apple" class="control-val">0%</span></div>
-            <div class="prob-bar-track"><div id="prob-bar-apple" class="prob-bar-fill bar-apple" style="width:0%"></div></div>
-          </div>
-          <div class="prob-row">
-            <div class="prob-header"><span>موز (Banana)</span><span id="prob-val-banana" class="control-val">0%</span></div>
-            <div class="prob-bar-track"><div id="prob-bar-banana" class="prob-bar-fill bar-banana" style="width:0%"></div></div>
-          </div>
-          <div class="prob-row">
-            <div class="prob-header"><span>برتقال (Orange)</span><span id="prob-val-orange" class="control-val">0%</span></div>
-            <div class="prob-bar-track"><div id="prob-bar-orange" class="prob-bar-fill bar-orange" style="width:0%"></div></div>
-          </div>
-          <div class="prob-row" id="row-unknown" style="display:none;">
-            <div class="prob-header"><span>دفاع: فئة أخرى / خلفية</span><span id="prob-val-unknown" class="control-val">0%</span></div>
-            <div class="prob-bar-track"><div id="prob-bar-unknown" class="prob-bar-fill bar-unknown" style="width:0%"></div></div>
-          </div>
-
-          <div id="verdict-banner" class="verdict-box verdict-vulnerable">
-            جارٍ تحليل استجابة النموذج للثغرات...
-          </div>
-        </div>
-      </div>
+  <section id="phases">
+    <div class="section-header"><h2 class="section-title">المراحل الأربع</h2></div>
+    <div class="flow"><span>1 صور صعبة</span><span style='border:0;background:none'>→</span><span>2 أرقام Excel</span><span style='border:0;background:none'>→</span><span>3 دماغ في Excel</span><span style='border:0;background:none'>→</span><span>4 كيف يتنبأ الذكاء الاصطناعي</span></div>
+    <div class="phase-grid" id="phase-grid" style="margin-top:26px">
+    <div class="pcard c1"><div class="pnum">1</div><div><div class="pkick">المرحلة 1 · Teachable Machine · ~60 دقيقة</div><h2>صور الزعيم: صور أصعب بكثير</h2><div class="pmeta">حزمة الطلاب <bdi dir="ltr">2.9 MB</bdi> · حزمة الإصلاح <bdi dir="ltr">1.3 MB</bdi> · English · العربية · עברית</div><p>درّب ذكاءً اصطناعيًا على 120 صورة فوضوية وواقعية. ثم واجه اختبار الزعيم وصور الكابوس والفخاخ. اكتشف لماذا يفشل، وأصلح الأمر بحزمة الإصلاح ودرّب من جديد.</p></div>
+      <div><div class="prow"><a class="pbtn" href="boss/guide-ar.html#video">الدليل + الفيديو</a><a class="pbtn alt" href="boss/guide-en.html#video">English</a><a class="pbtn alt" href="boss/guide-he.html#video">עברית</a></div><div class="prow"><a class="pbtn alt" href="downloads/Phase1_Boss_Pictures_STUDENT.zip" download>حزمة الطلاب (ZIP)</a><a class="pbtn alt" href="downloads/Phase1_Boss_FIX_PACK.zip" download>حزمة الإصلاح (ZIP)</a></div></div></div>
+    <div class="pcard c2"><div class="pnum">2</div><div><div class="pkick">المرحلة 2 · Excel · ~45 دقيقة</div><h2>مختبر بيانات Excel: من أرقامك إلى رسوم</h2><div class="pmeta">دليل بالصور + فيديو · English · العربية · עברית</div><p>مختبر Excel نفسه من الأسبوع الماضي، والآن بنتائج الزعيم عندك: صيغ ودقة وخمسة رسوم بيانية (دائري وأعمدة وخطي ومبعثر وفقاعي). أرقام Teachable Machine الحقيقية مرفقة كمثال.</p></div>
+      <div><div class="prow"><a class="pbtn" href="excel/guide-ar.html#video">الدليل + الفيديو</a><a class="pbtn alt" href="excel/guide-en.html#video">English</a><a class="pbtn alt" href="excel/guide-he.html#video">עברית</a></div><div class="prow"><a class="pbtn alt" href="excel/files/Excel_Lab_Starter_BOSS_AR.xlsx" download>ملف الزعيم للبداية (Excel)</a><a class="pbtn alt" href="excel/files/Excel_Lab_Example_BOSS_AR.xlsx" download>مثال الزعيم</a><a class="pbtn alt" href="downloads/Phase2_Excel_Data_Lab.zip" download>ZIP</a></div></div></div>
+    <div class="pcard c3"><div class="pnum">3</div><div><div class="pkick">المرحلة 3 · Excel · ~60 دقيقة</div><h2>دماغ في Excel: علّم جدولًا أن يرى</h2><div class="pmeta">دليل بالصور + فيديو · English · العربية · עברית</div><p>ابنِ ذكاءً اصطناعيًا صغيرًا بالصيغ فقط. يتعلم التمييز بين التفاحة والموزة في صور 5×5 بكسل. شاهد منحنيات التعلّم، وانظر إلى ما ينظر إليه الدماغ، واوصل إلى 90% في الاختبار.</p></div>
+      <div><div class="prow"><a class="pbtn" href="brain/guide-ar.html#video">الدليل + الفيديو</a><a class="pbtn alt" href="brain/guide-en.html#video">English</a><a class="pbtn alt" href="brain/guide-he.html#video">עברית</a></div><div class="prow"><a class="pbtn alt" href="brain/files/Excel_Brain_Starter_AR.xlsx" download>ملف البداية (Excel)</a><a class="pbtn alt" href="brain/files/Excel_Brain_Example_AR.xlsx" download>المثال</a><a class="pbtn alt" href="downloads/Phase3_Excel_Brain.zip" download>ZIP</a></div></div></div>
+    <div class="pcard c4"><div class="pnum">4</div><div><div class="pkick">المرحلة 4 · محاكاة · ~35 دقيقة</div><h2>خريطة المحقق: كيف يتنبأ الذكاء الاصطناعي؟</h2><div class="pmeta">تعمل في المتصفح · <bdi dir="ltr">987 KB</bdi> · English · العربية · עברית</div><p>كيف يقرر الذكاء الاصطناعي أن الصورة تفاحة أو موزة، قطة أو كلب؟ ضع صورة جديدة على خريطة أدلة، وغيّر ما ينظر إليه، وخض التحدي: اجعله يخطئ ثم اجعله يصيب.</p></div>
+      <div><div class="prow"><a class="pbtn" href="sim/index.html?lang=ar">▶ شغّل المحاكاة</a><a class="pbtn alt" href="sim/index.html?lang=en">English</a><a class="pbtn alt" href="sim/index.html?lang=he">עברית</a><a class="pbtn alt" href="downloads/Phase4_Detective_Map.zip" download>ZIP</a></div></div></div>
     </div>
   </section>
 
-  <!-- 4. DOWNLOADS -->
-  <section id="downloads">
-    <div class="section-header">
-      <h2 class="section-title">مراحل الدرس ومجموعات التحدي</h2>
-      <div class="filter-tabs">
-        <button class="filter-btn active" onclick="filterPhases('all', this)">كل الملفات <span dir="ltr">(0–13)</span></button>
-        <button class="filter-btn" onclick="filterPhases('core', this)">الدرس الأساسي (0–7)</button>
-        <button class="filter-btn" onclick="filterPhases('hardcore', this)">المتقدم (8 – 13)</button>
-        <button class="filter-btn" onclick="filterPhases('bundles', this)">الحزم المجمعة</button>
-      </div>
-    </div>
-
-    <div class="grid" id="phase-grid">
-
-      <!-- PHASE 13 - INBOX DEFENDER (XL CHALLENGE) -->
-      <div class="card card-phase13" data-category="hardcore">
-        <div>
-          <div class="card-kicker">المرحلة 13 · تحدٍّ كبير · 45–60 دقيقة · بلا صور</div>
-          <h2>حارس البريد: درّب ذكاءً اصطناعيًا ليوقف رسائل الاحتيال</h2>
-          <div class="card-meta">لعبة + فيديو + دليل · <bdi>العربية</bdi> · English · <bdi>עברית</bdi> · بدون إنترنت</div>
-          <p>
-            ذكاء اصطناعي يقرأ <i>الكلمات</i> لا الصور. علّمه برسائل احتيال وأمان من كتابتك، وشاهد أي الكلمات يعدّها أدلة، وتغلّب على المحتالين الماكرين الذين يغيّرون حيلهم، واضبط درجة صرامة حارسك. ستة مستويات وأوسمة وفيديو مدته 3 دقائق ودليل خطوة بخطوة.
-          </p>
-        </div>
-        <div>
-          <div class="card-actions">
-            <a class="btn-download" href="inbox/guide-ar.html#video">الدليل + الفيديو</a>
-            <a class="btn-inspect" href="inbox/guide-en.html#video">English</a>
-            <a class="btn-inspect" href="inbox/guide-he.html#video">עברית</a>
-          </div>
-          <div class="card-actions" style="margin-top:10px">
-            <a class="btn-download" style="background:#334155" href="inbox/index.html?lang=ar">▶ العب اللعبة</a>
-            <a class="btn-inspect" href="downloads/Phase_13_Inbox_Defender_XL.zip" download>ZIP</a>
-          </div>
-        </div>
-      </div>
-
-      <!-- PHASE 12 - DETECTIVE MAP -->
-      <div class="card card-phase12" data-category="hardcore">
-        <div>
-          <div class="card-kicker">المرحلة 12 · محاكاة المفهوم · حوالي 35 دقيقة · الأفضل بعد المرحلة 3</div>
-          <h2>خريطة المحقق: كيف يتنبأ الذكاء الاصطناعي؟</h2>
-          <div class="card-meta">1 ميجابايت · يُلعب في المتصفح · <bdi>العربية</bdi> · English · <bdi>עברית</bdi> · صور فاكهة حقيقية + قطط وكلاب مرسومة</div>
-          <p>
-            ماذا يحدث فعلًا بين التدريب والاختبار؟ شاهد الصور تتحول إلى أرقام، وصور التدريب تقع على خريطة أدلة، وصورة جديدة تقع بينها — فيصوّت أقرب الجيران. شغّل خريطة «دماغ» الذكاء الاصطناعي، واختر الأدلة، وانظر لماذا تخدعه بعض الصور.
-          </p>
-        </div>
-        <div class="card-actions">
-          <a class="btn-download" href="sim/index.html?lang=ar">افتح المحاكاة</a>
-          <a class="btn-inspect" href="downloads/Phase_12_Detective_Map_HOW_AI_PREDICTS.zip" download>ZIP</a>
-        </div>
-      </div>
-
-      <!-- PHASE 11 - DOODLE LAB (CREATIVE) -->
-      <div class="card card-phase11" data-category="hardcore">
-        <div>
-          <div class="card-kicker">المرحلة 11 · مختبر إبداعي · حوالي 35 دقيقة</div>
-          <h2>مختبر الرسم: علّم الذكاء الاصطناعي رسوماتك</h2>
-          <div class="card-meta">23 كيلوبايت · يُلعب في المتصفح · <bdi>العربية</bdi> · English · <bdi>עברית</bdi> · بدون إنترنت</div>
-          <p>
-            اخترع فئاتك الخاصة وارسم أمثلة التدريب وشاهد ذكاءً اصطناعيًا يتعلّم منك أنت. ثم حاول خداعه وقِس دقته وتبادل الرسومات مع صديق لتكتشف لماذا يهم تنوّع الأمثلة.
-          </p>
-        </div>
-        <div class="card-actions">
-          <a class="btn-download" href="lab/index.html?lang=ar">افتح المختبر</a>
-          <a class="btn-inspect" href="downloads/Phase_11_Doodle_Lab_CREATIVE.zip" download>ZIP</a>
-        </div>
-      </div>
-
-      <!-- PHASE 10 - EXCEL DATA LAB -->
-      <div class="card card-phase10" data-category="hardcore">
-        <div>
-          <div class="card-kicker">المرحلة 10 · درس متابعة · حوالي 45 دقيقة</div>
-          <h2>مختبر البيانات في Excel: حوّل نتائج الذكاء الاصطناعي إلى رسوم بيانية</h2>
-          <div class="card-meta">2.5 ميجابايت · دليل خطوة بخطوة مع صور · <bdi>العربية</bdi> · English · <bdi>עברית</bdi></div>
-          <p>
-            اكتب النسب المئوية التي أعطاها Teachable Machine (تفاح / موز / برتقال) في Excel، واحسب الدقة بالمعادلات، وارسم خمسة رسوم: دائري وأعمدة وخطي وانتشار XY وفقاعات XYZ. يتضمن ملف بداية ومثالاً جاهزاً بكل اللغات، مع فيديو مدته 4 دقائق يشرح كل خطوة.
-          </p>
-        </div>
-        <div>
-          <div class="card-actions">
-            <a class="btn-download" href="excel/guide-ar.html#video">الدليل + الفيديو</a>
-            <a class="btn-inspect" href="excel/guide-en.html">English</a>
-            <a class="btn-inspect" href="excel/guide-he.html">עברית</a>
-          </div>
-          <div class="card-actions">
-            <a class="btn-download btn-zip" href="downloads/Phase_10_Excel_Data_Lab_FOLLOWUP.zip" download>تنزيل ملف ZIP (الدليل + ملفات Excel)</a>
-          </div>
-        </div>
-      </div>
-
-      <!-- PHASE 09 -->
-      <div class="card card-phase9" data-category="hardcore">
-        <div>
-          <div class="card-kicker">المرحلة 09 · التحدي المتقدم الخارق (الفريق الأحمر)</div>
-          <h2>التحدي العدائي واختبار المدخلات الخارجية</h2>
-          <div class="card-meta">215 كيلوبايت · 12 صورة هجوم واختبار · المفهوم: أمان الذكاء الاصطناعي والمتانة</div>
-          <p>
-            التحدي الأقوى لطلاب المرحلة الثانوية. اكشف عيب دالة Softmax والثقة الزائفة للذكاء الاصطناعي باختبار كرات التنس والسلة وتبديل الأنسجة، ثم صمم فئة رابعة دفاعية لإنقاذ النموذج.
-          </p>
-        </div>
-        <div class="card-actions">
-          <a class="btn-download" href="downloads/Phase_09_Adversarial_Gauntlet_ULTIMATE.zip" download>تنزيل ملف ZIP</a>
-          <button class="btn-inspect" onclick="openPhaseModal('phase9')">معاينة وتدقيق</button>
-        </div>
-      </div>
-
-      <!-- PHASE 08 -->
-      <div class="card card-bonus" data-category="hardcore">
-        <div>
-          <div class="card-kicker">المرحلة 08 · تحدي إضافي</div>
-          <h2>التحدي الاحترافي (صور مخادعة)</h2>
-          <div class="card-meta">13 كيلوبايت · 8 صور صعبة · المفهوم: تعلّم الاختصارات الزائفة</div>
-          <p>
-            مخصص لمن يُنهي عمله مبكرًا. يختبر هل تعلّم النموذج الخصائص البيولوجية الحقيقية للفاكهة أم اعتمد على اختصارات بسيطة مثل اللون فقط أو اتجاه الصورة أو الحجم.
-          </p>
-        </div>
-        <div class="card-actions">
-          <a class="btn-download" href="downloads/Phase_08_Expert_Challenge_BONUS.zip" download>تنزيل ملف ZIP</a>
-          <button class="btn-inspect" onclick="openPhaseModal('phase8')">معاينة وتدقيق</button>
-        </div>
-      </div>
-
-      <!-- MASTER -->
-      <div class="card card-master" data-category="bundles">
-        <div>
-          <div class="card-kicker">الحزمة الكاملة</div>
-          <h2>الحزمة الشاملة — كل المراحل <span dir="ltr" style="white-space:nowrap">(0–13)</span></h2>
-          <div class="card-meta">5.8 ميجابايت · يشمل جميع الملفات المضغوطة · دليل المعلم الشامل</div>
-          <p>
-            ملف واحد يضم كل مراحل الدرس (14 مرحلة) مع أوراق العمل ونماذج الإجابة للمعلم، وهو ممتاز للحفظ على ذاكرة فلاش في الفصل.
-          </p>
-        </div>
-        <div class="card-actions">
-          <a class="btn-download" href="downloads/AI_90min_All_Phases_MASTER.zip" download>تنزيل ملف ZIP</a>
-          <button class="btn-inspect" onclick="openPhaseModal('master')">تفاصيل الحزمة</button>
-        </div>
-      </div>
-
-      <!-- EXPANDED -->
-      <div class="card card-master" data-category="bundles">
-        <div>
-          <div class="card-kicker">الحزمة الكاملة</div>
-          <h2>الملفات الموسّعة — مجلدات مفككة مسبقًا</h2>
-          <div class="card-meta">5.9 ميجابايت · مجلدات جاهزة للرفع مباشرة دون فك ضغط</div>
-          <p>
-            جميع صور التدريب والاختبار والتحدي مفككة وجاهزة في مجلدات مرتبة؛ لتسهيل العمل في المدارس التي تحظر فتح ملفات ZIP.
-          </p>
-        </div>
-        <div class="card-actions">
-          <a class="btn-download" href="downloads/AI_90min_All_Data_Expanded.zip" download>تنزيل ملف ZIP</a>
-          <button class="btn-inspect" onclick="openPhaseModal('expanded')">تفاصيل الحزمة</button>
-        </div>
-      </div>
-
-      <!-- PHASE 00 - EASY START GAME -->
-      <div class="card card-phase0" data-category="core">
-        <div>
-          <div class="card-kicker">المرحلة 00 · بداية سهلة · حوالي 10 دقائق</div>
-          <h2>الإنسان ضد الروبوت (لعبة)</h2>
-          <div class="card-meta">195 كيلوبايت · تُلعب في المتصفح · <bdi>العربية</bdi> · English · <bdi>עברית</bdi> · بدون كاميرا وبدون إنترنت</div>
-          <p>
-            علّم روبوتًا ترتيب الفاكهة ثم حاول أن تتفوّق عليه! تعرض عليه 9 صور، ثم تتسابق معه على 12 صورة جديدة، ثم تحاول خداعه بصور صعبة. خطوة أولى ممتعة قبل Teachable Machine — ويمكنك تنزيل نتيجتك كملف لفتحه في Excel.
-          </p>
-        </div>
-        <div class="card-actions">
-          <a class="btn-download" href="game/index.html?lang=ar">العب الآن</a>
-          <a class="btn-inspect" href="downloads/Phase_00_Easy_Game_Human_vs_Robot.zip" download>ZIP</a>
-        </div>
-      </div>
-
-      <!-- PHASE 01 -->
-      <div class="card" data-category="core">
-        <div>
-          <div class="card-kicker">المرحلة 01 · 0–15 دقيقة</div>
-          <h2>الإحماء ولعبة Quick, Draw!</h2>
-          <div class="card-meta">1.5 كيلوبايت · تعليمات الإحماء · المفهوم: تمييز الأنماط</div>
-          <p>
-            مقدمة تفاعلية للتعرف على أنماط التعلم الآلي عبر لعبة رسم سريعة تمهد لفهم كيفية استخراج الشبكات العصبية للملامح.
-          </p>
-        </div>
-        <div class="card-actions">
-          <a class="btn-download" href="downloads/Phase_01_Warmup_0-15min.zip" download>تنزيل ملف ZIP</a>
-          <button class="btn-inspect" onclick="openPhaseModal('phase1')">تفاصيل</button>
-        </div>
-      </div>
-
-      <!-- PHASE 02 -->
-      <div class="card" data-category="core">
-        <div>
-          <div class="card-kicker">المرحلة 02 · 15–47 دقيقة</div>
-          <h2>تدريب نموذج الذكاء الاصطناعي</h2>
-          <div class="card-meta">753 كيلوبايت · 90 صورة تدريبية · الفئات: تفاح، موز، برتقال</div>
-          <p>
-            ارفع 30 صورة لكل صنف في Teachable Machine، ودرب نموذجك الأساسي في الرؤية الحاسوبية دون حاجة لكاميرا.
-          </p>
-        </div>
-        <div class="card-actions">
-          <a class="btn-download" href="downloads/Phase_02_Train_Model_15-47min.zip" download>تنزيل ملف ZIP</a>
-          <button class="btn-inspect" onclick="openPhaseModal('phase2')">تفاصيل</button>
-        </div>
-      </div>
-
-      <!-- PHASE 03 -->
-      <div class="card" data-category="core">
-        <div>
-          <div class="card-kicker">المرحلة 03 · 47–57 دقيقة</div>
-          <h2>الاختبار السهل والمقاييس الأساسية</h2>
-          <div class="card-meta">203 كيلوبايت · 24 صورة جديدة · نموذج تسجيل النتائج</div>
-          <p>
-            اختبر نموذجك بصور غير مرئية مسبقًا، واحسب دقة التنبؤ الأساسية وتعرف على مدى قدرة النموذج على التعميم لصور الفواكه الطبيعية.
-          </p>
-        </div>
-        <div class="card-actions">
-          <a class="btn-download" href="downloads/Phase_03_Easy_Test_47-57min.zip" download>تنزيل ملف ZIP</a>
-          <button class="btn-inspect" onclick="openPhaseModal('phase3')">تفاصيل</button>
-        </div>
-      </div>
-
-      <!-- PHASE 04 -->
-      <div class="card" data-category="core">
-        <div>
-          <div class="card-kicker">المرحلة 04 · 57–67 دقيقة</div>
-          <h2>إرباك النموذج (اختبار الضغط)</h2>
-          <div class="card-meta">490 كيلوبايت · 30 صورة أصعب · تقرير الأخطاء</div>
-          <p>
-            اكتشف نقاط الضعف: فواكه مقطعة، إضاءة غير اعتيادية، حجب جزئي وتقريب مفرط. املأ تقرير الأخطاء لتوثيق أسباب الإخفاق.
-          </p>
-        </div>
-        <div class="card-actions">
-          <a class="btn-download" href="downloads/Phase_04_Break_The_AI_57-67min.zip" download>تنزيل ملف ZIP</a>
-          <button class="btn-inspect" onclick="openPhaseModal('phase4')">تفاصيل</button>
-        </div>
-      </div>
-
-      <!-- PHASE 05 -->
-      <div class="card" data-category="core">
-        <div>
-          <div class="card-kicker">المرحلة 05 · 67–75 دقيقة</div>
-          <h2>التحسين وإعادة التدريب</h2>
-          <div class="card-meta">469 كيلوبايت · صور تدريب مستهدفة · مجموعة تحقق</div>
-          <p>
-            أضف صور تدريب مخصصة لمعالجة الأخطاء التي ظهرت في المرحلة الرابعة، ثم أعد التدريب وقس التحسن بمجموعة تحقق منفصلة.
-          </p>
-        </div>
-        <div class="card-actions">
-          <a class="btn-download" href="downloads/Phase_05_Improve_Retrain_67-75min.zip" download>تنزيل ملف ZIP</a>
-          <button class="btn-inspect" onclick="openPhaseModal('phase5')">تفاصيل</button>
-        </div>
-      </div>
-
-      <!-- PHASE 06 -->
-      <div class="card" data-category="core">
-        <div>
-          <div class="card-kicker">المرحلة 06 · 75–87 دقيقة</div>
-          <h2>تحدي الغموض وصراع الخصائص</h2>
-          <div class="card-meta">112 كيلوبايت · فواكه مختلطة وغامضة · ورقة التحدي</div>
-          <p>
-            قدّم للنموذج أكثر من نوع فاكهة في نفس الإطار أو هجينًا غامضًا، وحلل كيف تتعامل الشبكة العصبية مع تضارب إشارات الملامح.
-          </p>
-        </div>
-        <div class="card-actions">
-          <a class="btn-download" href="downloads/Phase_06_Ambiguous_Challenge_75-87min.zip" download>تنزيل ملف ZIP</a>
-          <button class="btn-inspect" onclick="openPhaseModal('phase6')">تفاصيل</button>
-        </div>
-      </div>
-
-      <!-- PHASE 07 -->
-      <div class="card" data-category="core">
-        <div>
-          <div class="card-kicker">المرحلة 07 · 87–90 دقيقة</div>
-          <h2>بطاقة الخروج والتأمل الختامي</h2>
-          <div class="card-meta">1.2 كيلوبايت · أسئلة الطلاب · نموذج إجابة المعلم</div>
-          <p>
-            لخص ما تعلمته وأجب عن الأسئلة التأملية حول اختصارات التعلم الآلي والفرط في التخصيص ومدى موثوقية الذكاء الاصطناعي في الواقع.
-          </p>
-        </div>
-        <div class="card-actions">
-          <a class="btn-download" href="downloads/Phase_07_Exit_Ticket_87-90min.zip" download>تنزيل ملف ZIP</a>
-          <button class="btn-inspect" onclick="openPhaseModal('phase7')">تفاصيل</button>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- 5. TEACHER PANEL -->
   <section class="teacher-banner">
-    <div class="teacher-info">
-      <h3>أدوات المعلم ورمز الاستجابة السريعة (QR)</h3>
-      <p>هل تحتاج إلى ربط أجهزة الطلاب بسرعة عبر شبكة الفصل؟ استخدم صفحة رمز QR المتوفرة بدون إنترنت.</p>
-    </div>
-    <div style="display:flex; gap:10px;">
-      <a href="teacher_qr.html" class="btn-secondary">افتح مولد رمز QR للمعلم ↗</a>
+    <div class="teacher-info"><h3>عمليات المعلم ورمز QR</h3><p>هل تريد أن يتصل الطلاب بسرعة عبر واي فاي الصف؟ استخدم مولّد رمز QR دون اتصال بالإنترنت.</p></div>
+    <div style="display:flex; gap:10px; flex-wrap:wrap;">
+      <a href="teacher_qr.html" class="btn-secondary">افتح مولّد QR للمعلم ↗</a>
+      <a href="downloads/Phase1_Boss_TEACHER_KEY.zip" download class="btn-secondary">مفتاح المعلم — المرحلة 1 (ZIP)</a>
       <a href="https://teachablemachine.withgoogle.com/" target="_blank" rel="noopener" class="btn-primary">افتح Teachable Machine ↗</a>
     </div>
   </section>
-
+  <p style="font-size:13px;color:var(--text-muted);margin:6px 0 30px">للمعلمين: الدرس السابق ذو 14 مرحلة ما زال متاحًا على الخادم باسم all-phases-ar.html (غير مرتبط هنا).</p>
 </main>
-
-<!-- 6. MODAL INSPECTOR -->
-<div class="modal-overlay" id="inspectModal" onclick="closeModalOnBackdrop(event)">
-  <div class="modal-dialog" role="dialog" aria-modal="true">
-    <div class="modal-header">
-      <h3 id="modalTitle">تفاصيل المرحلة</h3>
-      <button class="modal-close" onclick="closeModal()" aria-label="إغلاق النافذة">&times;</button>
-    </div>
-    <div class="modal-body" id="modalBody">
-      <!-- Dynamic Content -->
-    </div>
-    <div class="modal-footer">
-      <button class="btn-secondary" onclick="closeModal()">إغلاق</button>
-      <a id="modalDownloadBtn" class="btn-primary" href="#" download>تنزيل ملف ZIP</a>
-    </div>
-  </div>
-</div>
-
 <script>
-// SIMULATOR LOGIC
-const SAMPLES = {
-  apple: { name: "تفاحة قياسية", img: "preview/phase_08/expert_04_upside_down_apple.png", appleBase: 95, bananaBase: 2, orangeBase: 3, isOOD: false, type: "فاكهة طبيعية" },
-  banana: { name: "موزة قياسية", img: "preview/phase_08/expert_03_tiny_banana_corner.png", appleBase: 3, bananaBase: 94, orangeBase: 3, isOOD: false, type: "فاكهة طبيعية" },
-  orange: { name: "برتقالة قياسية", img: "preview/phase_08/expert_06_washed_out_orange.png", appleBase: 4, bananaBase: 2, orangeBase: 94, isOOD: false, type: "فاكهة طبيعية" },
-  tennis: { name: "كرة تنس (خارج النطاق)", img: "preview/phase_09/adv_01_ood_tennis_ball.png", appleBase: 12, bananaBase: 42, orangeBase: 46, isOOD: true, type: "مدخل خارج التدريب OOD" },
-  basketball: { name: "كرة سلة (فخ الملمس واللون)", img: "preview/phase_09/adv_02_ood_basketball.png", appleBase: 8, bananaBase: 1, orangeBase: 91, isOOD: true, type: "فخ اختصار اللون" },
-  texture_swap: { name: "تفاحة بجلد الموز", img: "preview/phase_09/adv_03_texture_swap_apple_banana.png", appleBase: 45, bananaBase: 50, orangeBase: 5, isOOD: false, type: "صراع النسيج مقابل الشكل" },
-  patch: { name: "ملصق تشويش عدائي", img: "preview/phase_09/adv_04_adversarial_patch_sticker.png", appleBase: 62, bananaBase: 28, orangeBase: 10, isOOD: false, type: "هجوم عدائي موضعي" },
-  noise: { name: "تشويش شبكي عالي التردد", img: "preview/phase_09/adv_05_checkerboard_frequency_noise.png", appleBase: 35, bananaBase: 30, orangeBase: 35, isOOD: false, type: "اضطراب ترددي" },
-  traffic: { name: "إشارة مرور حمراء (حرج)", img: "preview/phase_09/adv_09_ood_traffic_light_red.png", appleBase: 88, bananaBase: 3, orangeBase: 9, isOOD: true, type: "مدخل خارج التدريب ذو أهمية أمنية" }
-};
-
-function runSimulation() {
-  const sampleKey = document.getElementById('sample-select').value;
-  const sample = SAMPLES[sampleKey] || SAMPLES.tennis;
-  const textureBias = parseInt(document.getElementById('slider-texture-bias').value, 10);
-  const noise = parseInt(document.getElementById('slider-noise').value, 10);
-  const thresholdActive = document.getElementById('check-threshold').checked;
-  const fourthClassActive = document.getElementById('check-fourth-class').checked;
-
-  document.getElementById('val-texture-bias').textContent = textureBias + '% نسيج';
-  document.getElementById('val-noise-level').textContent = noise + '%';
-  document.getElementById('sim-preview-img').src = sample.img;
-
-  let rawApple = sample.appleBase;
-  let rawBanana = sample.bananaBase;
-  let rawOrange = sample.orangeBase;
-  let rawUnknown = 0;
-
-  if (sampleKey === 'texture_swap') {
-    rawBanana = 10 + (textureBias * 0.8);
-    rawApple = 90 - (textureBias * 0.7);
-  }
-
-  if (noise > 0) {
-    const spread = noise * 0.35;
-    rawApple += (Math.random() - 0.5) * spread;
-    rawBanana += (Math.random() - 0.5) * spread;
-    rawOrange += (Math.random() - 0.5) * spread;
-  }
-
-  if (fourthClassActive) {
-    document.getElementById('row-unknown').style.display = 'flex';
-    if (sample.isOOD) {
-      rawUnknown = 85 + (Math.random() * 10);
-      rawApple *= 0.15;
-      rawBanana *= 0.15;
-      rawOrange *= 0.15;
-    } else {
-      rawUnknown = 4 + (Math.random() * 4);
-    }
-  } else {
-    document.getElementById('row-unknown').style.display = 'none';
-  }
-
-  let sum = rawApple + rawBanana + rawOrange + (fourthClassActive ? rawUnknown : 0);
-  if (sum <= 0) sum = 1;
-  const pApple = Math.max(0, Math.round((rawApple / sum) * 100));
-  const pBanana = Math.max(0, Math.round((rawBanana / sum) * 100));
-  const pOrange = Math.max(0, Math.round((rawOrange / sum) * 100));
-  const pUnknown = fourthClassActive ? Math.max(0, 100 - (pApple + pBanana + pOrange)) : 0;
-
-  document.getElementById('prob-val-apple').textContent = pApple + '%';
-  document.getElementById('prob-bar-apple').style.width = pApple + '%';
-
-  document.getElementById('prob-val-banana').textContent = pBanana + '%';
-  document.getElementById('prob-bar-banana').style.width = pBanana + '%';
-
-  document.getElementById('prob-val-orange').textContent = pOrange + '%';
-  document.getElementById('prob-bar-orange').style.width = pOrange + '%';
-
-  if (fourthClassActive) {
-    document.getElementById('prob-val-unknown').textContent = pUnknown + '%';
-    document.getElementById('prob-bar-unknown').style.width = pUnknown + '%';
-  }
-
-  const maxProb = Math.max(pApple, pBanana, pOrange, pUnknown);
-  const verdictBanner = document.getElementById('verdict-banner');
-
-  if (sample.isOOD && !fourthClassActive && (!thresholdActive || maxProb >= 75)) {
-    verdictBanner.className = 'verdict-box verdict-vulnerable';
-    verdictBanner.innerHTML = '<b>ثغرة حرجة مكتشفة:</b> هذا العنصر ليس فاكهة على الإطلاق! لكن دالة Softmax أجبرت النموذج على التخمين بنسبة ثقة ' + maxProb + '%. لحماية النظام، يجب إضافة فئة دفاعية رابعة أو تفعيل حد أدنى للثقة.';
-  } else if (sample.isOOD && thresholdActive && maxProb < 75) {
-    verdictBanner.className = 'verdict-box verdict-safe';
-    verdictBanner.innerHTML = '<b>تفعيل حارس عتبة الثقة:</b> أعلى نسبة ثقة (' + maxProb + '%) أقل من حد الرفض (75%). تم وضع إشارة [غير معترف به / ثقة منخفضة] لحماية النظام.';
-  } else if (sample.isOOD && fourthClassActive && pUnknown >= 60) {
-    verdictBanner.className = 'verdict-box verdict-safe';
-    verdictBanner.innerHTML = '<b>نجاح الدفاع الهندسي:</b> الفئة الرابعة ("أخرى / خلفية") التقطت هذا العنصر الغريب بنسبة ' + pUnknown + '% ومنعت الخطأ الكارثي.';
-  } else if (sampleKey === 'texture_swap') {
-    const winner = pBanana > pApple ? 'موز (تغلّب النسيج واللون على الشكل الهندسي)' : 'تفاح (تغلّب الشكل الهندسي على النسيج)';
-    verdictBanner.className = 'verdict-box verdict-vulnerable';
-    verdictBanner.innerHTML = '<b>تحليل انحياز النسيج:</b> تم التصنيف كـ: ' + winner + '. الشبكات العصبية العميقة تميل بطبيعتها إلى التركيز على النسيج السطحي أكثر من الهيكل الكلي.';
-  } else {
-    verdictBanner.className = 'verdict-box verdict-safe';
-    verdictBanner.innerHTML = '<b>تنبؤ طبيعي:</b> تعرّف النموذج بنجاح على ' + sample.name + ' بنسبة ثقة ' + maxProb + '%.';
-  }
-}
-
-// FILTER PHASES
-function filterPhases(category, btn) {
-  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-
-  const cards = document.querySelectorAll('#phase-grid .card');
-  cards.forEach(card => {
-    const cardCat = card.getAttribute('data-category');
-    if (category === 'all') {
-      card.style.display = 'flex';
-    } else if (category === 'core' && cardCat === 'core') {
-      card.style.display = 'flex';
-    } else if (category === 'hardcore' && cardCat === 'hardcore') {
-      card.style.display = 'flex';
-    } else if (category === 'bundles' && cardCat === 'bundles') {
-      card.style.display = 'flex';
-    } else {
-      card.style.display = 'none';
-    }
-  });
-}
-
-// MODAL INSPECTOR DATA
-const PHASE_DETAILS = {
-  phase9: {
-    title: "المرحلة 09 — التحدي العدائي واختبار المدخلات الخارجية (للمتقدمين)",
-    zip: "downloads/Phase_09_Adversarial_Gauntlet_ULTIMATE.zip",
-    body: `
-      <p><b>المستوى المستهدف:</b> طلاب المرحلة الثانوية (14–16 سنة)</p>
-      <p>في هذه المرحلة، يتقمّص الطلاب دور فريق التدقيق الأمني (Red Team) لاكتشاف ثغرات النموذج عبر 12 هجمة بصرية مصممة رياضيًا.</p>
-      <p><b>نماذج من صور الاختبار بالداخل:</b></p>
-      <div class="modal-preview-grid">
-        <div class="thumb-item"><img src="preview/phase_09/adv_01_ood_tennis_ball.png" alt="كرة تنس"><span>كرة تنس (OOD)</span></div>
-        <div class="thumb-item"><img src="preview/phase_09/adv_02_ood_basketball.png" alt="كرة سلة"><span>كرة سلة (OOD)</span></div>
-        <div class="thumb-item"><img src="preview/phase_09/adv_03_texture_swap_apple_banana.png" alt="تبديل النسيج"><span>تبديل النسيج</span></div>
-        <div class="thumb-item"><img src="preview/phase_09/adv_04_adversarial_patch_sticker.png" alt="ملصق تشويش"><span>ملصق تشويش</span></div>
-        <div class="thumb-item"><img src="preview/phase_09/adv_05_checkerboard_frequency_noise.png" alt="تشويش شبكي"><span>تشويش ترددي</span></div>
-        <div class="thumb-item"><img src="preview/phase_09/adv_09_ood_traffic_light_red.png" alt="ضوء أحمر"><span>إشارة مرور</span></div>
-      </div>
-      <p><b>الملفات المضمنة في الأرشيف:</b></p>
-      <ul>
-        <li><code>STUDENT_START_HERE.txt</code> — دليل البداية السريعة للتدقيق الأمني</li>
-        <li><code>MISSION_BRIEF.txt</code> — شرح مصيدة دالة Softmax والثقة الزائفة</li>
-        <li><code>AUDIT_WORKSHEET.txt</code> — ورقة تسجيل النتائج ونسب الثقة والأسئلة التحليلية</li>
-        <li><code>TEACHER_KEY_AND_DEBRIEF.txt</code> — نموذج إجابات المعلم وأسئلة النقاش الصفي</li>
-        <li><code>DATA_ADVERSARIAL_GAUNTLET/</code> — 12 صورة هجوم واختبار بدقة عالية (256×256)</li>
-      </ul>
-    `
-  },
-  phase8: {
-    title: "المرحلة 08 — التحدي الاحترافي (إضافية)",
-    zip: "downloads/Phase_08_Expert_Challenge_BONUS.zip",
-    body: `
-      <p><b>المستوى المستهدف:</b> من ينهي العمل مبكرًا</p>
-      <p>8 صور صعبة تكشف تعلم النموذج للاختصارات السطحية مثل فحص اللون فقط أو التأثر باتجاه الصورة أو حجمها.</p>
-      <div class="modal-preview-grid">
-        <div class="thumb-item"><img src="preview/phase_08/expert_01_round_ball_no_stem.png" alt="كرة"><span>كرة مجردة</span></div>
-        <div class="thumb-item"><img src="preview/phase_08/expert_02_green_apple.png" alt="تفاحة خضراء"><span>تفاحة خضراء</span></div>
-        <div class="thumb-item"><img src="preview/phase_08/expert_03_tiny_banana_corner.png" alt="موزة صغيرة"><span>موزة بالزاوية</span></div>
-        <div class="thumb-item"><img src="preview/phase_08/expert_04_upside_down_apple.png" alt="مقلوبة"><span>تفاحة مقلوبة</span></div>
-      </div>
-      <p><b>الملفات بالداخل:</b> مجلد <code>DATA_EXPERT/</code> (8 صور)، ونموذج النتائج وملاحظات المعلم.</p>
-    `
-  },
-  master: {
-    title: "الحزمة الشاملة — كل المراحل (0–13)",
-    zip: "downloads/AI_90min_All_Phases_MASTER.zip",
-    body: `
-      <p>ملف التحميل الرئيسي الذي يحتوي على كل مراحل الدرس (14 مرحلة) مع أوراق العمل ونماذج المعلم.</p>
-      <p>الحجم: <b>5.8 ميجابايت</b>. يُفك ضغطه مرة واحدة على جهاز المعلم.</p>
-    `
-  },
-  expanded: {
-    title: "الملفات الموسّعة — مجلدات مفككة مسبقًا",
-    zip: "downloads/AI_90min_All_Data_Expanded.zip",
-    body: `
-      <p>جميع صور ومجلدات التدريب مفككة وجاهزة للاستخدام في المدارس التي تحظر ملفات ZIP.</p>
-    `
-  },
-  phase2: {
-    title: "المرحلة 02 — تدريب نموذج الذكاء الاصطناعي",
-    zip: "downloads/Phase_02_Train_Model_15-47min.zip",
-    body: `
-      <p><b>المدة:</b> 15–47 دقيقة</p>
-      <p>يحتوي على 90 صورة تدريبية موزعة بالتساوي بين التفاح (30) والموز (30) والبرتقال (30)، وجاهزة للرفع المباشر في Teachable Machine.</p>
-    `
-  }
-};
-
-function openPhaseModal(phaseKey) {
-  const data = PHASE_DETAILS[phaseKey] || {
-    title: "تفاصيل المرحلة",
-    zip: "downloads/AI_90min_All_Phases_MASTER.zip",
-    body: "<p>حزمة الدرس القياسية مع مجموعات البيانات وأوراق العمل.</p>"
-  };
-  document.getElementById('modalTitle').textContent = data.title;
-  document.getElementById('modalBody').innerHTML = data.body;
-  document.getElementById('modalDownloadBtn').href = data.zip;
-  document.getElementById('inspectModal').classList.add('open');
-}
-
-function closeModal() {
-  document.getElementById('inspectModal').classList.remove('open');
-}
-
-function closeModalOnBackdrop(e) {
-  if (e.target.id === 'inspectModal') {
-    closeModal();
-  }
-}
-
-function initConnectionBar() {
-  const urlDisplay = document.getElementById('display-student-url');
-  if (urlDisplay) {
-    urlDisplay.textContent = location.origin + '/';
-  }
-}
-
-function copyStudentUrl() {
-  const url = location.origin + '/';
-  const textEl = document.getElementById('copy-btn-text');
-  if (navigator.clipboard && navigator.clipboard.writeText) {
-    navigator.clipboard.writeText(url).then(() => {
-      if (textEl) {
-        textEl.textContent = 'تم النسخ!';
-        setTimeout(() => { textEl.textContent = 'نسخ الرابط'; }, 2500);
-      }
-    }).catch(() => fallbackCopy(url, textEl));
-  } else {
-    fallbackCopy(url, textEl);
-  }
-}
-
-function fallbackCopy(text, textEl) {
-  const tempInput = document.createElement('input');
-  tempInput.value = text;
-  document.body.appendChild(tempInput);
-  tempInput.select();
-  document.execCommand('copy');
-  document.body.removeChild(tempInput);
-  if (textEl) {
-    textEl.textContent = 'تم النسخ!';
-    setTimeout(() => { textEl.textContent = 'نسخ الرابط'; }, 2500);
-  }
-}
-
-window.addEventListener('DOMContentLoaded', () => {
-  initConnectionBar();
-  runSimulation();
-});
+function initConnectionBar(){var u=document.getElementById('display-student-url');if(u){u.textContent=location.origin+'/';}}
+function copyStudentUrl(){var url=location.origin+'/',el=document.getElementById('copy-btn-text'),done=function(){if(el){el.textContent='تم نسخ الرابط!';setTimeout(function(){el.textContent='نسخ الرابط';},2500);}};
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(url).then(done).catch(function(){fb(url,done);});}else{fb(url,done);}}
+function fb(text,done){var i=document.createElement('input');i.value=text;document.body.appendChild(i);i.select();try{document.execCommand('copy');}catch(e){}document.body.removeChild(i);done();}
+window.addEventListener('DOMContentLoaded',initConnectionBar);
 </script>
-
 </body>
 </html>

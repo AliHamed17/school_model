@@ -1,13 +1,14 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>AI Class — Student Downloads</title>
-<meta name="description" content="Local classroom distribution hub for Teachable Machine AI image classification lesson phases, datasets, and guides.">
-<meta property="og:title" content="AI Class — Student Downloads">
-<meta property="og:description" content="Local classroom distribution hub for Teachable Machine AI image classification lesson phases, datasets, and guides.">
+<title>AI Class — 4 Phases</title>
+<meta name="description" content="Four classroom phases: hard pictures for Teachable Machine, Excel data lab, Excel brain, and how an AI predicts.">
+<meta property="og:title" content="AI Class — 4 Phases">
+<meta property="og:description" content="Four classroom phases: hard pictures for Teachable Machine, Excel data lab, Excel brain, and how an AI predicts.">
 <style>
+
 *, *::before, *::after { box-sizing: border-box; }
 :root {
   --bg-canvas: #f8fafc;
@@ -831,773 +832,95 @@ body {
   font-size: 12px;
   color: var(--text-secondary);
 }
+
+.phase-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,520px),1fr));gap:18px}
+.pcard{position:relative;background:var(--bg-surface);border:1px solid var(--border-subtle);border-radius:var(--radius-lg);padding:22px 22px 20px;display:flex;flex-direction:column;justify-content:space-between;gap:14px;box-shadow:0 1px 3px rgba(15,23,42,.06)}
+.pnum{position:absolute;top:-16px;inset-inline-start:20px;width:46px;height:46px;border-radius:50%;color:#fff;font-weight:800;font-size:24px;display:flex;align-items:center;justify-content:center;box-shadow:0 3px 10px rgba(0,0,0,.25)}
+.pcard h2{margin:12px 0 6px;font-size:23px;line-height:1.25}
+.pcard p{margin:0;color:var(--text-secondary);font-size:15.5px}
+.pkick{font-size:12.5px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;margin-top:8px}
+.pmeta{font-size:13px;color:var(--text-muted);margin:4px 0 8px}
+.prow{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.pbtn{display:inline-block;text-decoration:none;font-weight:700;font-size:15px;padding:10px 16px;border-radius:9px;color:#fff;border:2px solid transparent}
+.pbtn.alt{background:#fff;border-width:2px}
+.pcard.c1 .pnum,.pcard.c1 .pbtn:not(.alt){background:#b91c1c}.pcard.c1 .pkick{color:#b91c1c}.pcard.c1 .pbtn.alt{color:#b91c1c;border-color:#b91c1c}
+.pcard.c2 .pnum,.pcard.c2 .pbtn:not(.alt){background:#217346}.pcard.c2 .pkick{color:#217346}.pcard.c2 .pbtn.alt{color:#217346;border-color:#217346}
+.pcard.c3 .pnum,.pcard.c3 .pbtn:not(.alt){background:#4f46e5}.pcard.c3 .pkick{color:#4f46e5}.pcard.c3 .pbtn.alt{color:#4f46e5;border-color:#4f46e5}
+.pcard.c4 .pnum,.pcard.c4 .pbtn:not(.alt){background:#0f766e}.pcard.c4 .pkick{color:#0f766e}.pcard.c4 .pbtn.alt{color:#0f766e;border-color:#0f766e}
+.flow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:14px 0 4px;font-size:14.5px;color:var(--text-secondary)}
+.flow span{background:#fff;border:1px solid var(--border-subtle);border-radius:999px;padding:4px 14px}
+@media (max-width:640px){.pcard h2{font-size:20px}}
+
 </style>
 </head>
 <body>
-
-<!-- 1. TOP BAR -->
 <header class="topbar">
   <div class="topbar-wrap">
-    <a href="/" class="brand-zone">
-      <span class="brand-icon">AI</span>
-      <span>AI Class Vision Lab</span>
-    </a>
-    <nav class="nav-zone">
-      <a href="#curriculum" class="nav-link">Curriculum</a>
-      <a href="#simulator" class="nav-link">Red Team Simulator</a>
-      <a href="#downloads" class="nav-link">Downloads</a>
-      <a href="teacher_qr.html" class="nav-link">Teacher QR</a>
-    </nav>
+    <a href="/" class="brand-zone"><span class="brand-icon">AI</span><span>AI Class Vision Lab</span></a>
+    <nav class="nav-zone"><a href="#phases" class="nav-link">The 4 phases</a><a href="teacher_qr.html" class="nav-link">Teacher QR</a></nav>
     <div class="action-zone">
-      <a href="https://teachablemachine.withgoogle.com/" target="_blank" rel="noopener" class="btn-top-tm">
-        Open Teachable Machine ↗
-      </a>
-      <a href="index-ar.html" class="lang-toggle">العربية</a>
-      <a href="index-he.html" class="lang-toggle">עברית</a>
+      <a href="https://teachablemachine.withgoogle.com/" target="_blank" rel="noopener" class="btn-top-tm">Open Teachable Machine ↗</a>
+      <a href="index-ar.html" class="lang-toggle">العربية</a><a href="index-he.html" class="lang-toggle">עברית</a>
     </div>
   </div>
 </header>
-
 <main class="container">
-
-  <!-- 2. HERO SECTION -->
   <section class="hero" id="curriculum">
-    <div class="hero-tagline">Computer Vision STEM Curriculum · Ages 14–16</div>
-    <h1>Train, Audit, and Defend Image Classifiers</h1>
-    <p>
-      An offline-ready classroom distribution system for middle &amp; high school students.
-      Train transfer-learning neural networks, stress-test their vulnerabilities, and discover why deep learning models hallucinate under adversarial attacks.
-    </p>
-
-    <div class="trust-strip">
-      <span class="trust-item">
-        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
-        No Camera Required · 100% Curated Local Datasets
-      </span>
-      <span class="trust-item">
-        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
-        Classroom LAN &amp; Offline Compatible
-      </span>
-      <span class="trust-item">
-        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
-        Google Teachable Machine Optimized
-      </span>
-    </div>
-
+    <div class="hero-tagline">Week 2 · Computer Vision · 4 phases</div>
+    <h1>Four phases: from hard pictures to how an AI really predicts</h1>
+    <p>Train a real AI on much harder pictures. Turn its results into Excel numbers and charts. Build a tiny AI inside Excel. Then see on a map how an AI decides.</p>
+    <div class="trust-strip"><span class="trust-item"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>No camera needed</span><span class="trust-item"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>Classroom Wi-Fi or online</span><span class="trust-item"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>Guides and videos: English · العربية · עברית</span></div>
     <div class="hero-actions">
-      <a class="btn-primary" href="downloads/AI_90min_All_Phases_MASTER.zip" download>
-        Download All Phases (Master Bundle · 5.8 MB)
-      </a>
-      <a class="btn-secondary" href="downloads/AI_90min_All_Data_Expanded.zip" download>
-        Download Expanded Folders
-      </a>
-      <a class="btn-secondary" href="https://teachablemachine.withgoogle.com/" target="_blank" rel="noopener">
-        Open Teachable Machine Project ↗
-      </a>
+      <a class="btn-primary" href="downloads/Four_Phases_ALL.zip" download>Download all 4 phases (ZIP)</a>
+      <a class="btn-secondary" href="https://teachablemachine.withgoogle.com/" target="_blank" rel="noopener">Open Teachable Machine Project ↗</a>
     </div>
-
-    <!-- Live Multi-Network Student Share Hub -->
     <div class="network-connect-box">
       <div class="network-connect-main">
-        <div class="net-status-dot" title="Server Active"></div>
+        <div class="net-status-dot"></div>
         <div style="flex:1; min-width:240px;">
-          <div style="font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:0.04em; color:var(--text-muted); margin-bottom:2px;">
-            Student Direct Connection Link (Any Network / Any Device)
-          </div>
-          <div style="font-family:monospace; font-size:14px; font-weight:700; color:var(--text-primary); word-break:break-all;" id="display-student-url">
-            Loading connection link...
-          </div>
+          <div style="font-size:12px; font-weight:700; color:var(--text-muted); margin-bottom:2px;">Student Direct Connection Link (Any Network / Any Device)</div>
+          <div style="font-family:monospace; font-size:14px; font-weight:700; color:var(--text-primary); word-break:break-all; direction:ltr; text-align:left;" id="display-student-url">Loading connection link...</div>
         </div>
         <div style="display:flex; gap:8px;">
-          <button class="btn-copy-url" onclick="copyStudentUrl()">
-            <span id="copy-btn-text">Copy Link</span>
-          </button>
-          <a href="teacher_qr.html" class="btn-qr-link">
-            Show QR Code
-          </a>
+          <button class="btn-copy-url" onclick="copyStudentUrl()"><span id="copy-btn-text">Copy Link</span></button>
+          <a href="teacher_qr.html" class="btn-qr-link">Show QR Code</a>
         </div>
       </div>
-      <div class="network-tips">
-        <span><b>Any Network Mode:</b> Students can connect from iPhones, Androids, Chromebooks, or laptops on local classroom Wi-Fi, mobile hotspot, or the public cloud link with no configuration required.</span>
-      </div>
+      <div class="network-tips"><span><b>Any Network Mode:</b> students can open this page on phones, tablets, Chromebooks or laptops on the classroom Wi-Fi, a hotspot, or the public link — nothing to install.</span></div>
     </div>
   </section>
 
-  <!-- 3. INTERACTIVE RED TEAM SIMULATOR -->
-  <section class="sandbox-card" id="simulator">
-    <div class="sandbox-header">
-      <div>
-        <h2>Interactive Red Team Diagnostic Bench</h2>
-        <p>Explore how CNN models evaluate images and discover why Softmax normalization tricks AI into false confidence.</p>
-      </div>
-      <div style="font-size:12px; color:var(--text-muted); font-variant-numeric:tabular-nums;">
-        Pedagogical Model: MobileNet 224x224 Emulation
-      </div>
-    </div>
-
-    <div class="sandbox-grid">
-      <!-- Col 1: Select Test Vector -->
-      <div>
-        <div class="sandbox-col-title">1. Test Input Sample</div>
-        <div class="select-input-group">
-          <label for="sample-select">Choose Attack / Test Image:</label>
-          <select id="sample-select" class="select-styled" onchange="runSimulation()">
-            <option value="apple">Standard Apple (Training Baseline)</option>
-            <option value="banana">Standard Banana (Training Baseline)</option>
-            <option value="orange">Standard Orange (Training Baseline)</option>
-            <option value="tennis">🎾 Tennis Ball (Out-of-Distribution)</option>
-            <option value="basketball">🏀 Basketball (Color/Pebble Shortcut)</option>
-            <option value="texture_swap">🍏 Texture-Swap (Apple Shape + Banana Skin)</option>
-            <option value="patch">🛡️ Optical Adversarial Patch Sticker</option>
-            <option value="noise">⚡ High-Frequency Checkerboard Noise</option>
-            <option value="traffic">🔴 Red Stop Light (Safety-Critical OOD)</option>
-          </select>
-        </div>
-        <div class="preview-box">
-          <img id="sim-preview-img" src="preview/phase_09/adv_01_ood_tennis_ball.png" alt="Test Preview" referrerpolicy="no-referrer">
-        </div>
-      </div>
-
-      <!-- Col 2: Architectural Defense Parameters -->
-      <div>
-        <div class="sandbox-col-title">2. CNN Defense Parameters</div>
-        <div class="controls-deck">
-          <div class="control-item">
-            <div class="control-label-row">
-              <span>Texture vs. Shape Bias:</span>
-              <span class="control-val" id="val-texture-bias">70% Texture</span>
-            </div>
-            <input type="range" id="slider-texture-bias" min="0" max="100" value="70" class="slider" oninput="runSimulation()">
-          </div>
-
-          <div class="control-item">
-            <div class="control-label-row">
-              <span>Frequency Noise Perturbation:</span>
-              <span class="control-val" id="val-noise-level">0%</span>
-            </div>
-            <input type="range" id="slider-noise" min="0" max="100" value="0" class="slider" oninput="runSimulation()">
-          </div>
-
-          <div class="control-item">
-            <label class="toggle-switch">
-              <input type="checkbox" id="check-threshold" onchange="runSimulation()">
-              <span>Confidence Threshold Guard (&ge; 75%)</span>
-            </label>
-          </div>
-
-          <div class="control-item">
-            <label class="toggle-switch">
-              <input type="checkbox" id="check-fourth-class" onchange="runSimulation()">
-              <span>Train 4th Defense Class ("Other / Background")</span>
-            </label>
-          </div>
-        </div>
-      </div>
-
-      <!-- Col 3: Neural Probability Distribution -->
-      <div>
-        <div class="sandbox-col-title">3. Model Output Probabilities</div>
-        <div class="prediction-deck">
-          <div class="prob-row">
-            <div class="prob-header"><span>Apple</span><span id="prob-val-apple" class="control-val">0%</span></div>
-            <div class="prob-bar-track"><div id="prob-bar-apple" class="prob-bar-fill bar-apple" style="width:0%"></div></div>
-          </div>
-          <div class="prob-row">
-            <div class="prob-header"><span>Banana</span><span id="prob-val-banana" class="control-val">0%</span></div>
-            <div class="prob-bar-track"><div id="prob-bar-banana" class="prob-bar-fill bar-banana" style="width:0%"></div></div>
-          </div>
-          <div class="prob-row">
-            <div class="prob-header"><span>Orange</span><span id="prob-val-orange" class="control-val">0%</span></div>
-            <div class="prob-bar-track"><div id="prob-bar-orange" class="prob-bar-fill bar-orange" style="width:0%"></div></div>
-          </div>
-          <div class="prob-row" id="row-unknown" style="display:none;">
-            <div class="prob-header"><span>Defense: Other / Negative</span><span id="prob-val-unknown" class="control-val">0%</span></div>
-            <div class="prob-bar-track"><div id="prob-bar-unknown" class="prob-bar-fill bar-unknown" style="width:0%"></div></div>
-          </div>
-
-          <div id="verdict-banner" class="verdict-box verdict-vulnerable">
-            Analyzing model vulnerability...
-          </div>
-        </div>
-      </div>
+  <section id="phases">
+    <div class="section-header"><h2 class="section-title">The four phases</h2></div>
+    <div class="flow"><span>1 Hard pictures</span><span style='border:0;background:none'>→</span><span>2 Excel numbers</span><span style='border:0;background:none'>→</span><span>3 Excel brain</span><span style='border:0;background:none'>→</span><span>4 How an AI predicts</span></div>
+    <div class="phase-grid" id="phase-grid" style="margin-top:26px">
+    <div class="pcard c1"><div class="pnum">1</div><div><div class="pkick">Phase 1 · Teachable Machine · ~60 min</div><h2>Boss Pictures: much harder pictures</h2><div class="pmeta">Student pack <bdi dir="ltr">2.9 MB</bdi> · Fix Pack <bdi dir="ltr">1.3 MB</bdi> · English · العربية · עברית</div><p>Train an AI on 120 messy, realistic pictures. Then face the Boss test, the Nightmare pictures and the Traps. Find out why it fails, fix it with the Fix Pack and train again.</p></div>
+      <div><div class="prow"><a class="pbtn" href="boss/guide-en.html#video">Guide + Video</a><a class="pbtn alt" href="boss/guide-ar.html#video">العربية</a><a class="pbtn alt" href="boss/guide-he.html#video">עברית</a></div><div class="prow"><a class="pbtn alt" href="downloads/Phase1_Boss_Pictures_STUDENT.zip" download>Student pack (ZIP)</a><a class="pbtn alt" href="downloads/Phase1_Boss_FIX_PACK.zip" download>Fix Pack (ZIP)</a></div></div></div>
+    <div class="pcard c2"><div class="pnum">2</div><div><div class="pkick">Phase 2 · Excel · ~45 min</div><h2>Excel Data Lab: from your numbers to charts</h2><div class="pmeta">Guide with pictures + video · English · العربية · עברית</div><p>The same Excel lab as last week, now with your Boss results: formulas, accuracy, and five charts (pie, column, line, scatter, bubble). Real Teachable Machine numbers are included as an example.</p></div>
+      <div><div class="prow"><a class="pbtn" href="excel/guide-en.html#video">Guide + Video</a><a class="pbtn alt" href="excel/guide-ar.html#video">العربية</a><a class="pbtn alt" href="excel/guide-he.html#video">עברית</a></div><div class="prow"><a class="pbtn alt" href="excel/files/Excel_Lab_Starter_BOSS_EN.xlsx" download>Boss starter (Excel)</a><a class="pbtn alt" href="excel/files/Excel_Lab_Example_BOSS_EN.xlsx" download>Boss example</a><a class="pbtn alt" href="downloads/Phase2_Excel_Data_Lab.zip" download>ZIP</a></div></div></div>
+    <div class="pcard c3"><div class="pnum">3</div><div><div class="pkick">Phase 3 · Excel · ~60 min</div><h2>Excel Brain: teach a spreadsheet to see</h2><div class="pmeta">Guide with pictures + video · English · العربية · עברית</div><p>Build a tiny AI with only formulas. It learns to tell an apple from a banana in 5×5-pixel pictures. Watch the learning curves, see what the brain looks at, and reach 90% on the test.</p></div>
+      <div><div class="prow"><a class="pbtn" href="brain/guide-en.html#video">Guide + Video</a><a class="pbtn alt" href="brain/guide-ar.html#video">العربية</a><a class="pbtn alt" href="brain/guide-he.html#video">עברית</a></div><div class="prow"><a class="pbtn alt" href="brain/files/Excel_Brain_Starter_EN.xlsx" download>Starter (Excel)</a><a class="pbtn alt" href="brain/files/Excel_Brain_Example_EN.xlsx" download>Example</a><a class="pbtn alt" href="downloads/Phase3_Excel_Brain.zip" download>ZIP</a></div></div></div>
+    <div class="pcard c4"><div class="pnum">4</div><div><div class="pkick">Phase 4 · Simulation · ~35 min</div><h2>Detective Map: how does an AI predict?</h2><div class="pmeta">Plays in the browser · <bdi dir="ltr">987 KB</bdi> · English · العربية · עברית</div><p>How does an AI decide that a picture is an apple or a banana, a cat or a dog? Place a new picture on a map of clues, change what the AI looks at and play the challenge: make the AI wrong, then make it right.</p></div>
+      <div><div class="prow"><a class="pbtn" href="sim/index.html?lang=en">▶ Play the simulation</a><a class="pbtn alt" href="sim/index.html?lang=ar">العربية</a><a class="pbtn alt" href="sim/index.html?lang=he">עברית</a><a class="pbtn alt" href="downloads/Phase4_Detective_Map.zip" download>ZIP</a></div></div></div>
     </div>
   </section>
 
-  <!-- 4. DOWNLOADABLE PHASES SECTION -->
-  <section id="downloads">
-    <div class="section-header">
-      <h2 class="section-title">Lesson Phases &amp; Challenge Datasets</h2>
-      <div class="filter-tabs">
-        <button class="filter-btn active" onclick="filterPhases('all', this)">All (0–13)</button>
-        <button class="filter-btn" onclick="filterPhases('core', this)">Core Lesson (0–7)</button>
-        <button class="filter-btn" onclick="filterPhases('hardcore', this)">Advanced (8–13)</button>
-        <button class="filter-btn" onclick="filterPhases('bundles', this)">Bundles</button>
-      </div>
-    </div>
-
-    <div class="grid" id="phase-grid">
-
-      <!-- PHASE 13 - INBOX DEFENDER (XL CHALLENGE) -->
-      <div class="card card-phase13" data-category="hardcore">
-        <div>
-          <div class="card-kicker">Phase 13 · XL Challenge · 45–60 min · no pictures</div>
-          <h2>Inbox Defender: Train an AI to Stop Scam Messages</h2>
-          <div class="card-meta">Game + video + guide · English · <bdi>العربية</bdi> · <bdi>עברית</bdi> · No internet needed</div>
-          <p>
-            An AI that reads <i>words</i>, not pictures. Teach it with your own scam and safe messages, see which words it treats as clues, beat the sneaky scammers who keep changing their tricks, and tune how strict your guard is. Six levels, badges, a 3-minute video and a step-by-step guide.
-          </p>
-        </div>
-        <div>
-          <div class="card-actions">
-            <a class="btn-download" href="inbox/guide-en.html#video">Guide + Video</a>
-            <a class="btn-inspect" href="inbox/guide-ar.html#video">العربية</a>
-            <a class="btn-inspect" href="inbox/guide-he.html#video">עברית</a>
-          </div>
-          <div class="card-actions" style="margin-top:10px">
-            <a class="btn-download" style="background:#334155" href="inbox/index.html?lang=en">▶ Play the game</a>
-            <a class="btn-inspect" href="downloads/Phase_13_Inbox_Defender_XL.zip" download>ZIP</a>
-          </div>
-        </div>
-      </div>
-
-      <!-- PHASE 12 - DETECTIVE MAP (HOW AN AI PREDICTS) -->
-      <div class="card card-phase12" data-category="hardcore">
-        <div>
-          <div class="card-kicker">Phase 12 · Concept Simulation · ~35 min · best after Phase 3</div>
-          <h2>Detective Map: How Does an AI Predict?</h2>
-          <div class="card-meta">1 MB · Plays in the browser · English · <bdi>العربية</bdi> · <bdi>עברית</bdi> · Real fruit pictures + drawn cats &amp; dogs</div>
-          <p>
-            What really happens between training and testing? Watch pictures turn into numbers, training pictures land on a map of clues, and a new picture land among them — the closest neighbours vote. Switch on the AI's "brain" map, choose the clues, and see why some pictures fool it.
-          </p>
-        </div>
-        <div class="card-actions">
-          <a class="btn-download" href="sim/index.html?lang=en">Open the Simulation</a>
-          <a class="btn-inspect" href="downloads/Phase_12_Detective_Map_HOW_AI_PREDICTS.zip" download>ZIP</a>
-        </div>
-      </div>
-
-      <!-- PHASE 11 - DOODLE LAB (CREATIVE) -->
-      <div class="card card-phase11" data-category="hardcore">
-        <div>
-          <div class="card-kicker">Phase 11 · Creative Lab · ~35 min</div>
-          <h2>Doodle Lab: Teach the AI Your Own Drawings</h2>
-          <div class="card-meta">23 KB · Plays in the browser · English · <bdi>العربية</bdi> · <bdi>עברית</bdi> · No internet needed</div>
-          <p>
-            Invent your own categories, draw the training examples, and watch an AI learn from <i>you</i>. Then try to fool it, measure its accuracy, and swap drawings with a friend to discover why a variety of examples matters.
-          </p>
-        </div>
-        <div class="card-actions">
-          <a class="btn-download" href="lab/index.html?lang=en">Open the Lab</a>
-          <a class="btn-inspect" href="downloads/Phase_11_Doodle_Lab_CREATIVE.zip" download>ZIP</a>
-        </div>
-      </div>
-
-      <!-- PHASE 10 - EXCEL DATA LAB (FOLLOW-UP LESSON) -->
-      <div class="card card-phase10" data-category="hardcore">
-        <div>
-          <div class="card-kicker">Phase 10 · Follow-up Lesson · ~45 min</div>
-          <h2>Excel Data Lab: Turn Your AI Results into Charts</h2>
-          <div class="card-meta">2.5 MB · Step-by-step guide with pictures · English · <bdi>العربية</bdi> · <bdi>עברית</bdi></div>
-          <p>
-            Type the percentages Teachable Machine gave you (Apple / Banana / Orange) into Excel, calculate accuracy with formulas, and draw five charts: pie, column, line, XY scatter and XYZ bubble. Includes a starter workbook and a finished example in every language, plus a 4-minute video that shows every step.
-          </p>
-        </div>
-        <div>
-          <div class="card-actions">
-            <a class="btn-download" href="excel/guide-en.html#video">Guide + Video</a>
-            <a class="btn-inspect" href="excel/guide-ar.html">العربية</a>
-            <a class="btn-inspect" href="excel/guide-he.html">עברית</a>
-          </div>
-          <div class="card-actions">
-            <a class="btn-download btn-zip" href="downloads/Phase_10_Excel_Data_Lab_FOLLOWUP.zip" download>Download ZIP (guide + Excel files)</a>
-          </div>
-        </div>
-      </div>
-
-      <!-- PHASE 09 - HARDCORE ADVERSARIAL GAUNTLET -->
-      <div class="card card-phase9" data-category="hardcore">
-        <div>
-          <div class="card-kicker">Phase 09 · Hardcore Red Team Challenge</div>
-          <h2>Adversarial Gauntlet &amp; OOD Stress Test</h2>
-          <div class="card-meta">215 KB · 12 Challenge Attack Images · Topic: AI Safety &amp; Adversarial Robustness</div>
-          <p>
-            The ultimate test for high school researchers. Expose the Softmax Overconfidence Flaw by feeding tennis balls, basketballs, texture swaps, and adversarial noise into your model, then engineer a defensive 4th class to defend it.
-          </p>
-        </div>
-        <div class="card-actions">
-          <a class="btn-download" href="downloads/Phase_09_Adversarial_Gauntlet_ULTIMATE.zip" download>Download ZIP</a>
-          <button class="btn-inspect" onclick="openPhaseModal('phase9')">Inspect &amp; Preview</button>
-        </div>
-      </div>
-
-      <!-- PHASE 08 - EXPERT BONUS -->
-      <div class="card card-bonus" data-category="hardcore">
-        <div>
-          <div class="card-kicker">Phase 08 · Bonus Challenge</div>
-          <h2>Expert Challenge (Tricky Images)</h2>
-          <div class="card-meta">13 KB · 8 Tricky Images · Topic: Shortcut Learning &amp; Scale Invariance</div>
-          <p>
-            Designed for early finishers. Tests whether the AI learned genuine fruit anatomy or relied on shortcut features (color shortcuts, orientation, scale distortion, and contrast shifts).
-          </p>
-        </div>
-        <div class="card-actions">
-          <a class="btn-download" href="downloads/Phase_08_Expert_Challenge_BONUS.zip" download>Download ZIP</a>
-          <button class="btn-inspect" onclick="openPhaseModal('phase8')">Inspect &amp; Preview</button>
-        </div>
-      </div>
-
-      <!-- MASTER BUNDLE -->
-      <div class="card card-master" data-category="bundles">
-        <div>
-          <div class="card-kicker">Bundle Package</div>
-          <h2>MASTER — Complete All Phases <span style="white-space:nowrap">(0–13)</span></h2>
-          <div class="card-meta">5.8 MB · All ZIP Archives Included · Teacher Master Guide</div>
-          <p>
-            One single archive containing all 14 lesson phases, teacher guides, answer keys, and bonus challenges. Perfect for keeping a local copy on a USB flash drive.
-          </p>
-        </div>
-        <div class="card-actions">
-          <a class="btn-download" href="downloads/AI_90min_All_Phases_MASTER.zip" download>Download ZIP</a>
-          <button class="btn-inspect" onclick="openPhaseModal('master')">Inspect Details</button>
-        </div>
-      </div>
-
-      <!-- EXPANDED BUNDLE -->
-      <div class="card card-master" data-category="bundles">
-        <div>
-          <div class="card-kicker">Bundle Package</div>
-          <h2>Expanded — All Folders Extracted</h2>
-          <div class="card-meta">5.9 MB · Ready-to-Upload Directories · No Extraction Needed</div>
-          <p>
-            All training and test images already organized into clean subfolders. Ideal for systems where extracting ZIP archives is disabled by school IT.
-          </p>
-        </div>
-        <div class="card-actions">
-          <a class="btn-download" href="downloads/AI_90min_All_Data_Expanded.zip" download>Download ZIP</a>
-          <button class="btn-inspect" onclick="openPhaseModal('expanded')">Inspect Details</button>
-        </div>
-      </div>
-
-      <!-- PHASE 00 - EASY START GAME -->
-      <div class="card card-phase0" data-category="core">
-        <div>
-          <div class="card-kicker">Phase 00 · Easy Start · ~10 min</div>
-          <h2>Human vs Robot (Game)</h2>
-          <div class="card-meta">195 KB · Plays in the browser · English · <bdi>العربية</bdi> · <bdi>עברית</bdi> · No camera, no internet needed</div>
-          <p>
-            Teach a robot to sort fruit, then try to beat it! You show the robot 9 pictures, race it on 12 new ones, and try to trick it with tricky pictures. A friendly first step before Teachable Machine — and you can download your score as a file for Excel.
-          </p>
-        </div>
-        <div class="card-actions">
-          <a class="btn-download" href="game/index.html?lang=en">Play now</a>
-          <a class="btn-inspect" href="downloads/Phase_00_Easy_Game_Human_vs_Robot.zip" download>ZIP</a>
-        </div>
-      </div>
-
-      <!-- PHASE 01 -->
-      <div class="card" data-category="core">
-        <div>
-          <div class="card-kicker">Phase 01 · 0–15 min</div>
-          <h2>Warm-up &amp; Quick, Draw!</h2>
-          <div class="card-meta">1.5 KB · Warm-up Instructions · Topic: Neural Doodles</div>
-          <p>
-            Interactive introduction to machine learning pattern recognition using Quick, Draw! Sets the stage for how neural networks perceive features.
-          </p>
-        </div>
-        <div class="card-actions">
-          <a class="btn-download" href="downloads/Phase_01_Warmup_0-15min.zip" download>Download ZIP</a>
-          <button class="btn-inspect" onclick="openPhaseModal('phase1')">Inspect Details</button>
-        </div>
-      </div>
-
-      <!-- PHASE 02 -->
-      <div class="card" data-category="core">
-        <div>
-          <div class="card-kicker">Phase 02 · 15–47 min</div>
-          <h2>Train the AI Model</h2>
-          <div class="card-meta">753 KB · 90 Training Images · Classes: Apple, Banana, Orange</div>
-          <p>
-            Upload 30 images per class into Google Teachable Machine. Train your baseline computer vision model without cameras or manual photo tagging.
-          </p>
-        </div>
-        <div class="card-actions">
-          <a class="btn-download" href="downloads/Phase_02_Train_Model_15-47min.zip" download>Download ZIP</a>
-          <button class="btn-inspect" onclick="openPhaseModal('phase2')">Inspect Details</button>
-        </div>
-      </div>
-
-      <!-- PHASE 03 -->
-      <div class="card" data-category="core">
-        <div>
-          <div class="card-kicker">Phase 03 · 47–57 min</div>
-          <h2>Easy Test &amp; Baseline Metrics</h2>
-          <div class="card-meta">203 KB · 24 Unseen Test Images · Results Worksheet</div>
-          <p>
-            Test your freshly trained model with unseen images. Calculate your baseline test accuracy and discover how well the model generalizes to normal fruit photos.
-          </p>
-        </div>
-        <div class="card-actions">
-          <a class="btn-download" href="downloads/Phase_03_Easy_Test_47-57min.zip" download>Download ZIP</a>
-          <button class="btn-inspect" onclick="openPhaseModal('phase3')">Inspect Details</button>
-        </div>
-      </div>
-
-      <!-- PHASE 04 -->
-      <div class="card" data-category="core">
-        <div>
-          <div class="card-kicker">Phase 04 · 57–67 min</div>
-          <h2>Break the AI (Stress Testing)</h2>
-          <div class="card-meta">490 KB · 30 Harder Images · Failure Mode Report</div>
-          <p>
-            Expose weaknesses: sliced fruits, unusual lighting, occlusions, and zoomed crops. Fill out the Failure Mode Report to track where the AI makes mistakes.
-          </p>
-        </div>
-        <div class="card-actions">
-          <a class="btn-download" href="downloads/Phase_04_Break_The_AI_57-67min.zip" download>Download ZIP</a>
-          <button class="btn-inspect" onclick="openPhaseModal('phase4')">Inspect Details</button>
-        </div>
-      </div>
-
-      <!-- PHASE 05 -->
-      <div class="card" data-category="core">
-        <div>
-          <div class="card-kicker">Phase 05 · 67–75 min</div>
-          <h2>Improve &amp; Retrain</h2>
-          <div class="card-meta">469 KB · Targeted Retraining Data · Validation Set</div>
-          <p>
-            Curate targeted training examples to address the failure modes found in Phase 4. Retrain the model and quantify the improvement with a separate validation set.
-          </p>
-        </div>
-        <div class="card-actions">
-          <a class="btn-download" href="downloads/Phase_05_Improve_Retrain_67-75min.zip" download>Download ZIP</a>
-          <button class="btn-inspect" onclick="openPhaseModal('phase5')">Inspect Details</button>
-        </div>
-      </div>
-
-      <!-- PHASE 06 -->
-      <div class="card" data-category="core">
-        <div>
-          <div class="card-kicker">Phase 06 · 75–87 min</div>
-          <h2>AI Challenge (Ambiguity &amp; Conflict)</h2>
-          <div class="card-meta">112 KB · Mixed &amp; Hybrid Fruits · Challenge Sheet</div>
-          <p>
-            Present multiple fruits in a single frame or ambiguous hybrids. Analyze how the neural network handles conflicting feature activations.
-          </p>
-        </div>
-        <div class="card-actions">
-          <a class="btn-download" href="downloads/Phase_06_Ambiguous_Challenge_75-87min.zip" download>Download ZIP</a>
-          <button class="btn-inspect" onclick="openPhaseModal('phase6')">Inspect Details</button>
-        </div>
-      </div>
-
-      <!-- PHASE 07 -->
-      <div class="card" data-category="core">
-        <div>
-          <div class="card-kicker">Phase 07 · 87–90 min</div>
-          <h2>Exit Ticket &amp; Reflection</h2>
-          <div class="card-meta">1.2 KB · Student Questions · Teacher Answer Key</div>
-          <p>
-            Synthesize what you learned. Answer the core reflection questions on machine learning shortcuts, overfitting, and real-world computer vision reliability.
-          </p>
-        </div>
-        <div class="card-actions">
-          <a class="btn-download" href="downloads/Phase_07_Exit_Ticket_87-90min.zip" download>Download ZIP</a>
-          <button class="btn-inspect" onclick="openPhaseModal('phase7')">Inspect Details</button>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- 5. TEACHER RESOURCE PANEL -->
   <section class="teacher-banner">
-    <div class="teacher-info">
-      <h3>Teacher Operations &amp; QR Code</h3>
-      <p>Need students to connect quickly over the classroom Wi-Fi? Use the offline QR code generator.</p>
-    </div>
-    <div style="display:flex; gap:10px;">
+    <div class="teacher-info"><h3>Teacher Operations & QR Code</h3><p>Need students to connect quickly over the classroom Wi-Fi? Use the offline QR code generator.</p></div>
+    <div style="display:flex; gap:10px; flex-wrap:wrap;">
       <a href="teacher_qr.html" class="btn-secondary">Open Teacher QR Generator ↗</a>
-      <a href="https://teachablemachine.withgoogle.com/" target="_blank" rel="noopener" class="btn-primary">Launch Teachable Machine ↗</a>
+      <a href="downloads/Phase1_Boss_TEACHER_KEY.zip" download class="btn-secondary">Teacher key — Phase 1 (ZIP)</a>
+      <a href="https://teachablemachine.withgoogle.com/" target="_blank" rel="noopener" class="btn-primary">Open Teachable Machine ↗</a>
     </div>
   </section>
-
+  <p style="font-size:13px;color:var(--text-muted);margin:6px 0 30px">Teachers: the previous 14-phase lesson is still available on the server as all-phases.html (not linked here).</p>
 </main>
-
-<!-- 6. MODAL INSPECTOR -->
-<div class="modal-overlay" id="inspectModal" onclick="closeModalOnBackdrop(event)">
-  <div class="modal-dialog" role="dialog" aria-modal="true">
-    <div class="modal-header">
-      <h3 id="modalTitle">Phase Details</h3>
-      <button class="modal-close" onclick="closeModal()" aria-label="Close modal">&times;</button>
-    </div>
-    <div class="modal-body" id="modalBody">
-      <!-- Dynamic Content -->
-    </div>
-    <div class="modal-footer">
-      <button class="btn-secondary" onclick="closeModal()">Close</button>
-      <a id="modalDownloadBtn" class="btn-primary" href="#" download>Download ZIP</a>
-    </div>
-  </div>
-</div>
-
 <script>
-// SIMULATOR LOGIC
-const SAMPLES = {
-  apple: { name: "Standard Apple", img: "preview/phase_08/expert_04_upside_down_apple.png", appleBase: 95, bananaBase: 2, orangeBase: 3, isOOD: false, type: "Clean Fruit" },
-  banana: { name: "Standard Banana", img: "preview/phase_08/expert_03_tiny_banana_corner.png", appleBase: 3, bananaBase: 94, orangeBase: 3, isOOD: false, type: "Clean Fruit" },
-  orange: { name: "Standard Orange", img: "preview/phase_08/expert_06_washed_out_orange.png", appleBase: 4, bananaBase: 2, orangeBase: 94, isOOD: false, type: "Clean Fruit" },
-  tennis: { name: "Tennis Ball (OOD)", img: "preview/phase_09/adv_01_ood_tennis_ball.png", appleBase: 12, bananaBase: 42, orangeBase: 46, isOOD: true, type: "Out-Of-Distribution" },
-  basketball: { name: "Basketball (OOD)", img: "preview/phase_09/adv_02_ood_basketball.png", appleBase: 8, bananaBase: 1, orangeBase: 91, isOOD: true, type: "Color Shortcut Trap" },
-  texture_swap: { name: "Texture Swap Apple", img: "preview/phase_09/adv_03_texture_swap_apple_banana.png", appleBase: 45, bananaBase: 50, orangeBase: 5, isOOD: false, type: "Texture vs Shape Conflict" },
-  patch: { name: "Adversarial Patch", img: "preview/phase_09/adv_04_adversarial_patch_sticker.png", appleBase: 62, bananaBase: 28, orangeBase: 10, isOOD: false, type: "Optical Perturbation" },
-  noise: { name: "Checkerboard Noise", img: "preview/phase_09/adv_05_checkerboard_frequency_noise.png", appleBase: 35, bananaBase: 30, orangeBase: 35, isOOD: false, type: "High-Frequency Disruption" },
-  traffic: { name: "Red Traffic Light (OOD)", img: "preview/phase_09/adv_09_ood_traffic_light_red.png", appleBase: 88, bananaBase: 3, orangeBase: 9, isOOD: true, type: "Safety-Critical OOD" }
-};
-
-function runSimulation() {
-  const sampleKey = document.getElementById('sample-select').value;
-  const sample = SAMPLES[sampleKey] || SAMPLES.tennis;
-  const textureBias = parseInt(document.getElementById('slider-texture-bias').value, 10);
-  const noise = parseInt(document.getElementById('slider-noise').value, 10);
-  const thresholdActive = document.getElementById('check-threshold').checked;
-  const fourthClassActive = document.getElementById('check-fourth-class').checked;
-
-  document.getElementById('val-texture-bias').textContent = textureBias + '% Texture';
-  document.getElementById('val-noise-level').textContent = noise + '%';
-  document.getElementById('sim-preview-img').src = sample.img;
-
-  let rawApple = sample.appleBase;
-  let rawBanana = sample.bananaBase;
-  let rawOrange = sample.orangeBase;
-  let rawUnknown = 0;
-
-  // Simulate Texture Bias effect on Texture Swap
-  if (sampleKey === 'texture_swap') {
-    // textureBias = 0 -> Shape wins (Apple 90%)
-    // textureBias = 100 -> Texture wins (Banana 90%)
-    rawBanana = 10 + (textureBias * 0.8);
-    rawApple = 90 - (textureBias * 0.7);
-  }
-
-  // Simulate noise degradation
-  if (noise > 0) {
-    const spread = noise * 0.35;
-    rawApple += (Math.random() - 0.5) * spread;
-    rawBanana += (Math.random() - 0.5) * spread;
-    rawOrange += (Math.random() - 0.5) * spread;
-  }
-
-  // If 4th Class defense is active
-  if (fourthClassActive) {
-    document.getElementById('row-unknown').style.display = 'flex';
-    if (sample.isOOD) {
-      rawUnknown = 85 + (Math.random() * 10);
-      rawApple *= 0.15;
-      rawBanana *= 0.15;
-      rawOrange *= 0.15;
-    } else {
-      rawUnknown = 4 + (Math.random() * 4);
-    }
-  } else {
-    document.getElementById('row-unknown').style.display = 'none';
-  }
-
-  // Softmax normalization
-  let sum = rawApple + rawBanana + rawOrange + (fourthClassActive ? rawUnknown : 0);
-  if (sum <= 0) sum = 1;
-  const pApple = Math.max(0, Math.round((rawApple / sum) * 100));
-  const pBanana = Math.max(0, Math.round((rawBanana / sum) * 100));
-  const pOrange = Math.max(0, Math.round((rawOrange / sum) * 100));
-  const pUnknown = fourthClassActive ? Math.max(0, 100 - (pApple + pBanana + pOrange)) : 0;
-
-  document.getElementById('prob-val-apple').textContent = pApple + '%';
-  document.getElementById('prob-bar-apple').style.width = pApple + '%';
-
-  document.getElementById('prob-val-banana').textContent = pBanana + '%';
-  document.getElementById('prob-bar-banana').style.width = pBanana + '%';
-
-  document.getElementById('prob-val-orange').textContent = pOrange + '%';
-  document.getElementById('prob-bar-orange').style.width = pOrange + '%';
-
-  if (fourthClassActive) {
-    document.getElementById('prob-val-unknown').textContent = pUnknown + '%';
-    document.getElementById('prob-bar-unknown').style.width = pUnknown + '%';
-  }
-
-  const maxProb = Math.max(pApple, pBanana, pOrange, pUnknown);
-  const verdictBanner = document.getElementById('verdict-banner');
-
-  if (sample.isOOD && !fourthClassActive && (!thresholdActive || maxProb >= 75)) {
-    verdictBanner.className = 'verdict-box verdict-vulnerable';
-    verdictBanner.innerHTML = '<b>CRITICAL VULNERABILITY DETECTED:</b> This object is NOT a fruit! The closed-world Softmax layer forced a false prediction with ' + maxProb + '% confidence. Add a 4th class or confidence thresholding to protect the model.';
-  } else if (sample.isOOD && thresholdActive && maxProb < 75) {
-    verdictBanner.className = 'verdict-box verdict-safe';
-    verdictBanner.innerHTML = '<b>THRESHOLD GUARD ACTIVATED:</b> Top confidence (' + maxProb + '%) is below the 75% cutoff. The prediction is safely flagged as [UNRECOGNIZED / LOW CONFIDENCE].';
-  } else if (sample.isOOD && fourthClassActive && pUnknown >= 60) {
-    verdictBanner.className = 'verdict-box verdict-safe';
-    verdictBanner.innerHTML = '<b>DEFENSE SUCCEEDED:</b> The 4th negative rejection class ("Other / Background") correctly captured this Out-of-Distribution object with ' + pUnknown + '% confidence.';
-  } else if (sampleKey === 'texture_swap') {
-    const winner = pBanana > pApple ? 'BANANA (Texture won over Shape)' : 'APPLE (Shape won over Texture)';
-    verdictBanner.className = 'verdict-box verdict-vulnerable';
-    verdictBanner.innerHTML = '<b>TEXTURE BIAS AUDIT:</b> Classified as ' + winner + '. Deep CNNs often prioritize high-frequency surface textures rather than holistic geometry.';
-  } else {
-    verdictBanner.className = 'verdict-box verdict-safe';
-    verdictBanner.innerHTML = '<b>NORMAL PREDICTION:</b> Model correctly identified ' + sample.name + ' with ' + maxProb + '% confidence.';
-  }
-}
-
-// FILTER PHASES
-function filterPhases(category, btn) {
-  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-
-  const cards = document.querySelectorAll('#phase-grid .card');
-  cards.forEach(card => {
-    const cardCat = card.getAttribute('data-category');
-    if (category === 'all') {
-      card.style.display = 'flex';
-    } else if (category === 'core' && cardCat === 'core') {
-      card.style.display = 'flex';
-    } else if (category === 'hardcore' && cardCat === 'hardcore') {
-      card.style.display = 'flex';
-    } else if (category === 'bundles' && cardCat === 'bundles') {
-      card.style.display = 'flex';
-    } else {
-      card.style.display = 'none';
-    }
-  });
-}
-
-// MODAL INSPECTOR DATA
-const PHASE_DETAILS = {
-  phase9: {
-    title: "Phase 09 — Adversarial Gauntlet & OOD Audit (Hardcore)",
-    zip: "downloads/Phase_09_Adversarial_Gauntlet_ULTIMATE.zip",
-    body: `
-      <p><b>Target Level:</b> Advanced High School STEM (Ages 14–16)</p>
-      <p>In this phase, students conduct a red-team security audit of their trained model using 12 mathematically crafted adversarial &amp; Out-Of-Distribution (OOD) attack vectors.</p>
-      <p><b>Sample Attack Images inside:</b></p>
-      <div class="modal-preview-grid">
-        <div class="thumb-item"><img src="preview/phase_09/adv_01_ood_tennis_ball.png" alt="Tennis Ball"><span>Tennis Ball (OOD)</span></div>
-        <div class="thumb-item"><img src="preview/phase_09/adv_02_ood_basketball.png" alt="Basketball"><span>Basketball (OOD)</span></div>
-        <div class="thumb-item"><img src="preview/phase_09/adv_03_texture_swap_apple_banana.png" alt="Texture Swap"><span>Texture Swap</span></div>
-        <div class="thumb-item"><img src="preview/phase_09/adv_04_adversarial_patch_sticker.png" alt="Patch Sticker"><span>Patch Sticker</span></div>
-        <div class="thumb-item"><img src="preview/phase_09/adv_05_checkerboard_frequency_noise.png" alt="Noise"><span>Grid Noise</span></div>
-        <div class="thumb-item"><img src="preview/phase_09/adv_09_ood_traffic_light_red.png" alt="Stop Light"><span>Traffic Light</span></div>
-      </div>
-      <p><b>Files inside this ZIP:</b></p>
-      <ul>
-        <li><code>STUDENT_START_HERE.txt</code> — Fast 3-minute audit walkthrough</li>
-        <li><code>MISSION_BRIEF.txt</code> — Explaining the Softmax mathematical trap</li>
-        <li><code>AUDIT_WORKSHEET.txt</code> — Student scoring matrix &amp; reflection prompts</li>
-        <li><code>TEACHER_KEY_AND_DEBRIEF.txt</code> — Complete answer key &amp; classroom debate questions</li>
-        <li><code>DATA_ADVERSARIAL_GAUNTLET/</code> — 12 PNG attack vectors (256x256)</li>
-      </ul>
-    `
-  },
-  phase8: {
-    title: "Phase 08 — Expert Challenge (Bonus)",
-    zip: "downloads/Phase_08_Expert_Challenge_BONUS.zip",
-    body: `
-      <p><b>Target Level:</b> Early Finishers</p>
-      <p>8 tricky images designed to expose shortcut learning: color generalization, inverted orientations, and scale variations.</p>
-      <div class="modal-preview-grid">
-        <div class="thumb-item"><img src="preview/phase_08/expert_01_round_ball_no_stem.png" alt="Ball"><span>Round Ball</span></div>
-        <div class="thumb-item"><img src="preview/phase_08/expert_02_green_apple.png" alt="Green Apple"><span>Green Apple</span></div>
-        <div class="thumb-item"><img src="preview/phase_08/expert_03_tiny_banana_corner.png" alt="Corner Banana"><span>Tiny Banana</span></div>
-        <div class="thumb-item"><img src="preview/phase_08/expert_04_upside_down_apple.png" alt="Upside Down"><span>Upside Down</span></div>
-      </div>
-      <p><b>Files inside:</b> <code>DATA_EXPERT/</code> (8 test images), <code>EXPERT_RESULTS.txt</code>, <code>TEACHER_NOTES.txt</code>.</p>
-    `
-  },
-  master: {
-    title: "MASTER — Complete 9-Phase Package",
-    zip: "downloads/AI_90min_All_Phases_MASTER.zip",
-    body: `
-      <p>The single master distribution file containing every lesson phase (0 through 13), student worksheets, and teacher guidance.</p>
-      <p>Size: <b>5.8 MB</b>. Extract once on the teacher workstation.</p>
-    `
-  },
-  expanded: {
-    title: "Expanded — All Folders Extracted",
-    zip: "downloads/AI_90min_All_Data_Expanded.zip",
-    body: `
-      <p>All training, testing, and challenge images expanded directly into uncompressed folder structures for classrooms with restricted unzip policies.</p>
-    `
-  },
-  phase2: {
-    title: "Phase 02 — Train the AI Model",
-    zip: "downloads/Phase_02_Train_Model_15-47min.zip",
-    body: `
-      <p><b>Timeframe:</b> 15–47 min</p>
-      <p>Contains 90 curated training images evenly divided across Apple (30), Banana (30), and Orange (30). Ready to upload directly to Google Teachable Machine.</p>
-    `
-  }
-};
-
-function openPhaseModal(phaseKey) {
-  const data = PHASE_DETAILS[phaseKey] || {
-    title: "Phase Inspection",
-    zip: "downloads/AI_90min_All_Phases_MASTER.zip",
-    body: "<p>Standard lesson phase package with curated datasets and worksheets.</p>"
-  };
-  document.getElementById('modalTitle').textContent = data.title;
-  document.getElementById('modalBody').innerHTML = data.body;
-  document.getElementById('modalDownloadBtn').href = data.zip;
-  document.getElementById('inspectModal').classList.add('open');
-}
-
-function closeModal() {
-  document.getElementById('inspectModal').classList.remove('open');
-}
-
-function closeModalOnBackdrop(e) {
-  if (e.target.id === 'inspectModal') {
-    closeModal();
-  }
-}
-
-function initConnectionBar() {
-  const urlDisplay = document.getElementById('display-student-url');
-  if (urlDisplay) {
-    urlDisplay.textContent = location.origin + '/';
-  }
-}
-
-function copyStudentUrl() {
-  const url = location.origin + '/';
-  const textEl = document.getElementById('copy-btn-text');
-  if (navigator.clipboard && navigator.clipboard.writeText) {
-    navigator.clipboard.writeText(url).then(() => {
-      if (textEl) {
-        textEl.textContent = 'Link Copied!';
-        setTimeout(() => { textEl.textContent = 'Copy Link'; }, 2500);
-      }
-    }).catch(() => fallbackCopy(url, textEl));
-  } else {
-    fallbackCopy(url, textEl);
-  }
-}
-
-function fallbackCopy(text, textEl) {
-  const tempInput = document.createElement('input');
-  tempInput.value = text;
-  document.body.appendChild(tempInput);
-  tempInput.select();
-  document.execCommand('copy');
-  document.body.removeChild(tempInput);
-  if (textEl) {
-    textEl.textContent = 'Link Copied!';
-    setTimeout(() => { textEl.textContent = 'Copy Link'; }, 2500);
-  }
-}
-
-// Initialize on page load
-window.addEventListener('DOMContentLoaded', () => {
-  initConnectionBar();
-  runSimulation();
-});
+function initConnectionBar(){var u=document.getElementById('display-student-url');if(u){u.textContent=location.origin+'/';}}
+function copyStudentUrl(){var url=location.origin+'/',el=document.getElementById('copy-btn-text'),done=function(){if(el){el.textContent='Link Copied!';setTimeout(function(){el.textContent='Copy Link';},2500);}};
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(url).then(done).catch(function(){fb(url,done);});}else{fb(url,done);}}
+function fb(text,done){var i=document.createElement('input');i.value=text;document.body.appendChild(i);i.select();try{document.execCommand('copy');}catch(e){}document.body.removeChild(i);done();}
+window.addEventListener('DOMContentLoaded',initConnectionBar);
 </script>
-
 </body>
 </html>

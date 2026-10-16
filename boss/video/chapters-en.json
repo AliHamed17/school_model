@@ -1,0 +1,40 @@
+{
+ "duration": 200.0,
+ "chapters": [
+  {
+   "n": 1,
+   "title": "The mission",
+   "t": 7
+  },
+  {
+   "n": 2,
+   "title": "Look at the pictures",
+   "t": 20
+  },
+  {
+   "n": 3,
+   "title": "Train your AI",
+   "t": 53
+  },
+  {
+   "n": 4,
+   "title": "Boss test",
+   "t": 87
+  },
+  {
+   "n": 5,
+   "title": "Nightmare and traps",
+   "t": 117
+  },
+  {
+   "n": 6,
+   "title": "Detective",
+   "t": 140
+  },
+  {
+   "n": 7,
+   "title": "Round 2: fix it",
+   "t": 155
+  }
+ ]
+}
