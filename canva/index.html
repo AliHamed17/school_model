@@ -120,6 +120,7 @@ dialog .actions{display:flex;justify-content:flex-end;gap:10px;margin-top:10px}
     <div class="legend" aria-hidden="true"><span><i></i>Free</span><span><i class="t"></i>Taken</span><span><i class="m"></i>Yours</span></div>
     <nav id="grid" class="grid" aria-label="Choose your computer number"></nav>
     <p id="updated" class="sub" aria-live="off"></p>
+    <p class="sub">Used a number before, maybe on another computer? Click your number and type your name to get back into your design.</p>
   </section>
 
   <footer>Only use the number you chose. Your teacher can see who picked which number.</footer>
@@ -206,7 +207,7 @@ dialog .actions{display:flex;justify-content:flex-end;gap:10px;margin-top:10px}
   let statusLoaded = false;
   let mine = null;        // {seat, name, url}
   let pollTimer = null;
-  let dialogMode = 'claim'; // 'claim' | 'rename'
+  let dialogMode = 'claim'; // 'claim' | 'recover' | 'rename'
   let dialogSeat = 0;
   let busy = false;
 
@@ -219,6 +220,7 @@ dialog .actions{display:flex;justify-content:flex-end;gap:10px;margin-top:10px}
     no_link: 'This computer has no Canva link yet. Please tell your teacher.',
     bad_seat: 'That number is not valid. Please pick one from the list.',
     bad_name: 'Please type your name.',
+    wrong_name: 'That is not the name used for this number. Type it the same way as before.',
     bad_token: 'Your browser could not be recognised. Reload the page and try again.',
     no_seat: 'You do not have a computer yet.',
   };
@@ -260,10 +262,10 @@ dialog .actions{display:flex;justify-content:flex-end;gap:10px;margin-top:10px}
       const taken = known && s.taken && !isMine;
       if (known && !s.taken) free++;
       t.className = 'tile' + (isMine ? ' mine' : taken ? ' taken' : known ? '' : ' unknown');
-      t.disabled = !isMine && (!!mine || !(known && !s.taken));
+      t.disabled = !isMine && (!!mine || !known);  // taken numbers stay clickable: "this is my number"
       t.querySelector('.who').textContent = isMine ? mine.name : taken ? s.name : '';
       t.setAttribute('aria-label', isMine ? `Computer ${n}, yours (${mine.name})`
-        : taken ? `Computer ${n}, taken by ${s.name}`
+        : taken ? `Computer ${n}, taken by ${s.name}. Click it if this is you.`
         : known ? `Computer ${n}, free` : `Computer ${n}, loading`);
     }
     $('count').textContent = statusLoaded ? `${free} free · ${SEATS - free} taken` : 'Loading…';
@@ -345,8 +347,12 @@ dialog .actions{display:flex;justify-content:flex-end;gap:10px;margin-top:10px}
     $('dlgErr').textContent = '';
     $('dlgSeat').textContent = seat;
     $('dlgTitle').firstChild.textContent = mode === 'rename' ? 'Change your name · Computer ' : 'Computer ';
-    $('dlgSubmit').textContent = mode === 'rename' ? 'Save name' : 'Open my design';
-    $('nameInput').value = mode === 'rename' && mine ? mine.name : (store.get('canvaSeatName') || '');
+    $('dlgSubmit').textContent = submitLabel();
+    $('dlgHelp').textContent = mode === 'recover'
+      ? `This number is taken by ${(seatInfo[seat] || {}).name || 'someone'}. If that is you, type your name the same way as before to get back into your design.`
+      : mode === 'rename' ? 'Type the name you want to show next to your number.'
+      : 'Type your first name. It will be shown to the class next to your number.';
+    $('nameInput').value = mode === 'rename' && mine ? mine.name : mode === 'recover' ? '' : (store.get('canvaSeatName') || '');
     if (!dlg.open) dlg.showModal();
     $('nameInput').focus();
     $('nameInput').select();
@@ -354,11 +360,12 @@ dialog .actions{display:flex;justify-content:flex-end;gap:10px;margin-top:10px}
   $('dlgCancel').addEventListener('click', () => { if (!busy) dlg.close(); });
   dlg.addEventListener('cancel', (e) => { if (busy) e.preventDefault(); });
 
+  function submitLabel() { return dialogMode === 'rename' ? 'Save name' : dialogMode === 'recover' ? 'That is me, open my design' : 'Open my design'; }
   function waitingLabel() { $('dlgSubmit').textContent = 'Waiting in line…'; }
 
   function setBusy(on) {
     busy = on;
-    if (!on) $('dlgSubmit').textContent = dialogMode === 'rename' ? 'Save name' : 'Open my design';
+    if (!on) $('dlgSubmit').textContent = submitLabel();
     $('dlgSubmit').disabled = on;
     $('dlgCancel').disabled = on;
     $('nameInput').disabled = on;
@@ -395,7 +402,7 @@ dialog .actions{display:flex;justify-content:flex-end;gap:10px;margin-top:10px}
 
     setBusy(true);
     const seat = dialogSeat;
-    const res = await callRetry({ action: 'claim', seat, name, token }, 4, waitingLabel);
+    const res = await callRetry({ action: dialogMode === 'recover' ? 'recover' : 'claim', seat, name, token }, 4, waitingLabel);
     setBusy(false);
 
     if (res.ok || res.error === 'already_has_seat') {
@@ -423,13 +430,20 @@ dialog .actions{display:flex;justify-content:flex-end;gap:10px;margin-top:10px}
       refresh();
       return;
     }
+    if (res.error === 'not_taken') {
+      dlg.close();
+      say('', `Computer ${seat} is free now. Click it to take it.`);
+      refresh();
+      return;
+    }
     $('dlgErr').textContent = MESSAGES[res.error] || MESSAGES.server;
   });
 
   function onTile(n) {
     if (mine && mine.seat === n) { $('mine').scrollIntoView({ behavior: 'smooth', block: 'start' }); return; }
     if (mine) return;
-    openDialog('claim', n);
+    const s = seatInfo[n];
+    openDialog(s && s.taken ? 'recover' : 'claim', n);
   }
 
   $('renameBtn').addEventListener('click', () => { if (mine) openDialog('rename', mine.seat); });
