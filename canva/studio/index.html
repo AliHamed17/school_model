@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AI Website Studio | AI Classroom</title>
+<meta name="description" content="Describe a website and the AI builds it. Your Canva colors and picture can be part of it.">
+<meta name="robots" content="noindex">
+<style>
+:root{color-scheme:light;--ink:#152432;--sub:#566575;--border:#dbe3ea;--bg:#f5f8fb;--accent:#086fa9;--accent-ink:#fff;--warn-bg:#fff6e5;--warn-border:#f0d49a;--bad-bg:#fdecec;--bad-border:#f0b4b4;--ok-bg:#e9f7ef;--ok-border:#a9dcc0}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Arial,sans-serif;line-height:1.5}
+.wrap{max-width:1180px;margin:0 auto;padding:clamp(20px,4vw,44px) 16px 60px}
+header{text-align:center;margin-bottom:18px}
+.eyebrow{font-size:12px;text-transform:uppercase;letter-spacing:.14em;color:var(--accent);font-weight:800}
+h1{font-size:clamp(26px,4.5vw,40px);letter-spacing:-.03em;margin:6px 0 8px;line-height:1.15}
+h2{font-size:16px;margin:18px 0 8px}
+.lead{color:var(--sub);font-size:clamp(15px,2vw,17px);margin:0 auto;max-width:700px}
+.sub{color:var(--sub);font-size:13px}
+nav.top{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:14px 0 0}
+.btn{font:inherit;font-weight:700;border-radius:10px;border:1px solid var(--border);background:#fff;color:var(--ink);padding:10px 16px;cursor:pointer;text-decoration:none;display:inline-block;line-height:1.3}
+.btn:hover{border-color:#9db3c4}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.btn.primary:hover{background:#075f90}
+.btn:disabled{opacity:.55;cursor:not-allowed}
+.btn.small{padding:6px 12px;font-size:14px}
+:focus-visible{outline:3px solid #0b78b1;outline-offset:2px}
+.notice{max-width:820px;margin:0 auto 16px;padding:12px 16px;border-radius:12px;border:1px solid var(--warn-border);background:var(--warn-bg)}
+.notice.bad{background:var(--bad-bg);border-color:var(--bad-border)}
+.notice.ok{background:var(--ok-bg);border-color:var(--ok-border)}
+.notice p{margin:0}
+.who{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;background:#fff;border:1px solid var(--border);border-radius:14px;padding:10px 16px;margin-bottom:16px}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{font:inherit;font-size:13px;border:1px solid var(--border);background:#fff;border-radius:99px;padding:5px 12px;cursor:pointer;color:var(--ink)}
+.chip:hover{border-color:var(--accent);color:var(--accent)}
+.quota{font-size:13px;color:var(--sub)}
+.cols{display:grid;grid-template-columns:minmax(300px,420px) 1fr;gap:18px;align-items:start}
+.panel{background:#fff;border:1px solid var(--border);border-radius:16px;padding:16px 18px}
+textarea{font:inherit;width:100%;min-height:130px;resize:vertical;padding:10px 12px;border:2px solid var(--border);border-radius:10px}
+textarea:focus{border-color:var(--accent);outline:none}
+.count{display:flex;justify-content:space-between;font-size:12px;color:var(--sub);margin-top:4px}
+details{margin:10px 0;color:var(--sub)}
+summary{cursor:pointer;font-weight:600}
+details ul{margin:8px 0 0;padding-left:20px}
+.colors{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.colors input[type=color]{width:44px;height:36px;border:1px solid var(--border);border-radius:8px;padding:2px;background:#fff;cursor:pointer}
+.colors .rm{border:0;background:none;color:var(--sub);cursor:pointer;font-size:12px;text-decoration:underline}
+.pic{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.pic img{width:64px;height:64px;object-fit:cover;border-radius:10px;border:1px solid var(--border);background:#eef2f6}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+#msg{margin-top:14px;min-height:1.4em}
+.spin{display:inline-block;width:14px;height:14px;border:2px solid #bcd3e2;border-top-color:var(--accent);border-radius:50%;animation:s 1s linear infinite;vertical-align:-2px;margin-right:8px}
+@keyframes s{to{transform:rotate(360deg)}}
+.tools{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:10px}
+.tools .t{font-weight:700;flex:1;min-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#frameBox{border:1px solid var(--border);border-radius:12px;overflow:hidden;background:#fff;min-height:420px}
+#frameBox iframe{display:block;width:100%;height:560px;border:0;background:#fff}
+.empty{display:grid;place-items:center;min-height:420px;color:var(--sub);text-align:center;padding:24px}
+#history{margin:8px 0 0;padding-left:20px;color:var(--sub);font-size:14px}
+#history li{margin:4px 0}
+#history .r{font-size:12px}
+footer{font-size:13px;color:var(--sub);margin-top:26px;text-align:center}
+@media (max-width:860px){.cols{grid-template-columns:1fr}#frameBox iframe{height:440px}}
+@media (prefers-reduced-motion:reduce){.spin{animation:none}}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <header>
+    <div class="eyebrow">AI &amp; Machine Learning · Classroom Activity</div>
+    <h1>AI Website Studio</h1>
+    <p class="lead">Tell the AI what website you want. It builds it in seconds. Then change it, as many times as you like.</p>
+    <nav class="top"><a class="btn" id="navMain" href="#">← My Canva design</a><a class="btn" id="navGallery" href="#">Class gallery</a></nav>
+  </header>
+
+  <noscript><div class="notice bad"><p>This page needs JavaScript.</p></div></noscript>
+  <div id="gate" class="notice" hidden><p id="gateText"></p></div>
+
+  <div id="app" hidden>
+    <div class="who">
+      <div><strong id="whoName"></strong> · Computer <span id="whoSeat"></span></div>
+      <div class="quota" id="quota"></div>
+    </div>
+
+    <div class="cols">
+      <section class="panel" aria-labelledby="h1b">
+        <h2 id="h1b" style="margin-top:0">1. Describe your website</h2>
+        <label for="prompt" id="promptLabel" class="sub">What website do you want?</label>
+        <textarea id="prompt" maxlength="600" dir="auto" placeholder="Example: A page about my favorite football team, with a table of players and a fun quiz at the bottom."></textarea>
+        <div class="count"><span id="promptHelp">The more details, the better the result.</span><span id="counter">0 / 600</span></div>
+        <div class="chips" id="examples" aria-label="Example ideas"></div>
+        <details>
+          <summary>How to write a great prompt</summary>
+          <ul>
+            <li><strong>Who</strong> is it for? (classmates, my family, visitors)</li>
+            <li><strong>What</strong> sections do you want? (about me, photos, quiz, table)</li>
+            <li><strong>How</strong> should it look? (colors, fun or serious, big title)</li>
+            <li>Change <strong>one thing at a time</strong>, then look at the result.</li>
+          </ul>
+        </details>
+
+        <h2>2. Use your Canva design <span class="sub">(optional)</span></h2>
+        <div class="sub">Colors: pick up to 5 colors from your design.</div>
+        <div class="colors" id="colors"></div>
+        <div class="sub" style="margin-top:10px">Picture: in Canva choose <strong>File → Download</strong> (PNG or JPG), then add it here.</div>
+        <div class="pic">
+          <img id="picThumb" alt="" hidden>
+          <input type="file" id="picFile" accept="image/png,image/jpeg,image/webp" aria-label="Add a picture from Canva">
+          <button type="button" class="btn small" id="picRemove" hidden>Remove picture</button>
+        </div>
+
+        <div class="actions">
+          <button type="button" class="btn primary" id="goBtn">Create my website</button>
+          <button type="button" class="btn" id="undoBtn" hidden>Undo last change</button>
+          <button type="button" class="btn" id="clearBtn" hidden>Start over</button>
+        </div>
+        <div id="msg" role="status" aria-live="polite"></div>
+      </section>
+
+      <section class="panel" aria-labelledby="h3">
+        <h2 id="h3" style="margin-top:0">3. Your website</h2>
+        <div class="tools" id="tools" hidden>
+          <span class="t" id="siteTitle"></span>
+          <a class="btn small" id="fullBtn" href="#">Open full screen</a>
+          <button type="button" class="btn small" id="copyBtn">Copy my link</button>
+          <button type="button" class="btn small" id="dlBtn">Download</button>
+        </div>
+        <div id="frameBox"><div class="empty" id="emptyState"><p>Your website will appear here.<br>Write your idea on the left and press <strong>Create my website</strong>.</p></div></div>
+        <h2>My prompts so far</h2>
+        <ol id="history"><li class="sub">Nothing yet.</li></ol>
+        <p class="sub">Your teacher can see your prompts and your website. The AI can make mistakes, so check what it wrote.</p>
+      </section>
+    </div>
+  </div>
+  <footer>Only your first name and your computer number are shown with your website.</footer>
+</main>
+
+<script>window.CLASSROOM_CONFIG = { API_URL: "https://script.google.com/macros/s/AKfycbzhE3qrCU0pCMTOwBQt4Agp4ho2HMBN5L8-UiFyK9n53Q-46b-HvBEfU7crK4obe-RR7A/exec" };</script>
+<script>
+(() => {
+  'use strict';
+  const CFG = window.CLASSROOM_CONFIG || {};
+  const API = String(CFG.API_URL || '').trim();
+  const configured =
+    /^https:\/\/script\.google\.com\/(a\/macros\/[^/]+|macros)\/s\/[^/]+\/exec$/.test(API) ||
+    /^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?\//.test(API);
+  const $ = (id) => document.getElementById(id);
+  const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+  const ROOT = location.pathname.replace(/studio\/?$/, '');
+  $('navMain').href = ROOT;
+  $('navGallery').href = ROOT + 'gallery/';
+
+  // ---- storage ----
+  const mem = {};
+  const store = {
+    get(k) { try { const v = localStorage.getItem(k); if (v !== null) return v; } catch (_) {} return mem[k] ?? null; },
+    set(k, v) { mem[k] = v; try { localStorage.setItem(k, v); } catch (_) {} },
+  };
+  const token = store.get('canvaSeatToken');
+
+  // ---- server ----
+  async function request(init, params) {
+    const url = new URL(API);
+    if (!init) for (const [k, v] of Object.entries(params)) url.searchParams.set(k, v);
+    const ctl = new AbortController();
+    const timer = setTimeout(() => ctl.abort(), init ? 150000 : 30000);
+    try {
+      const res = await fetch(url, init ? { method: 'POST', redirect: 'follow', cache: 'no-store', signal: ctl.signal,
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(params) }
+        : { redirect: 'follow', cache: 'no-store', signal: ctl.signal });
+      const text = await res.text();
+      try { return JSON.parse(text); } catch (_) { return { ok: false, error: 'bad_response' }; }
+    } catch (_) { return { ok: false, error: 'network' }; }
+    finally { clearTimeout(timer); }
+  }
+  const get = (params) => request(false, params);
+  const post = (params) => request(true, params);
+  const transient = (r) => !r.ok && (r.error === 'network' || r.error === 'busy' || r.error === 'server' || String(r.error).startsWith('bad_response'));
+  async function retrying(fn, tries = 4) {
+    let r;
+    for (let i = 0; i < tries; i++) {
+      r = await fn();
+      if (!transient(r)) return r;
+      if (i < tries - 1) await sleep(1200 * 2 ** i + Math.random() * 1200);
+    }
+    return r;
+  }
+
+  // ---- safe preview: a sandboxed frame with no network, no navigation, no popups, no storage access ----
+  const CSP = "default-src 'none'; img-src data:; style-src 'unsafe-inline'; script-src 'unsafe-inline'; font-src data:; media-src data:; base-uri 'none'; form-action 'none'";
+  function srcdocFor(html, image) {
+    let h = String(html).replace(/<!doctype[^>]*>/i, '');
+    if (image) h = h.split('{{IMAGE}}').join(image);
+    return '<!doctype html><meta http-equiv="Content-Security-Policy" content="' + CSP + '">' + h;
+  }
+  function showSite(html, image) {
+    const box = $('frameBox');
+    box.textContent = '';
+    const f = document.createElement('iframe');
+    f.setAttribute('sandbox', 'allow-scripts');
+    f.setAttribute('referrerpolicy', 'no-referrer');
+    f.setAttribute('title', 'My website preview');
+    f.srcdoc = srcdocFor(html, image);
+    box.appendChild(f);
+    lastHtml = srcdocFor(html, image);
+  }
+
+  // ---- state ----
+  let me = null;
+  let busy = false;
+  let lastHtml = '';
+  let colors = [];
+  try { colors = JSON.parse(store.get('studioColors') || '[]').filter((c) => /^#[0-9a-f]{6}$/i.test(c)).slice(0, 5); } catch (_) {}
+
+  const EXAMPLES = [
+    'A fan page for my favorite football team with a table of players',
+    'A quiz website about animals with 5 questions and a score',
+    'A personal page about my hobbies with a photo section and a fun color theme',
+    'A study guide for a school subject with short summaries and a checklist',
+    'A restaurant menu page for an imaginary pizza place',
+  ];
+  EXAMPLES.forEach((t) => {
+    const b = document.createElement('button');
+    b.type = 'button'; b.className = 'chip'; b.textContent = t.split(' with ')[0];
+    b.addEventListener('click', () => { $('prompt').value = t; $('prompt').focus(); count(); });
+    $('examples').appendChild(b);
+  });
+
+  const MSG = {
+    refused: (r) => r.reason || 'That idea is not suitable for a school website. Please try a different one.',
+    blocked: () => 'The AI would not make that. Try a different idea.',
+    unsafe: () => 'The AI used something that is not allowed in our class websites. Try again, or ask for a simpler page.',
+    too_long: () => 'That website became too big. Ask for something simpler, with fewer sections.',
+    limit_hour: (r) => `You used all your requests for this hour. Try again in about ${r.minutes || 60} minutes. Meanwhile, improve your prompt.`,
+    limit_day: () => 'You used all your requests for today. Come back tomorrow.',
+    class_limit: () => 'The whole class used today\'s AI quota. Please try again tomorrow.',
+    paused: () => 'Your teacher paused the studio for now.',
+    no_key: () => 'The studio is not switched on yet. Ask your teacher.',
+    bad_key: () => 'The AI connection is not working. Please tell your teacher. Your try was not counted.',
+    busy_self: () => 'Your last request is still running. Please wait for it to finish.',
+    hidden: () => 'Your teacher hid your website for now.',
+    no_site: () => 'You do not have a website yet. Create one first.',
+    bad_prompt: () => 'Please write what you want first.',
+    empty: () => 'The AI had a problem. Please try again. Your try was not counted.',
+    api: () => 'The AI had a problem. Please try again in a moment. Your try was not counted.',
+    slow: () => 'The AI took too long. Try a simpler idea. Your try was not counted.',
+    network: () => 'No connection to the class server. Check your internet and look at your website: it may have been created.',
+    bad_response: () => 'The class server answered in an unexpected way. Tell your teacher.',
+    server: () => 'Something went wrong on the class server. Try again.',
+  };
+  const say = (text, kind) => {
+    const m = $('msg');
+    m.textContent = '';
+    if (kind === 'busy') { const s = document.createElement('span'); s.className = 'spin'; m.appendChild(s); }
+    m.appendChild(document.createTextNode(text));
+  };
+  const gate = (text, kind) => { $('gate').className = 'notice' + (kind ? ' ' + kind : ''); $('gateText').textContent = text; $('gate').hidden = false; };
+
+  function count() { $('counter').textContent = `${$('prompt').value.length} / 600`; }
+  $('prompt').addEventListener('input', count);
+
+  function renderQuota() {
+    const q = me.quota || {};
+    $('quota').textContent = `Requests left: ${q.hour ?? '?'} this hour · ${q.day ?? '?'} today`;
+  }
+  function renderHistory() {
+    const ol = $('history');
+    ol.textContent = '';
+    const log = (me.log || []).slice().reverse();
+    if (!log.length) { const li = document.createElement('li'); li.className = 'sub'; li.textContent = 'Nothing yet.'; ol.appendChild(li); return; }
+    for (const e of log) {
+      const li = document.createElement('li');
+      li.textContent = e.p;
+      li.dir = 'auto';
+      if (e.r && e.r !== 'ok') { const s = document.createElement('span'); s.className = 'r'; s.textContent = ' (not built: ' + e.r + ')'; li.appendChild(s); }
+      ol.appendChild(li);
+    }
+  }
+  function renderMode() {
+    const has = me.hasSite;
+    $('goBtn').textContent = has ? 'Update my website' : 'Create my website';
+    $('promptLabel').textContent = has ? 'What should we change?' : 'What website do you want?';
+    $('prompt').placeholder = has ? 'Example: Make the title bigger, change the background to dark blue, and add a section about my favorite players.'
+      : 'Example: A page about my favorite football team, with a table of players and a fun quiz at the bottom.';
+    $('undoBtn').hidden = !me.canUndo;
+    $('clearBtn').hidden = !has;
+    $('tools').hidden = !has;
+    $('siteTitle').textContent = me.title || '';
+    $('picThumb').hidden = !me.hasImage;
+    $('picRemove').hidden = !me.hasImage;
+    if (me.hasImage) { $('picThumb').alt = 'Your picture'; }
+    $('fullBtn').href = ROOT + 'gallery/?site=' + me.seat;
+  }
+
+  async function loadSite() {
+    if (!me.hasSite) {
+      $('frameBox').textContent = '';
+      const d = document.createElement('div'); d.className = 'empty'; d.innerHTML = '<p>Your website will appear here.<br>Write your idea on the left and press <strong>Create my website</strong>.</p>';
+      $('frameBox').appendChild(d);
+      lastHtml = '';
+      return;
+    }
+    const s = await retrying(() => get({ action: 'site', seat: me.seat, token }));
+    if (s.ok) { showSite(s.html, s.image); if (s.image) $('picThumb').src = s.image; }
+    else say(MSG[s.error] ? MSG[s.error](s) : 'Could not load your website.');
+  }
+  async function refreshStatus() {
+    const st = await retrying(() => get({ action: 'studio_status', token }));
+    if (st.ok) { me = st; renderQuota(); renderHistory(); renderMode(); }
+    return st;
+  }
+
+  function lock(on) {
+    busy = on;
+    for (const id of ['goBtn', 'undoBtn', 'clearBtn', 'picFile', 'picRemove', 'prompt']) $(id).disabled = on;
+    if (!on && me && (!me.hasKey || !me.enabled)) $('goBtn').disabled = true;   // paused or no key: stays off
+  }
+
+  async function generate() {
+    if (busy) return;
+    const prompt = $('prompt').value.trim();
+    if (!prompt) { say(MSG.bad_prompt()); $('prompt').focus(); return; }
+    lock(true);
+    const started = Date.now();
+    let waiting = false;
+    const timer = setInterval(() => {
+      if (!waiting) say(`The AI is building your website… ${Math.round((Date.now() - started) / 1000)} s (usually 15 to 40 s)`, 'busy');
+    }, 1000);
+    say('The AI is building your website…', 'busy');
+    let res;
+    try {
+      for (let i = 0; i < 14; i++) {
+        waiting = false;
+        res = await post({ action: 'studio_generate', token, prompt, mode: me.hasSite ? 'update' : 'new', colors });
+        if (res.ok || res.error !== 'queue') break;
+        // the class is busy: wait in line instead of failing
+        waiting = true;
+        for (let s = Math.ceil((res.wait || 15) + Math.random() * 5); s > 0; s--) { say(`Waiting in line… the AI is busy with other students (${s} s)`, 'busy'); await sleep(1000); }
+      }
+    } finally { clearInterval(timer); }
+    if (res.ok) {
+      $('prompt').value = ''; count();
+      await refreshStatus();
+      await loadSite();
+      say('Done! Look at your website. Want to change something? Write it on the left and press Update.');
+    } else {
+      say(res.error === 'queue' ? 'The AI is very busy right now. Please try again in a minute.' : (MSG[res.error] ? MSG[res.error](res) : 'Something went wrong. Please try again.'));
+      await refreshStatus();
+    }
+    lock(false);
+    renderMode();
+  }
+  $('goBtn').addEventListener('click', generate);
+  $('prompt').addEventListener('keydown', (e) => { if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) generate(); });
+
+  $('undoBtn').addEventListener('click', async () => {
+    if (busy) return;
+    lock(true); say('Undoing…', 'busy');
+    const r = await retrying(() => post({ action: 'studio_undo', token }));
+    if (r.ok) { await refreshStatus(); await loadSite(); say('Went back to the version before.'); } else say('Nothing to undo.');
+    lock(false); renderMode();
+  });
+  $('clearBtn').addEventListener('click', async () => {
+    if (busy || !confirm('Delete your website and start again? You can still see your old prompts.')) return;
+    lock(true);
+    const r = await retrying(() => post({ action: 'studio_clear', token }));
+    if (r.ok) { await refreshStatus(); await loadSite(); say('Your website was deleted. Write a new idea!'); }
+    lock(false); renderMode();
+  });
+
+  // ---- Canva colors ----
+  function saveColors() { store.set('studioColors', JSON.stringify(colors)); }
+  function renderColors() {
+    const box = $('colors');
+    box.textContent = '';
+    colors.forEach((c, i) => {
+      const inp = document.createElement('input');
+      inp.type = 'color'; inp.value = c; inp.setAttribute('aria-label', 'Color ' + (i + 1));
+      inp.addEventListener('input', () => { colors[i] = inp.value; saveColors(); });
+      const rm = document.createElement('button');
+      rm.type = 'button'; rm.className = 'rm'; rm.textContent = 'remove'; rm.setAttribute('aria-label', 'Remove color ' + (i + 1));
+      rm.addEventListener('click', () => { colors.splice(i, 1); saveColors(); renderColors(); });
+      const w = document.createElement('span'); w.append(inp, rm); box.appendChild(w);
+    });
+    if (colors.length < 5) {
+      const add = document.createElement('button');
+      add.type = 'button'; add.className = 'btn small'; add.textContent = '+ Add a color';
+      add.addEventListener('click', () => { colors.push('#086fa9'); saveColors(); renderColors(); });
+      box.appendChild(add);
+    }
+  }
+  renderColors();
+
+  // ---- Canva picture: shrunk in the browser first, so it always fits ----
+  const MAX_CHARS = 200000;
+  async function shrink(file) {
+    const url = URL.createObjectURL(file);
+    try {
+      const img = await new Promise((ok, no) => { const i = new Image(); i.onload = () => ok(i); i.onerror = no; i.src = url; });
+      let side = 720, q = 0.78;
+      for (let i = 0; i < 8; i++) {
+        const k = Math.min(1, side / Math.max(img.width, img.height));
+        const c = document.createElement('canvas');
+        c.width = Math.max(1, Math.round(img.width * k)); c.height = Math.max(1, Math.round(img.height * k));
+        const g = c.getContext('2d'); g.fillStyle = '#fff'; g.fillRect(0, 0, c.width, c.height); g.drawImage(img, 0, 0, c.width, c.height);
+        const data = c.toDataURL('image/jpeg', q);
+        if (data.length <= MAX_CHARS) return data;
+        side = Math.round(side * 0.8); q = Math.max(0.5, q - 0.06);
+      }
+      return null;
+    } finally { URL.revokeObjectURL(url); }
+  }
+  $('picFile').addEventListener('change', async () => {
+    const f = $('picFile').files[0];
+    if (!f) return;
+    if (!/^image\/(png|jpeg|webp)$/.test(f.type)) { say('Please choose a PNG or JPG picture.'); return; }
+    lock(true); say('Preparing your picture…', 'busy');
+    try {
+      const data = await shrink(f);
+      if (!data) { say('That picture is too big. Try a smaller one.'); return; }
+      const r = await retrying(() => post({ action: 'studio_image', token, image: data }));
+      if (r.ok) { $('picThumb').src = data; me.hasImage = true; renderMode(); say('Picture added. The AI will use it in your next website or update.'); }
+      else say('Could not save the picture. Try a smaller one.');
+    } catch (_) { say('Could not read that picture.'); }
+    finally { lock(false); renderMode(); $('picFile').value = ''; }
+  });
+  $('picRemove').addEventListener('click', async () => {
+    lock(true);
+    const r = await retrying(() => post({ action: 'studio_image_clear', token }));
+    if (r.ok) { me.hasImage = false; $('picThumb').removeAttribute('src'); say('Picture removed.'); }
+    lock(false); renderMode();
+  });
+
+  // ---- share ----
+  $('copyBtn').addEventListener('click', async () => {
+    const link = new URL(ROOT + 'gallery/?site=' + me.seat, location.href).href;
+    let ok = false;
+    try { await navigator.clipboard.writeText(link); ok = true; } catch (_) {}
+    say(ok ? 'Link copied. Anyone with it can see your website.' : 'Copy this link: ' + link);
+  });
+  $('dlBtn').addEventListener('click', () => {
+    if (!lastHtml) return;
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(new Blob([lastHtml], { type: 'text/html' }));
+    a.download = 'my-website.html';
+    a.click();
+    setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+  });
+
+  // ---- start ----
+  async function boot() {
+    if (!configured) { gate('This page is not connected to the class server yet.', 'bad'); return; }
+    const needNumber = () => {
+      const a = document.createElement('a'); a.href = ROOT; a.textContent = 'Go and pick your number, or click your name';
+      $('gateText').textContent = '';
+      $('gateText').append('This browser does not have a computer number yet. ', a, '.');
+      $('gate').className = 'notice'; $('gate').hidden = false;
+    };
+    if (!token) { needNumber(); return; }
+    const st = await refreshStatus();
+    if (!st.ok) {
+      if (st.error === 'no_seat' || st.error === 'bad_token') {
+        needNumber();
+      } else if (st.error === 'unknown_action') {
+        gate('The AI Studio is not installed on the class server yet. Ask your teacher.', 'bad');
+      } else gate('Could not reach the class server. Please reload the page.', 'bad');
+      return;
+    }
+    $('whoName').textContent = me.name; $('whoSeat').textContent = me.seat;
+    $('app').hidden = false;
+    if (!me.hasKey) gate('The studio is not switched on yet: your teacher still needs to add the AI key. You can already look at the class gallery.', '');
+    else if (!me.enabled) gate('Your teacher paused the studio for now. You can still look at the gallery.', '');
+    if (me.hidden) gate('Your teacher hid your website for now.', '');
+    if (!me.hasKey || !me.enabled) $('goBtn').disabled = true;   // right away, before the preview has loaded
+    await loadSite();
+  }
+  count();
+  boot();
+})();
+</script>
+</body>
+</html>
