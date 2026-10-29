@@ -48,16 +48,16 @@ details .row{margin-top:8px}
 .bar{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:8px}
 .legend{display:flex;gap:16px;flex-wrap:wrap;font-size:13px;color:var(--sub);margin-bottom:12px}
 .legend i{display:inline-block;width:12px;height:12px;border-radius:4px;border:1px solid var(--border);background:#fff;margin-right:6px;vertical-align:-1px}
-.legend i.t{background:var(--taken)}.legend i.m{background:var(--accent);border-color:var(--accent)}
+.legend i.t{background:#eaf4fb;border-color:#9cc9e4}.legend i.m{background:var(--accent);border-color:var(--accent)}
 .grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}
 .tile{font:inherit;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-height:96px;padding:8px 6px;background:#fff;border:1px solid var(--border);border-radius:14px;color:var(--ink);cursor:pointer;box-shadow:0 2px 9px #19283307;transition:transform .12s,border-color .12s,box-shadow .12s}
 .tile .n{font-size:32px;line-height:1;font-weight:780}
 .tile .who{font-size:13px;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-height:1.3em}
-.tile:not(:disabled):hover{border-color:#0b78b1;box-shadow:0 8px 20px #12365017;transform:translateY(-2px)}
-.tile.taken{background:var(--taken);color:var(--taken-ink);box-shadow:none}
+.tile:hover{border-color:#0b78b1;box-shadow:0 8px 20px #12365017;transform:translateY(-2px)}
+.tile.taken{background:#eaf4fb;border-color:#9cc9e4;color:var(--ink);box-shadow:none}
+.tile.taken .who{color:var(--accent);font-weight:700}
 .tile.mine{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
 .tile.unknown{color:#b3c0cc;animation:pulse 1.4s ease-in-out infinite}
-.tile:disabled{cursor:not-allowed}
 @keyframes pulse{50%{opacity:.55}}
 footer{font-size:13px;color:var(--sub);margin-top:26px;text-align:center}
 
@@ -96,6 +96,7 @@ dialog .actions{display:flex;justify-content:flex-end;gap:10px;margin-top:10px}
     <div class="row">
       <a id="openBtn" class="btn primary" href="#" target="_blank" rel="noopener noreferrer">Open my Canva design</a>
     </div>
+    <p class="sub">Someone else on this computer? Just click your own name (or a free number) in the grid below.</p>
     <div class="rename">
       <p><strong>Put your name on your design</strong></p>
       <ol>
@@ -117,7 +118,7 @@ dialog .actions{display:flex;justify-content:flex-end;gap:10px;margin-top:10px}
 
   <section id="board" aria-labelledby="boardTitle">
     <div class="bar"><h2 id="boardTitle">Student computers</h2><span id="count" class="sub">Loading…</span></div>
-    <div class="legend" aria-hidden="true"><span><i></i>Free</span><span><i class="t"></i>Taken</span><span><i class="m"></i>Yours</span></div>
+    <div class="legend" aria-hidden="true"><span><i></i>Free: click to take it</span><span><i class="t"></i>Has a name: click your name to open your design</span><span><i class="m"></i>Yours</span></div>
     <nav id="grid" class="grid" aria-label="Choose your computer number"></nav>
     <p id="updated" class="sub" aria-live="off"></p>
     <p class="sub"><strong>Were you here before?</strong> Find your name in the grid and click it to open your design again.</p>
@@ -244,7 +245,6 @@ dialog .actions{display:flex;justify-content:flex-end;gap:10px;margin-top:10px}
     const b = document.createElement('button');
     b.type = 'button';
     b.className = 'tile unknown';
-    b.disabled = true;
     b.innerHTML = '<span class="n"></span><span class="who" dir="auto"></span>';
     b.querySelector('.n').textContent = n;
     b.addEventListener('click', () => onTile(n));
@@ -262,11 +262,11 @@ dialog .actions{display:flex;justify-content:flex-end;gap:10px;margin-top:10px}
       const taken = known && s.taken && !isMine;
       if (known && !s.taken) free++;
       t.className = 'tile' + (isMine ? ' mine' : taken ? ' taken' : known ? '' : ' unknown');
-      t.disabled = !isMine && (!!mine || !known);  // taken numbers stay clickable: "this is my number"
+      t.disabled = false;   // every number is always clickable, whatever this browser did before or whether the list loaded
       t.querySelector('.who').textContent = isMine ? mine.name : taken ? s.name : '';
       t.setAttribute('aria-label', isMine ? `Computer ${n}, yours (${mine.name})`
         : taken ? `Computer ${n}, ${s.name}. Click your name to open your design.`
-        : known ? `Computer ${n}, free` : `Computer ${n}, loading`);
+        : known ? `Computer ${n}, free. Click to take it.` : `Computer ${n}`);
     }
     $('count').textContent = statusLoaded ? `${free} free · ${SEATS - free} taken` : 'Loading…';
   }
@@ -288,11 +288,11 @@ dialog .actions{display:flex;justify-content:flex-end;gap:10px;margin-top:10px}
 
   function schedulePoll() {
     clearTimeout(pollTimer);
-    if (mine || document.hidden || !configured) return;
+    if (document.hidden || !configured) return;
     pollTimer = setTimeout(async () => { await refresh(); schedulePoll(); }, POLL_MS + Math.random() * 6000);
   }
   document.addEventListener('visibilitychange', () => {
-    if (!document.hidden && !mine && configured) { refresh(); schedulePoll(); }
+    if (!document.hidden && configured) { refresh(); schedulePoll(); }
   });
 
   // ---- my seat card ----
@@ -306,8 +306,8 @@ dialog .actions{display:flex;justify-content:flex-end;gap:10px;margin-top:10px}
     $('namePill').hidden = false;
     $('copyBtn').textContent = 'Copy my name';
     $('mine').hidden = false;
-    clearTimeout(pollTimer);
     paintGrid();
+    schedulePoll();
   }
   function clearMine() {
     mine = null;
@@ -446,7 +446,6 @@ dialog .actions{display:flex;justify-content:flex-end;gap:10px;margin-top:10px}
 
   function onTile(n) {
     if (mine && mine.seat === n) { $('mine').scrollIntoView({ behavior: 'smooth', block: 'start' }); return; }
-    if (mine) return;
     const s = seatInfo[n];
     openDialog(s && s.taken ? 'reopen' : 'claim', n);
   }
