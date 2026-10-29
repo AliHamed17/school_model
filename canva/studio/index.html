@@ -57,7 +57,7 @@ footer{font-size:13px;color:var(--sub);margin-top:26px;text-align:center}
     <div class="eyebrow">AI &amp; Machine Learning · Classroom Activity</div>
     <h1>Build a website with Canva Code</h1>
     <p class="lead">Describe the website you want to Canva's AI. Canva builds it. Publish it, then share your link with the class.</p>
-    <nav class="top"><a class="btn" id="navMain" href="#">← My Canva design</a><a class="btn" id="navGallery" href="#">Class gallery</a></nav>
+    <nav class="top"><a class="btn" id="navMain" href="#">← My Canva design</a><a class="btn" id="navNext" href="#">Poster, video or picture</a><a class="btn" id="navGallery" href="#">Class gallery</a></nav>
   </header>
 
   <noscript><div class="notice bad"><p>This page needs JavaScript.</p></div></noscript>
@@ -150,6 +150,7 @@ footer{font-size:13px;color:var(--sub);margin-top:26px;text-align:center}
   const ROOT = location.pathname.replace(/studio\/?$/, '');
   $('navMain').href = ROOT;
   $('navGallery').href = ROOT + 'gallery/';
+  $('navNext').href = ROOT + 'next/';
   $('savedGallery').href = ROOT + 'gallery/';
 
   let token = null;

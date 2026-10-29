@@ -84,6 +84,7 @@ dialog .actions{display:flex;justify-content:flex-end;gap:10px;margin-top:10px}
     <p class="lead">New here? Pick a free number and type your name. Been here before? Click your name. Your own Canva design opens, and no sign-in is needed.</p>
     <nav aria-label="More activities" style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:14px">
       <a class="btn primary" id="navStudio" href="#">🌐 Build a website (Canva Code)</a>
+      <a class="btn" id="navNext" href="#">🚀 Take my design further</a>
       <a class="btn" id="navGallery" href="#">Class gallery</a>
     </nav>
   </header>
@@ -100,6 +101,7 @@ dialog .actions{display:flex;justify-content:flex-end;gap:10px;margin-top:10px}
     <div class="row">
       <a id="openBtn" class="btn primary" href="#" target="_blank" rel="noopener noreferrer">Open my Canva design</a>
       <a id="codeBtn" class="btn" href="#">Build my website with Canva Code</a>
+      <a id="nextBtn" class="btn" href="#">Make a poster, video or picture</a>
     </div>
     <p class="sub">Your design opens with no sign-in. For your website, Canva asks you to sign in once with Google (free). Your design and your website are both saved under your computer number, and your teacher sees them together.</p>
     <p class="sub">Someone else on this computer? Just click your own name (or a free number) in the grid below.</p>
@@ -160,6 +162,8 @@ dialog .actions{display:flex;justify-content:flex-end;gap:10px;margin-top:10px}
   const ROOT = location.pathname.endsWith('/') ? location.pathname : location.pathname + '/';   // works with or without the trailing slash
   $('navStudio').href = ROOT + 'studio/';
   $('codeBtn').href = ROOT + 'studio/';
+  $('navNext').href = ROOT + 'next/';
+  $('nextBtn').href = ROOT + 'next/';
   $('navGallery').href = ROOT + 'gallery/';
   const configured =
     /^https:\/\/script\.google\.com\/(a\/macros\/[^/]+|macros)\/s\/[^/]+\/exec$/.test(API) ||

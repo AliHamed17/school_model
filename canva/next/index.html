@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Take your design further | AI Classroom</title>
+<meta name="description" content="Turn your Canva design into a poster, a website, a video or an AI picture with free tools.">
+<meta name="robots" content="noindex">
+<style>
+:root{color-scheme:light;--ink:#152432;--sub:#566575;--border:#dbe3ea;--bg:#f5f8fb;--accent:#086fa9;--accent-ink:#fff;--warn-bg:#fff6e5;--warn-border:#f0d49a;--bad-bg:#fdecec;--bad-border:#f0b4b4;--ok-bg:#e9f7ef;--ok-border:#a9dcc0}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Arial,sans-serif;line-height:1.5}
+.wrap{max-width:1000px;margin:0 auto;padding:clamp(20px,4vw,44px) 16px 60px}
+header{text-align:center;margin-bottom:18px}
+.eyebrow{font-size:12px;text-transform:uppercase;letter-spacing:.14em;color:var(--accent);font-weight:800}
+h1{font-size:clamp(26px,4.5vw,40px);letter-spacing:-.03em;margin:6px 0 8px;line-height:1.15}
+h2{font-size:18px;margin:0 0 6px}
+h3{font-size:17px;margin:0}
+.lead{color:var(--sub);font-size:clamp(15px,2vw,17px);margin:0 auto;max-width:700px}
+.sub{color:var(--sub);font-size:14px}
+nav.top{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:14px 0 0}
+.btn{font:inherit;font-weight:700;border-radius:10px;border:1px solid var(--border);background:#fff;color:var(--ink);padding:10px 16px;cursor:pointer;text-decoration:none;display:inline-block;line-height:1.3}
+.btn:hover{border-color:#9db3c4}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.btn.primary:hover{background:#075f90}
+.btn.small{padding:6px 12px;font-size:14px}
+:focus-visible{outline:3px solid #0b78b1;outline-offset:2px}
+.notice{margin:0 auto 16px;padding:12px 16px;border-radius:12px;border:1px solid var(--warn-border);background:var(--warn-bg)}
+.notice.bad{background:var(--bad-bg);border-color:var(--bad-border)}
+.notice.ok{background:var(--ok-bg);border-color:var(--ok-border)}
+.notice p{margin:0}
+.who{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;background:#fff;border:1px solid var(--border);border-radius:14px;padding:10px 16px;margin-bottom:16px}
+.panel{background:#fff;border:1px solid var(--border);border-radius:16px;padding:16px 18px;margin-bottom:14px}
+.panel p{margin:4px 0 8px}
+label{display:block;font-weight:700;margin:6px 0 4px}
+input[type=text],textarea{font:inherit;width:100%;padding:10px 12px;border:2px solid var(--border);border-radius:10px;background:#fff}
+textarea{min-height:116px;resize:vertical;font-size:14px}
+input:focus,textarea:focus{border-color:var(--accent);outline:none}
+.hint{font-weight:400;color:var(--sub);font-size:13px;margin-top:3px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
+.card{background:#fff;border:1px solid var(--border);border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:8px}
+.card .head{display:flex;align-items:center;gap:10px}
+.card .ico{font-size:28px;line-height:1}
+.card .what{color:var(--sub);font-size:14px;margin:0}
+.card .tools{display:flex;flex-direction:column;gap:8px;margin-top:4px}
+.tool{display:flex;flex-direction:column;gap:2px}
+.tool .badge{font-size:12px;color:var(--sub)}
+.card .tip{font-size:13px;color:var(--sub);margin:0}
+#toast{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);background:#152432;color:#fff;padding:10px 16px;border-radius:12px;font-size:14px;max-width:90vw;box-shadow:0 6px 24px #0003}
+.steps{margin:6px 0 0;padding-left:20px;color:var(--ink);font-size:15px}
+.steps li{margin:2px 0}
+kbd{font:inherit;font-size:13px;background:#eef3f7;border:1px solid var(--border);border-bottom-width:2px;border-radius:6px;padding:0 6px}
+footer{font-size:13px;color:var(--sub);margin-top:26px;text-align:center}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <header>
+    <div class="eyebrow">AI &amp; Machine Learning · Classroom Activity</div>
+    <h1>Take your design further</h1>
+    <p class="lead">Start from the design you made in Canva and turn it into a poster, a website, a video or an AI picture. Every tool here is free to start.</p>
+    <nav class="top"><a class="btn" id="navMain" href="#">← My Canva design</a><a class="btn" id="navStudio" href="#">Build a website (Canva Code)</a><a class="btn" id="navGallery" href="#">Class gallery</a></nav>
+  </header>
+
+  <noscript><div class="notice bad"><p>This page needs JavaScript.</p></div></noscript>
+  <div id="gate" class="notice" hidden><p id="gateText"></p></div>
+
+  <div id="app" hidden>
+    <div class="who"><div><strong id="whoName"></strong> · Computer <span id="whoSeat"></span> <a class="btn small" id="designLink" href="#" target="_blank" rel="noopener noreferrer" hidden>Open my Canva design ↗</a></div><div class="sub">Pick what to make from your design</div></div>
+
+    <section class="panel" aria-labelledby="p1">
+      <h2 id="p1">1. What is your design about?</h2>
+      <input id="topic" type="text" aria-label="What is your design about?" maxlength="120" dir="auto" placeholder="Example: my favorite football team" autocomplete="off">
+      <div class="hint">One short line. We use it to write ready-made prompts for you. Do not type your full name, phone number, address or school.</div>
+    </section>
+
+    <section class="panel" aria-labelledby="p2">
+      <h2 id="p2">2. Bring your design along (optional)</h2>
+      <ol class="steps">
+        <li>Open your design (button above) and click on the page.</li>
+        <li>Press <kbd>Ctrl</kbd>+<kbd>A</kbd> to select everything, then <kbd>Ctrl</kbd>+<kbd>C</kbd> to copy.</li>
+        <li>Open a tool below, then press <kbd>Ctrl</kbd>+<kbd>V</kbd> inside Canva to paste your design into the new one.</li>
+      </ol>
+      <p class="sub">Copy and paste works between Canva designs in the same browser. Your original design stays as it is.</p>
+    </section>
+
+    <h2 style="margin:18px 0 8px">3. Pick what to make</h2>
+    <div class="notice" style="max-width:none"><p><strong>Click a tool.</strong> Your prompt is copied for you and the tool opens in a new tab. Paste the prompt there with <kbd>Ctrl</kbd>+<kbd>V</kbd> and press Enter.</p></div>
+    <div class="grid" id="cards"></div>
+
+    <section class="panel" style="margin-top:14px">
+      <h2>Before you start</h2>
+      <ul class="steps">
+        <li><strong>Free to start:</strong> each tool has a free version with limits (for example a few AI pictures a day). If a tool asks you to pay, close it and choose another.</li>
+        <li><strong>Accounts:</strong> Canva and Google tools use your Google sign-in. Microsoft and Adobe tools need their own free account. Some tools need you to be 13 or older. If you are younger, ask your teacher first.</li>
+        <li><strong>Be careful:</strong> AI makes mistakes. Do not upload photos of people or put personal details in a prompt.</li>
+      </ul>
+    </section>
+  </div>
+  <footer>These are other companies' websites with their own rules and limits. This page only opens them and copies your prompt. Nothing you type here is sent anywhere.</footer>
+</main>
+<div id="toast" role="status" aria-live="polite" hidden></div>
+
+<script>window.CLASSROOM_CONFIG = { API_URL: "https://script.google.com/macros/s/AKfycbzhE3qrCU0pCMTOwBQt4Agp4ho2HMBN5L8-UiFyK9n53Q-46b-HvBEfU7crK4obe-RR7A/exec" };</script>
+<script>
+(() => {
+  'use strict';
+  const CFG = window.CLASSROOM_CONFIG || {};
+  const API = String(CFG.API_URL || '').trim();
+  const configured =
+    /^https:\/\/script\.google\.com\/(a\/macros\/[^/]+|macros)\/s\/[^/]+\/exec$/.test(API) ||
+    /^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?\//.test(API);
+  const $ = (id) => document.getElementById(id);
+  const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+  const ROOT = location.pathname.replace(/next\/?$/, '');
+  $('navMain').href = ROOT;
+  $('navStudio').href = ROOT + 'studio/';
+  $('navGallery').href = ROOT + 'gallery/';
+
+  // ---------------------------------------------------------------------------------------------
+  // THE LIST OF TOOLS. To add, remove or change one, edit this list and republish the page.
+  // Only fixed https addresses are ever opened. The student's text is never put into an address.
+  // `{topic}` in a prompt is replaced with the one line the student typed.
+  // ---------------------------------------------------------------------------------------------
+  const OPTIONS = [
+    { id: 'poster', icon: '🖼️', title: 'A poster', what: 'Big title, short slogan and the key facts, ready to print or share.',
+      prompt: 'Make a poster about {topic}. Use a big title, a short slogan, three key facts and bright colors that match my design.',
+      tools: [{ name: 'Canva poster maker', url: 'https://www.canva.com/create/posters/', badge: 'Free with your Canva account (Google sign-in)' }] },
+    { id: 'website', icon: '🌐', title: 'A website', what: 'Describe it to Canva\'s AI and publish a real website you can share.',
+      prompt: 'Build a one-page website about {topic} for my classmates. Include a big title, an About section, three fun facts and a small quiz. Use the colors from my design.',
+      tools: [
+        { name: 'Canva Code (AI), step by step', url: '@studio', badge: 'Free with your Canva account. Our guide opens first.' },
+        { name: 'Canva website builder', url: 'https://www.canva.com/create/websites/', badge: 'Free with your Canva account' },
+      ] },
+    { id: 'video', icon: '🎬', title: 'A video', what: 'Turn your design into a short video with text, music and scenes.',
+      prompt: 'Make a 30 second video about {topic}: an opening title, four short scenes with text, and upbeat music.',
+      tools: [
+        { name: 'Canva video editor', url: 'https://www.canva.com/create/videos/', badge: 'Free with your Canva account' },
+        { name: 'Clipchamp', url: 'https://clipchamp.com/en/', badge: 'Free video editor with a Microsoft account' },
+      ],
+      tip: 'AI video makers are mostly paid. These two let you make a video for free.' },
+    { id: 'picture', icon: '🎨', title: 'An AI picture', what: 'Describe a picture and an AI draws it. Add it to your design afterwards.',
+      prompt: 'A colorful, friendly illustration about {topic}, simple shapes, no text, suitable for school.',
+      tools: [
+        { name: 'Microsoft Image Creator', url: 'https://www.bing.com/images/create', badge: 'Free with a Microsoft account, daily limit' },
+        { name: 'Adobe Firefly', url: 'https://firefly.adobe.com/', badge: 'Free credits with an Adobe account' },
+        { name: 'Gemini', url: 'https://gemini.google.com/app', badge: 'Free with your Google account, limits apply' },
+      ],
+      tip: 'Download the picture, then upload it into your Canva design.' },
+    { id: 'slides', icon: '📊', title: 'Slides or an infographic', what: 'Explain your topic with slides or a one-page infographic.',
+      prompt: 'Create a presentation about {topic} with a title slide, three content slides with short text and pictures, and a summary slide.',
+      tools: [
+        { name: 'Canva presentations', url: 'https://www.canva.com/create/presentations/', badge: 'Free with your Canva account' },
+        { name: 'Canva infographics', url: 'https://www.canva.com/create/infographics/', badge: 'Free with your Canva account' },
+      ] },
+    { id: 'coach', icon: '💡', title: 'Make my prompt better', what: 'Ask an AI coach to help you write a stronger prompt for any tool above.',
+      prompt: 'I am making a school project about {topic}. Ask me three short questions about what I want, then write one clear prompt I can paste into an AI design tool.',
+      tools: [{ name: 'Gemini', url: 'https://gemini.google.com/app', badge: 'Free with your Google account, limits apply' }] },
+  ];
+
+  // ---------------------------------------------------------------------------------------------
+  const SAFE_URL = /^https:\/\/[a-z0-9.-]+\.[a-z]{2,}(\/[A-Za-z0-9._~\/-]*)?$/;   // fixed https addresses only, no query strings
+  let topic = '';
+  try { topic = localStorage.getItem('canvaNextTopic') || ''; } catch (_) {}
+  const edited = new Set();           // prompts the student has changed by hand: never overwritten by the topic
+
+  const toast = (text) => {
+    const t = $('toast'); t.textContent = text; t.hidden = false;
+    clearTimeout(toast.timer); toast.timer = setTimeout(() => { t.hidden = true; }, 5000);
+  };
+  async function copyText(text) {
+    try { await navigator.clipboard.writeText(text); return true; } catch (_) {}
+    const ta = document.createElement('textarea');
+    ta.value = text; ta.setAttribute('readonly', ''); ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select();
+    let ok = false;
+    try { ok = document.execCommand('copy'); } catch (_) {}
+    ta.remove();
+    return ok;
+  }
+  const fillPrompt = (tpl) => tpl.replace('{topic}', topic.trim() || 'my design');
+
+  function buildCards() {
+    const host = $('cards'); host.textContent = '';
+    for (const o of OPTIONS) {
+      const card = document.createElement('article'); card.className = 'card'; card.dataset.id = o.id;
+      const head = document.createElement('div'); head.className = 'head';
+      const ico = document.createElement('span'); ico.className = 'ico'; ico.textContent = o.icon; ico.setAttribute('aria-hidden', 'true');
+      const h = document.createElement('h3'); h.textContent = o.title;
+      head.append(ico, h);
+      const what = document.createElement('p'); what.className = 'what'; what.textContent = o.what;
+      const lab = document.createElement('label'); lab.textContent = 'Your prompt'; lab.htmlFor = 'prompt-' + o.id; lab.style.fontSize = '14px';
+      const ta = document.createElement('textarea'); ta.id = 'prompt-' + o.id; ta.dir = 'auto'; ta.maxLength = 600; ta.value = fillPrompt(o.prompt);
+      ta.addEventListener('input', () => edited.add(o.id));
+      const tools = document.createElement('div'); tools.className = 'tools';
+      for (const t of o.tools) {
+        const url = t.url === '@studio' ? ROOT + 'studio/' : t.url;
+        if (t.url !== '@studio' && !SAFE_URL.test(url)) continue;               // never link to anything unexpected
+        const wrap = document.createElement('div'); wrap.className = 'tool';
+        const a = document.createElement('a'); a.className = 'btn primary small'; a.textContent = 'Open ' + t.name + ' ↗';
+        a.href = url; a.target = '_blank'; a.rel = 'noopener noreferrer'; a.dataset.tool = t.name;
+        a.addEventListener('click', async () => {
+          const ok = await copyText(ta.value);
+          toast(ok ? 'Prompt copied. In ' + t.name + ', click the box and press Ctrl+V.' : 'Could not copy automatically. Select your prompt and copy it.');
+        });
+        const b = document.createElement('span'); b.className = 'badge'; b.textContent = t.badge;
+        wrap.append(a, b); tools.appendChild(wrap);
+      }
+      card.append(head, what, lab, ta, tools);
+      if (o.tip) { const tip = document.createElement('p'); tip.className = 'tip'; tip.textContent = o.tip; card.appendChild(tip); }
+      host.appendChild(card);
+    }
+  }
+  function refreshPrompts() {
+    for (const o of OPTIONS) { if (!edited.has(o.id)) { const ta = $('prompt-' + o.id); if (ta) ta.value = fillPrompt(o.prompt); } }
+  }
+
+  // ---- talking to the class server (same calls as the other pages) ----
+  async function request(params) {
+    const url = new URL(API);
+    for (const [k, v] of Object.entries(params)) url.searchParams.set(k, v);
+    const ctl = new AbortController();
+    const timer = setTimeout(() => ctl.abort(), 30000);
+    try {
+      const res = await fetch(url, { redirect: 'follow', cache: 'no-store', signal: ctl.signal });
+      const text = await res.text();
+      try { return JSON.parse(text); } catch (_) { return { ok: false, error: 'bad_response' }; }
+    } catch (_) { return { ok: false, error: 'network' }; }
+    finally { clearTimeout(timer); }
+  }
+  const transient = (r) => !r.ok && (r.error === 'network' || r.error === 'busy' || r.error === 'server' || String(r.error).startsWith('bad_response'));
+  async function retrying(fn, tries = 4) {
+    let r;
+    for (let i = 0; i < tries; i++) {
+      r = await fn();
+      if (!transient(r)) return r;
+      if (i < tries - 1) await sleep(1200 * 2 ** i + Math.random() * 1200);
+    }
+    return r;
+  }
+
+  $('topic').addEventListener('input', () => {
+    topic = $('topic').value;
+    try { localStorage.setItem('canvaNextTopic', topic); } catch (_) {}
+    refreshPrompts();
+  });
+
+  async function boot() {
+    const needNumber = () => {
+      const a = document.createElement('a'); a.href = ROOT; a.textContent = 'Go and pick your number, or click your name';
+      $('gateText').textContent = '';
+      $('gateText').append('This browser does not have a computer number yet. ', a, '.');
+      $('gate').hidden = false;
+    };
+    let token = null;
+    try { token = localStorage.getItem('canvaSeatToken'); } catch (_) {}
+    if (!configured) { $('gateText').textContent = 'This page is not connected to the class server yet.'; $('gate').className = 'notice bad'; $('gate').hidden = false; return; }
+    if (!token) { needNumber(); return; }
+    const r = await retrying(() => request({ action: 'resume', token }));
+    if (!r.ok) { $('gateText').textContent = 'Could not reach the class server. Please reload the page.'; $('gate').className = 'notice bad'; $('gate').hidden = false; return; }
+    if (!r.has) { needNumber(); return; }
+    $('whoName').textContent = r.name; $('whoSeat').textContent = r.seat;
+    if (/^https:\/\/www\.canva\.com\/design\/[\w-]+\/[\w-]+\/edit$/.test(r.url || '')) { $('designLink').href = r.url; $('designLink').hidden = false; }
+    $('topic').value = topic;
+    buildCards();
+    $('app').hidden = false;
+  }
+  boot();
+})();
+</script>
+</body>
+</html>
