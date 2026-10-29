@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Class gallery | AI Classroom</title>
-<meta name="description" content="Websites the class built with AI.">
+<meta name="description" content="Websites the class built with Canva Code.">
 <meta name="robots" content="noindex">
 <style>
 :root{color-scheme:light;--ink:#152432;--sub:#566575;--border:#dbe3ea;--bg:#f5f8fb;--accent:#086fa9;--accent-ink:#fff;--warn-bg:#fff6e5;--warn-border:#f0d49a;--bad-bg:#fdecec;--bad-border:#f0b4b4}
@@ -27,22 +27,18 @@ nav.top{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:14px 
 .notice.bad{background:var(--bad-bg);border-color:var(--bad-border)}
 .notice p{margin:0}
 .bar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px}
-.card{font:inherit;text-align:left;background:#fff;border:1px solid var(--border);border-radius:16px;padding:16px;cursor:pointer;color:var(--ink);display:flex;flex-direction:column;gap:8px;min-height:140px;transition:transform .12s,border-color .12s,box-shadow .12s}
-.card:hover{border-color:#0b78b1;box-shadow:0 8px 20px #12365017;transform:translateY(-2px)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
+.card{background:#fff;border:1px solid var(--border);border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:8px}
+.card.focus{border-color:var(--accent);box-shadow:0 0 0 3px #086fa933}
 .card .num{align-self:flex-start;background:#e7f5fd;color:var(--accent);font-weight:800;font-size:12px;border-radius:99px;padding:2px 10px}
 .card .t{font-size:18px;font-weight:760;letter-spacing:-.01em;overflow-wrap:anywhere}
-.card .by{color:var(--sub);font-size:14px;margin-top:auto}
-.card .go{color:var(--accent);font-weight:700;font-size:14px}
-.empty{background:#fff;border:1px dashed var(--border);border-radius:16px;padding:36px 20px;text-align:center;color:var(--sub)}
-#viewer{position:fixed;inset:0;background:#0a233acc;z-index:10;display:flex;flex-direction:column;padding:12px}
-#viewer .head{display:flex;gap:10px;align-items:center;background:#fff;border-radius:12px 12px 0 0;padding:10px 14px;flex-wrap:wrap}
-#viewer .head .t{font-weight:700;flex:1;min-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-#viewer .body{flex:1;background:#fff;border-radius:0 0 12px 12px;overflow:hidden}
-#viewer iframe{width:100%;height:100%;border:0;background:#fff;display:block}
-#viewer .msg{display:grid;place-items:center;height:100%;color:var(--sub);padding:20px;text-align:center}
+.card .by{color:var(--sub);font-size:14px}
+.card details{font-size:14px;color:var(--sub)}
+.card summary{cursor:pointer;font-weight:600}
+.card details p{margin:6px 0 0;white-space:pre-wrap;overflow-wrap:anywhere;color:var(--ink)}
+.card .open{margin-top:auto;align-self:flex-start}
+.empty{background:#fff;border:1px dashed var(--border);border-radius:16px;padding:36px 20px;text-align:center;color:var(--sub);grid-column:1/-1}
 footer{font-size:13px;color:var(--sub);margin-top:26px;text-align:center}
-@media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
 <body>
@@ -50,24 +46,15 @@ footer{font-size:13px;color:var(--sub);margin-top:26px;text-align:center}
   <header>
     <div class="eyebrow">AI &amp; Machine Learning · Classroom Activity</div>
     <h1>Class gallery</h1>
-    <p class="lead">Websites our class built with AI. Click one to open it.</p>
-    <nav class="top"><a class="btn" id="navMain" href="#">← My Canva design</a><a class="btn primary" id="navStudio" href="#">AI Website Studio</a></nav>
+    <p class="lead">Websites our class built with Canva Code. Click one to open it. You can also learn from the prompts students shared.</p>
+    <nav class="top"><a class="btn" id="navMain" href="#">← My Canva design</a><a class="btn primary" id="navStudio" href="#">Build my website</a></nav>
   </header>
 
   <div id="note" class="notice" hidden><p id="noteText"></p></div>
   <div class="bar"><strong id="count">Loading…</strong><span class="sub" id="updated"></span></div>
   <div class="grid" id="grid" aria-live="polite"></div>
-  <footer>Websites are written by AI from student prompts, and the AI can make mistakes. Your teacher can hide any website.</footer>
+  <footer>Websites are made by students with Canva Code and hosted by Canva. The AI can make mistakes. Your teacher can hide any website.</footer>
 </main>
-
-<div id="viewer" role="dialog" aria-modal="true" aria-label="Student website" hidden>
-  <div class="head">
-    <span class="t" id="vTitle"></span>
-    <button type="button" class="btn small" id="vCopy">Copy link</button>
-    <button type="button" class="btn small primary" id="vClose">Close</button>
-  </div>
-  <div class="body" id="vBody"></div>
-</div>
 
 <script>window.CLASSROOM_CONFIG = { API_URL: "https://script.google.com/macros/s/AKfycbzhE3qrCU0pCMTOwBQt4Agp4ho2HMBN5L8-UiFyK9n53Q-46b-HvBEfU7crK4obe-RR7A/exec" };</script>
 <script>
@@ -84,12 +71,9 @@ footer{font-size:13px;color:var(--sub);margin-top:26px;text-align:center}
   $('navMain').href = ROOT;
   $('navStudio').href = ROOT + 'studio/';
 
-  let token = null;
-  try { token = localStorage.getItem('canvaSeatToken'); } catch (_) {}
-
   async function get(params) {
     const url = new URL(API);
-    for (const [k, v] of Object.entries(params)) if (v != null) url.searchParams.set(k, v);
+    for (const [k, v] of Object.entries(params)) url.searchParams.set(k, v);
     const ctl = new AbortController();
     const timer = setTimeout(() => ctl.abort(), 30000);
     try {
@@ -110,14 +94,6 @@ footer{font-size:13px;color:var(--sub);margin-top:26px;text-align:center}
     return r;
   }
 
-  // A student's page runs in a sandbox with no network, no navigation, no popups and no access to this site.
-  const CSP = "default-src 'none'; img-src data:; style-src 'unsafe-inline'; script-src 'unsafe-inline'; font-src data:; media-src data:; base-uri 'none'; form-action 'none'";
-  function srcdocFor(html, image) {
-    let h = String(html).replace(/<!doctype[^>]*>/i, '');
-    if (image) h = h.split('{{IMAGE}}').join(image);
-    return '<!doctype html><meta http-equiv="Content-Security-Policy" content="' + CSP + '">' + h;
-  }
-
   function ago(iso) {
     const s = Math.max(0, (Date.now() - Date.parse(iso)) / 1000);
     if (!isFinite(s)) return '';
@@ -127,31 +103,43 @@ footer{font-size:13px;color:var(--sub);margin-top:26px;text-align:center}
     return Math.round(s / 86400) + ' days ago';
   }
 
-  let sites = [];
-  function render() {
+  const want = parseInt(new URLSearchParams(location.search).get('site'), 10);
+  function render(sites) {
     const grid = $('grid');
     grid.textContent = '';
     if (!sites.length) {
-      const d = document.createElement('div'); d.className = 'empty'; d.style.gridColumn = '1/-1';
-      d.textContent = 'No websites yet. Be the first: open the AI Website Studio!';
+      const d = document.createElement('div'); d.className = 'empty';
+      d.textContent = 'No websites yet. Be the first: build one with Canva Code and share your link!';
       grid.appendChild(d);
     }
     for (const s of sites.slice().sort((a, b) => String(b.updated).localeCompare(String(a.updated)))) {
-      const b = document.createElement('button');
-      b.type = 'button'; b.className = 'card';
+      if (!/^https:\/\//.test(s.url)) continue;                 // the server already checks; never link to anything else
+      const card = document.createElement('article');
+      card.className = 'card' + (s.seat === want ? ' focus' : '');
       const num = document.createElement('span'); num.className = 'num'; num.textContent = 'Computer ' + s.seat;
       const t = document.createElement('span'); t.className = 't'; t.dir = 'auto'; t.textContent = s.title;
       const by = document.createElement('span'); by.className = 'by'; by.dir = 'auto'; by.textContent = 'by ' + s.name + (s.updated ? ' · ' + ago(s.updated) : '');
-      const go = document.createElement('span'); go.className = 'go'; go.textContent = 'Open website →';
-      b.append(num, t, by, go);
-      b.addEventListener('click', () => openSite(s.seat));
-      grid.appendChild(b);
+      card.append(num, t, by);
+      for (const [label, text] of [['The prompt', s.prompt], ['What the AI got wrong and what changed', s.note]]) {
+        if (!text) continue;
+        const d = document.createElement('details');
+        const sm = document.createElement('summary'); sm.textContent = label;
+        const p = document.createElement('p'); p.dir = 'auto'; p.textContent = text;
+        d.append(sm, p); card.appendChild(d);
+      }
+      const a = document.createElement('a');
+      a.className = 'btn primary small open'; a.textContent = 'Open website ↗';
+      a.href = s.url; a.target = '_blank'; a.rel = 'noopener noreferrer';
+      a.setAttribute('aria-label', 'Open ' + s.title + ' by ' + s.name);
+      card.appendChild(a);
+      grid.appendChild(card);
+      if (s.seat === want) setTimeout(() => card.scrollIntoView({ block: 'center' }), 50);
     }
     $('count').textContent = sites.length === 1 ? '1 website' : sites.length + ' websites';
     $('updated').textContent = 'Updated ' + new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
   }
 
-  async function loadGallery() {
+  async function load() {
     const g = await retrying(() => get({ action: 'gallery' }));
     if (!g.ok) {
       $('count').textContent = '';
@@ -159,60 +147,12 @@ footer{font-size:13px;color:var(--sub);margin-top:26px;text-align:center}
       $('note').className = 'notice bad'; $('note').hidden = false;
       return;
     }
-    sites = g.sites;
-    if (!g.enabled) { $('noteText').textContent = 'The studio is paused by your teacher. You can still look at the websites.'; $('note').hidden = false; }
-    render();
+    $('note').hidden = true;
+    render(g.sites);
   }
 
-  // ---- viewer ----
-  let openSeat = 0;
-  async function openSite(seat) {
-    openSeat = seat;
-    const v = $('viewer'), body = $('vBody');
-    v.hidden = false;
-    body.textContent = '';
-    const m = document.createElement('div'); m.className = 'msg'; m.textContent = 'Loading…'; body.appendChild(m);
-    $('vTitle').textContent = 'Computer ' + seat;
-    history.replaceState(null, '', '?site=' + seat);
-    const s = await retrying(() => get({ action: 'site', seat, token }));
-    if (openSeat !== seat) return;
-    body.textContent = '';
-    if (!s.ok) {
-      const d = document.createElement('div'); d.className = 'msg';
-      d.textContent = s.error === 'hidden' ? 'This website is hidden by the teacher.' : s.error === 'no_site' ? 'There is no website for this computer yet.' : 'Could not load this website.';
-      body.appendChild(d);
-      return;
-    }
-    $('vTitle').textContent = s.title + ' · by ' + s.name + ' (Computer ' + seat + ')';
-    const f = document.createElement('iframe');
-    f.setAttribute('sandbox', 'allow-scripts');
-    f.setAttribute('referrerpolicy', 'no-referrer');
-    f.setAttribute('title', s.title);
-    f.srcdoc = srcdocFor(s.html, s.image);
-    body.appendChild(f);
-    $('vClose').focus();
-  }
-  function closeViewer() {
-    $('viewer').hidden = true; $('vBody').textContent = ''; openSeat = 0;
-    history.replaceState(null, '', location.pathname);
-  }
-  $('vClose').addEventListener('click', closeViewer);
-  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !$('viewer').hidden) closeViewer(); });
-  $('vCopy').addEventListener('click', async () => {
-    const link = new URL(location.pathname + '?site=' + openSeat, location.href).href;
-    try { await navigator.clipboard.writeText(link); $('vCopy').textContent = 'Copied ✓'; } catch (_) { $('vCopy').textContent = 'Press Ctrl+C on the address bar'; }
-    setTimeout(() => { $('vCopy').textContent = 'Copy link'; }, 2200);
-  });
-
-  // ---- start ----
-  async function boot() {
-    if (!configured) { $('noteText').textContent = 'This page is not connected to the class server yet.'; $('note').className = 'notice bad'; $('note').hidden = false; $('count').textContent = ''; return; }
-    const want = parseInt(new URLSearchParams(location.search).get('site'), 10);
-    if (want >= 1 && want <= 50) openSite(want);
-    await loadGallery();
-    setInterval(() => { if (!document.hidden && $('viewer').hidden) loadGallery(); }, 45000);
-  }
-  boot();
+  if (!configured) { $('noteText').textContent = 'This page is not connected to the class server yet.'; $('note').className = 'notice bad'; $('note').hidden = false; $('count').textContent = ''; }
+  else { load(); setInterval(() => { if (!document.hidden) load(); }, 45000); }
 })();
 </script>
 </body>
