@@ -30,6 +30,7 @@ nav.top{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:14px 
 .notice.bad{background:var(--bad-bg);border-color:var(--bad-border)}
 .notice.ok{background:var(--ok-bg);border-color:var(--ok-border)}
 .notice p{margin:0}
+.urlrow{display:flex;gap:8px}.urlrow input{flex:1;min-width:0}.urlrow .btn{white-space:nowrap}
 .who{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;background:#fff;border:1px solid var(--border);border-radius:14px;padding:10px 16px;margin-bottom:16px}
 .step{display:grid;grid-template-columns:44px 1fr;gap:14px;background:#fff;border:1px solid var(--border);border-radius:16px;padding:16px 18px;margin-bottom:12px}
 .step .n{width:36px;height:36px;border-radius:99px;background:#e7f5fd;color:var(--accent);display:grid;place-items:center;font-weight:800}
@@ -63,7 +64,7 @@ footer{font-size:13px;color:var(--sub);margin-top:26px;text-align:center}
   <div id="gate" class="notice" hidden><p id="gateText"></p></div>
 
   <div id="app" hidden>
-    <div class="who"><div><strong id="whoName"></strong> · Computer <span id="whoSeat"></span></div><div class="sub" id="whoState"></div></div>
+    <div class="who"><div><strong id="whoName"></strong> · Computer <span id="whoSeat"></span> <a class="btn small" id="designLink" href="#" target="_blank" rel="noopener noreferrer" hidden>Open my Canva design ↗</a></div><div class="sub" id="whoState"></div></div>
 
     <section class="step" aria-labelledby="s1">
       <div class="n" aria-hidden="true">1</div>
@@ -114,9 +115,9 @@ footer{font-size:13px;color:var(--sub);margin-top:26px;text-align:center}
         <h2 id="s5">Share it with the class</h2>
         <form id="form" autocomplete="off" novalidate>
           <label for="url">Your website link</label>
-          <input id="url" type="url" inputmode="url" placeholder="https://your-name.my.canva.site" spellcheck="false" required>
-          <div class="hint">Paste the link Canva showed you after publishing.</div>
-          <label for="title">A title for your website</label>
+          <div class="urlrow"><input id="url" type="url" inputmode="url" placeholder="https://your-name.my.canva.site" spellcheck="false" required><button type="button" class="btn" id="pasteBtn">Paste link</button></div>
+          <div class="hint">Copy the link Canva showed you after publishing, then click <strong>Paste link</strong>.</div>
+          <label for="title">A title for your website <span class="hint">(optional, we use the name in your link)</span></label>
           <input id="title" type="text" maxlength="60" dir="auto" placeholder="Example: Animal quiz">
           <label for="prompt">The prompt that worked best <span class="hint">(optional)</span></label>
           <textarea id="prompt" maxlength="600" dir="auto" placeholder="Paste your best prompt. Other students can learn from it."></textarea>
@@ -215,6 +216,7 @@ footer{font-size:13px;color:var(--sub);margin-top:26px;text-align:center}
   let me = null;
   function render() {
     $('whoName').textContent = me.name; $('whoSeat').textContent = me.seat;
+    if (/^https:\/\/www\.canva\.com\/design\/[\w-]+\/[\w-]+\/edit$/.test(me.design || '')) { $('designLink').href = me.design; $('designLink').hidden = false; }
     $('whoState').textContent = me.hasLink ? (me.hidden ? 'Your website is hidden by your teacher' : 'Your website is in the class gallery') : 'No website shared yet';
     $('removeBtn').hidden = !me.hasLink;
     $('saved').hidden = !me.hasLink;
@@ -250,6 +252,12 @@ footer{font-size:13px;color:var(--sub);margin-top:26px;text-align:center}
       say('Done! Your website is in the class gallery.', 'ok');
     } else say((MSG[r.error] || (() => 'Could not save. Please try again.'))(r), 'bad');
   });
+  $('pasteBtn').addEventListener('click', async () => {
+    let text = '';
+    try { text = (await navigator.clipboard.readText()).trim(); } catch (_) {}
+    if (!text) { $('url').focus(); say('Your browser did not allow pasting with the button. Click the box and press Ctrl+V.', 'bad'); return; }
+    $('url').value = text; say('');
+  });
   $('removeBtn').addEventListener('click', async () => {
     if (!confirm('Remove your website from the class gallery? Your website on Canva stays.')) return;
     const r = await retrying(() => request(true, { action: 'link_clear', token }));
@@ -280,6 +288,8 @@ footer{font-size:13px;color:var(--sub);margin-top:26px;text-align:center}
     me = st;
     $('app').hidden = false;
     render(); fill();
+    // the student's own design link (same answer the number page gets), so both live side by side
+    retrying(() => request(false, { action: 'resume', token })).then((r) => { if (r.ok && r.has && r.url) { me.design = r.url; render(); } });
     if (me.hidden) gate('Your teacher hid your website for now.', '');
   }
   boot();

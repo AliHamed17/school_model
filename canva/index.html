@@ -99,7 +99,9 @@ dialog .actions{display:flex;justify-content:flex-end;gap:10px;margin-top:10px}
     <h2 id="mineTitle">Computer <span id="mySeat"></span> · <span id="myName" dir="auto"></span></h2>
     <div class="row">
       <a id="openBtn" class="btn primary" href="#" target="_blank" rel="noopener noreferrer">Open my Canva design</a>
+      <a id="codeBtn" class="btn" href="#">Build my website with Canva Code</a>
     </div>
+    <p class="sub">Your design and your website are both saved under your computer number. Your teacher sees them together.</p>
     <p class="sub">Someone else on this computer? Just click your own name (or a free number) in the grid below.</p>
     <div class="rename">
       <p><strong>Put your name on your design</strong></p>
@@ -157,6 +159,7 @@ dialog .actions{display:flex;justify-content:flex-end;gap:10px;margin-top:10px}
   const $ = (id) => document.getElementById(id);
   const ROOT = location.pathname.endsWith('/') ? location.pathname : location.pathname + '/';   // works with or without the trailing slash
   $('navStudio').href = ROOT + 'studio/';
+  $('codeBtn').href = ROOT + 'studio/';
   $('navGallery').href = ROOT + 'gallery/';
   const configured =
     /^https:\/\/script\.google\.com\/(a\/macros\/[^/]+|macros)\/s\/[^/]+\/exec$/.test(API) ||
