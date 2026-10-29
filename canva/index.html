@@ -81,7 +81,7 @@ dialog .actions{display:flex;justify-content:flex-end;gap:10px;margin-top:10px}
   <header>
     <div class="eyebrow">AI &amp; Machine Learning · Classroom Activity</div>
     <h1>Choose your computer number</h1>
-    <p class="lead">Pick a free number and type your name. Your own Canva design opens, and nobody else can take the same number.</p>
+    <p class="lead">New here? Pick a free number and type your name. Been here before? Click your name. Your own Canva design opens, and no sign-in is needed.</p>
   </header>
 
   <noscript><div class="notice bad"><p>This page needs JavaScript. Please use a current version of Chrome, Edge, Firefox or Safari.</p></div></noscript>
@@ -120,7 +120,7 @@ dialog .actions{display:flex;justify-content:flex-end;gap:10px;margin-top:10px}
     <div class="legend" aria-hidden="true"><span><i></i>Free</span><span><i class="t"></i>Taken</span><span><i class="m"></i>Yours</span></div>
     <nav id="grid" class="grid" aria-label="Choose your computer number"></nav>
     <p id="updated" class="sub" aria-live="off"></p>
-    <p class="sub">Used a number before, maybe on another computer? Click your number and type your name to get back into your design.</p>
+    <p class="sub"><strong>Were you here before?</strong> Find your name in the grid and click it to open your design again.</p>
   </section>
 
   <footer>Only use the number you chose. Your teacher can see who picked which number.</footer>
@@ -130,7 +130,7 @@ dialog .actions{display:flex;justify-content:flex-end;gap:10px;margin-top:10px}
   <form id="nameForm" autocomplete="off">
     <h2 id="dlgTitle">Computer <span id="dlgSeat"></span></h2>
     <p class="sub" id="dlgHelp">Type your first name. It will be shown to the class next to your number.</p>
-    <label for="nameInput">Your name</label>
+    <label for="nameInput" id="nameLabel">Your name</label>
     <input id="nameInput" name="name" type="text" maxlength="30" dir="auto" required spellcheck="false">
     <p class="err" id="dlgErr" role="alert"></p>
     <div class="actions">
@@ -265,7 +265,7 @@ dialog .actions{display:flex;justify-content:flex-end;gap:10px;margin-top:10px}
       t.disabled = !isMine && (!!mine || !known);  // taken numbers stay clickable: "this is my number"
       t.querySelector('.who').textContent = isMine ? mine.name : taken ? s.name : '';
       t.setAttribute('aria-label', isMine ? `Computer ${n}, yours (${mine.name})`
-        : taken ? `Computer ${n}, taken by ${s.name}. Click it if this is you.`
+        : taken ? `Computer ${n}, ${s.name}. Click your name to open your design.`
         : known ? `Computer ${n}, free` : `Computer ${n}, loading`);
     }
     $('count').textContent = statusLoaded ? `${free} free · ${SEATS - free} taken` : 'Loading…';
@@ -348,19 +348,23 @@ dialog .actions{display:flex;justify-content:flex-end;gap:10px;margin-top:10px}
     $('dlgSeat').textContent = seat;
     $('dlgTitle').firstChild.textContent = mode === 'rename' ? 'Change your name · Computer ' : 'Computer ';
     $('dlgSubmit').textContent = submitLabel();
-    $('dlgHelp').textContent = mode === 'recover'
-      ? `This number is taken by ${(seatInfo[seat] || {}).name || 'someone'}. If that is you, type your name the same way as before to get back into your design.`
+    const owner = (seatInfo[seat] || {}).name || 'someone';
+    $('dlgHelp').textContent = mode === 'reopen'
+      ? `Computer ${seat} belongs to ${owner}. Is that you? If yes, you go straight back into your design.`
       : mode === 'rename' ? 'Type the name you want to show next to your number.'
       : 'Type your first name. It will be shown to the class next to your number.';
-    $('nameInput').value = mode === 'rename' && mine ? mine.name : mode === 'recover' ? '' : (store.get('canvaSeatName') || '');
+    const needsName = mode !== 'reopen';   // returning students just confirm, no typing
+    $('nameLabel').hidden = !needsName;
+    $('nameInput').hidden = !needsName;
+    $('nameInput').required = needsName;
+    $('nameInput').value = mode === 'rename' && mine ? mine.name : mode === 'reopen' ? '' : (store.get('canvaSeatName') || '');
     if (!dlg.open) dlg.showModal();
-    $('nameInput').focus();
-    $('nameInput').select();
+    if (needsName) { $('nameInput').focus(); $('nameInput').select(); } else { $('dlgSubmit').focus(); }
   }
   $('dlgCancel').addEventListener('click', () => { if (!busy) dlg.close(); });
   dlg.addEventListener('cancel', (e) => { if (busy) e.preventDefault(); });
 
-  function submitLabel() { return dialogMode === 'rename' ? 'Save name' : dialogMode === 'recover' ? 'That is me, open my design' : 'Open my design'; }
+  function submitLabel() { return dialogMode === 'rename' ? 'Save name' : dialogMode === 'reopen' ? 'Yes, that is me. Open my design' : 'Open my design'; }
   function waitingLabel() { $('dlgSubmit').textContent = 'Waiting in line…'; }
 
   function setBusy(on) {
@@ -375,7 +379,7 @@ dialog .actions{display:flex;justify-content:flex-end;gap:10px;margin-top:10px}
     ev.preventDefault();
     if (busy) return;
     const name = $('nameInput').value.trim();
-    if (!name) { $('dlgErr').textContent = MESSAGES.bad_name; return; }
+    if (!name && dialogMode !== 'reopen') { $('dlgErr').textContent = MESSAGES.bad_name; return; }
 
     if (dialogMode === 'rename') {
       setBusy(true);
@@ -402,11 +406,12 @@ dialog .actions{display:flex;justify-content:flex-end;gap:10px;margin-top:10px}
 
     setBusy(true);
     const seat = dialogSeat;
-    const res = await callRetry({ action: dialogMode === 'recover' ? 'recover' : 'claim', seat, name, token }, 4, waitingLabel);
+    const request = dialogMode === 'reopen' ? { action: 'reopen', seat, token } : { action: 'claim', seat, name, token };
+    const res = await callRetry(request, 4, waitingLabel);
     setBusy(false);
 
     if (res.ok || res.error === 'already_has_seat') {
-      store.set('canvaSeatName', name);
+      store.set('canvaSeatName', res.name || name);
       dlg.close();
       setMine(res);
       refresh(); // one fresh look at the other seats; polling stays off once you hold one
@@ -443,7 +448,7 @@ dialog .actions{display:flex;justify-content:flex-end;gap:10px;margin-top:10px}
     if (mine && mine.seat === n) { $('mine').scrollIntoView({ behavior: 'smooth', block: 'start' }); return; }
     if (mine) return;
     const s = seatInfo[n];
-    openDialog(s && s.taken ? 'recover' : 'claim', n);
+    openDialog(s && s.taken ? 'reopen' : 'claim', n);
   }
 
   $('renameBtn').addEventListener('click', () => { if (mine) openDialog('rename', mine.seat); });
