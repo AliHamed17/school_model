@@ -46,14 +46,14 @@ footer{font-size:13px;color:var(--sub);margin-top:26px;text-align:center}
   <header>
     <div class="eyebrow">AI &amp; Machine Learning · Classroom Activity</div>
     <h1>Class gallery</h1>
-    <p class="lead">Websites our class built with Canva Code. Click one to open it. You can also learn from the prompts students shared.</p>
-    <nav class="top"><a class="btn" id="navMain" href="#">← My Canva design</a><a class="btn primary" id="navStudio" href="#">Build my website</a></nav>
+    <p class="lead">Websites, apps and games our class built with AI. Click one to open it. You can also learn from the prompts students shared.</p>
+    <nav class="top"><a class="btn" id="navMain" href="#">← My Canva design</a><a class="btn primary" id="navStudio" href="#">Build my website</a><a class="btn" id="navCreate" href="#">🧰 Make with AI</a></nav>
   </header>
 
   <div id="note" class="notice" hidden><p id="noteText"></p></div>
   <div class="bar"><strong id="count">Loading…</strong><span class="sub" id="updated"></span></div>
   <div class="grid" id="grid" aria-live="polite"></div>
-  <footer>Websites are made by students with Canva Code and hosted by Canva. The AI can make mistakes. Your teacher can hide any website.</footer>
+  <footer>Projects are made by students with free AI tools and hosted by those tools. The AI can make mistakes. Your teacher can hide any project.</footer>
 </main>
 
 <script>window.CLASSROOM_CONFIG = { API_URL: "https://script.google.com/macros/s/AKfycbzhE3qrCU0pCMTOwBQt4Agp4ho2HMBN5L8-UiFyK9n53Q-46b-HvBEfU7crK4obe-RR7A/exec" };</script>
@@ -70,6 +70,7 @@ footer{font-size:13px;color:var(--sub);margin-top:26px;text-align:center}
   const ROOT = location.pathname.replace(/gallery\/?$/, '');
   $('navMain').href = ROOT;
   $('navStudio').href = ROOT + 'studio/';
+  $('navCreate').href = ROOT + 'create/';
 
   async function get(params) {
     const url = new URL(API);

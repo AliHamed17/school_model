@@ -57,7 +57,7 @@ footer{font-size:13px;color:var(--sub);margin-top:26px;text-align:center}
     <div class="eyebrow">AI &amp; Machine Learning · Classroom Activity</div>
     <h1>Build a website with Canva Code</h1>
     <p class="lead">Describe the website you want to Canva's AI. Canva builds it. Publish it, then share your link with the class.</p>
-    <nav class="top"><a class="btn" id="navMain" href="#">← My Canva design</a><a class="btn" id="navNext" href="#">Poster, video or picture</a><a class="btn" id="navGallery" href="#">Class gallery</a></nav>
+    <nav class="top"><a class="btn" id="navMain" href="#">← My Canva design</a><a class="btn" id="navNext" href="#">Poster, video or picture</a><a class="btn primary" id="navCreate" href="#">🧰 Make with AI</a><a class="btn" id="navGallery" href="#">Class gallery</a></nav>
   </header>
 
   <noscript><div class="notice bad"><p>This page needs JavaScript.</p></div></noscript>
@@ -109,14 +109,14 @@ footer{font-size:13px;color:var(--sub);margin-top:26px;text-align:center}
       </div>
     </section>
 
-    <section class="step" aria-labelledby="s5">
+    <section class="step" id="share" aria-labelledby="s5">
       <div class="n" aria-hidden="true">5</div>
       <div>
         <h2 id="s5">Share it with the class</h2>
         <form id="form" autocomplete="off" novalidate>
-          <label for="url">Your website link</label>
+          <label for="url">Your link (website, app or game)</label>
           <div class="urlrow"><input id="url" type="url" inputmode="url" placeholder="https://your-name.my.canva.site" spellcheck="false" required><button type="button" class="btn" id="pasteBtn">Paste link</button></div>
-          <div class="hint">Copy the link Canva showed you after publishing, then click <strong>Paste link</strong>.</div>
+          <div class="hint">Copy the link your tool showed you after publishing (Canva, Gemini, Google Sites, Bolt, Lovable, Netlify, MakeCode and more), then click <strong>Paste link</strong>.</div>
           <label for="title">A title for your website <span class="hint">(optional, we use the name in your link)</span></label>
           <input id="title" type="text" maxlength="60" dir="auto" placeholder="Example: Animal quiz">
           <label for="prompt">The prompt that worked best <span class="hint">(optional)</span></label>
@@ -133,7 +133,7 @@ footer{font-size:13px;color:var(--sub);margin-top:26px;text-align:center}
       </div>
     </section>
   </div>
-  <footer>Websites are made with Canva Code and live on Canva. Only your first name and your computer number are shown here.</footer>
+  <footer>Projects are made with Canva Code or other free tools and live on those sites. Only your first name and your computer number are shown here.</footer>
 </main>
 
 <script>window.CLASSROOM_CONFIG = { API_URL: "https://script.google.com/macros/s/AKfycbzhE3qrCU0pCMTOwBQt4Agp4ho2HMBN5L8-UiFyK9n53Q-46b-HvBEfU7crK4obe-RR7A/exec" };</script>
@@ -151,6 +151,7 @@ footer{font-size:13px;color:var(--sub);margin-top:26px;text-align:center}
   $('navMain').href = ROOT;
   $('navGallery').href = ROOT + 'gallery/';
   $('navNext').href = ROOT + 'next/';
+  $('navCreate').href = ROOT + 'create/';
   $('savedGallery').href = ROOT + 'gallery/';
 
   let token = null;
@@ -231,7 +232,7 @@ footer{font-size:13px;color:var(--sub);margin-top:26px;text-align:center}
   }
 
   const MSG = {
-    bad_link: (r) => `That is not a Canva website link. After you publish in Canva, copy the link it shows you. It starts with https:// and is on ${(r.domains || ['canva.site']).join(', ')}.`,
+    bad_link: (r) => `That is not a link I can accept. Publish your project first, then copy the link the tool shows you. It must start with https:// and come from a site your teacher allows, for example ${(r.domains || ['canva.site']).slice(0, 6).join(', ')}.`,
     no_seat: () => 'This browser does not have a computer number yet.',
     bad_token: () => 'Your browser could not be recognised. Go back and click your name.',
     network: () => 'No connection to the class server. Check your internet and try again.',
@@ -287,6 +288,7 @@ footer{font-size:13px;color:var(--sub);margin-top:26px;text-align:center}
       return;
     }
     me = st;
+    if (location.hash === '#share') setTimeout(() => $('share').scrollIntoView(), 0);
     $('app').hidden = false;
     render(); fill();
     // the student's own design link (same answer the number page gets), so both live side by side

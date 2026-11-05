@@ -59,6 +59,11 @@ details .row{margin-top:8px}
 .tile.mine{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
 .tile.unknown{color:#b3c0cc;animation:pulse 1.4s ease-in-out infinite}
 @keyframes pulse{50%{opacity:.55}}
+.make{max-width:780px;margin:18px auto 0;text-align:center}
+.make .lbl{font-weight:800;font-size:15px;margin-bottom:8px}
+.make .chips{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+.make .chips a{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border:2px solid var(--border);border-radius:999px;background:#fff;color:var(--ink);font-weight:700;font-size:15px;text-decoration:none}
+.make .chips a:hover{border-color:var(--accent);background:#e8f4fb}
 footer{font-size:13px;color:var(--sub);margin-top:26px;text-align:center}
 
 dialog{border:0;border-radius:18px;padding:0;width:min(420px,calc(100vw - 32px));box-shadow:0 20px 60px #0a233a40;color:var(--ink)}
@@ -87,6 +92,18 @@ dialog .actions{display:flex;justify-content:flex-end;gap:10px;margin-top:10px}
       <a class="btn" id="navNext" href="#">🚀 Take my design further</a>
       <a class="btn" id="navGallery" href="#">Class gallery</a>
     </nav>
+    <div class="make" role="group" aria-labelledby="makeLbl">
+      <div class="lbl" id="makeLbl">🧰 Make something with AI. Click one:</div>
+      <div class="chips" id="makeChips">
+        <a href="#" data-id="website">🌐 Website</a>
+        <a href="#" data-id="app">📱 App</a>
+        <a href="#" data-id="game">🎮 Game</a>
+        <a href="#" data-id="design">🎨 Design</a>
+        <a href="#" data-id="video">🎬 Video</a>
+        <a href="#" data-id="image">🖼️ Pictures</a>
+        <a href="#" data-id="chat">🤖 Ask AI</a>
+      </div>
+    </div>
   </header>
 
   <noscript><div class="notice bad"><p>This page needs JavaScript. Please use a current version of Chrome, Edge, Firefox or Safari.</p></div></noscript>
@@ -102,6 +119,7 @@ dialog .actions{display:flex;justify-content:flex-end;gap:10px;margin-top:10px}
       <a id="openBtn" class="btn primary" href="#" target="_blank" rel="noopener noreferrer">Open my Canva design</a>
       <a id="codeBtn" class="btn" href="#">Build my website with Canva Code</a>
       <a id="nextBtn" class="btn" href="#">Make a poster, video or picture</a>
+      <a id="createBtn" class="btn" href="#">Make an app, game or video with AI</a>
     </div>
     <p class="sub">Your design opens with no sign-in. For your website, Canva asks you to sign in once with Google (free). Your design and your website are both saved under your computer number, and your teacher sees them together.</p>
     <p class="sub">Someone else on this computer? Just click your own name (or a free number) in the grid below.</p>
@@ -165,6 +183,8 @@ dialog .actions{display:flex;justify-content:flex-end;gap:10px;margin-top:10px}
   $('navNext').href = ROOT + 'next/';
   $('nextBtn').href = ROOT + 'next/';
   $('navGallery').href = ROOT + 'gallery/';
+  $('createBtn').href = ROOT + 'create/';
+  for (const a of document.querySelectorAll('#makeChips a')) a.href = ROOT + 'create/#' + a.dataset.id;
   const configured =
     /^https:\/\/script\.google\.com\/(a\/macros\/[^/]+|macros)\/s\/[^/]+\/exec$/.test(API) ||
     /^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?\//.test(API);

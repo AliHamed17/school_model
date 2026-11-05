@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Make with AI | AI Classroom</title>
+<meta name="description" content="Pick what you want to make: a website, an app, a game, a design, a video or a picture. The best free AI tools open in one click.">
+<meta name="robots" content="noindex">
+<style>
+:root{color-scheme:light;--ink:#152432;--sub:#566575;--border:#dbe3ea;--bg:#f5f8fb;--accent:#086fa9;--accent-ink:#fff;--soft:#e8f4fb;--warn-bg:#fff6e5;--warn-border:#f0d49a;--warn-ink:#6a4a00;--bad-bg:#fdecec;--bad-border:#f0b4b4;--ok-bg:#e9f7ef;--ok-border:#a9dcc0}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Arial,sans-serif;line-height:1.5}
+.wrap{max-width:1000px;margin:0 auto;padding:clamp(20px,4vw,44px) 16px 60px}
+header{text-align:center;margin-bottom:18px}
+.eyebrow{font-size:12px;text-transform:uppercase;letter-spacing:.14em;color:var(--accent);font-weight:800}
+h1{font-size:clamp(26px,4.5vw,40px);letter-spacing:-.03em;margin:6px 0 8px;line-height:1.15}
+h2{font-size:18px;margin:0 0 6px}
+h3{font-size:17px;margin:0}
+.lead{color:var(--sub);font-size:clamp(15px,2vw,17px);margin:0 auto;max-width:700px}
+.sub{color:var(--sub);font-size:14px}
+nav.top{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:14px 0 0}
+.btn{font:inherit;font-weight:700;border-radius:10px;border:1px solid var(--border);background:#fff;color:var(--ink);padding:10px 16px;cursor:pointer;text-decoration:none;display:inline-block;line-height:1.3}
+.btn:hover{border-color:#9db3c4}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.btn.primary:hover{background:#075f90}
+.btn.small{padding:7px 13px;font-size:14px}
+:focus-visible{outline:3px solid #0b78b1;outline-offset:2px}
+.notice{margin:0 auto 16px;padding:12px 16px;border-radius:12px;border:1px solid var(--warn-border);background:var(--warn-bg)}
+.notice.bad{background:var(--bad-bg);border-color:var(--bad-border)}
+.notice p{margin:0}
+.panel{background:#fff;border:1px solid var(--border);border-radius:16px;padding:16px 18px;margin-bottom:14px}
+input[type=text],textarea{font:inherit;width:100%;padding:10px 12px;border:2px solid var(--border);border-radius:10px;background:#fff}
+textarea{min-height:104px;resize:vertical;font-size:14px}
+input:focus,textarea:focus{border-color:var(--accent);outline:none}
+label{display:block;font-weight:700;margin:2px 0 4px}
+.hint{font-weight:400;color:var(--sub);font-size:13px;margin-top:3px}
+.sec{margin:20px 0 8px}
+
+/* the toggles */
+.toggles{display:grid;grid-template-columns:repeat(auto-fit,minmax(128px,1fr));gap:10px;margin:0 0 14px}
+.toggle{font:inherit;text-align:left;background:#fff;border:2px solid var(--border);border-radius:14px;padding:10px 12px;cursor:pointer;display:flex;flex-direction:column;gap:2px;color:var(--ink);min-height:84px}
+.toggle:hover{border-color:#9db3c4}
+.toggle .ico{font-size:24px;line-height:1}
+.toggle .lbl{font-weight:800}
+.toggle .tag{font-size:12px;color:var(--sub);line-height:1.25}
+.toggle[aria-selected="true"]{border-color:var(--accent);background:var(--soft);box-shadow:inset 0 0 0 1px var(--accent)}
+
+/* the panel under the toggles */
+#panel:focus{outline:none}
+.phead{display:flex;gap:12px;align-items:center;margin-bottom:4px}
+.phead .ico{font-size:34px;line-height:1}
+.steps{margin:8px 0 0;padding-left:22px;font-size:15px}
+.steps li{margin:4px 0}
+.promptbox{margin-top:14px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:8px}
+.best{border:2px solid var(--accent);background:#fff;border-radius:16px;padding:16px 18px;margin:14px 0 12px;display:flex;flex-direction:column;gap:6px;align-items:flex-start}
+.ribbon{display:inline-block;background:var(--accent);color:#fff;font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;border-radius:999px;padding:2px 10px}
+.how{margin:0;font-size:15px}
+.tags{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font-size:12px;border:1px solid var(--border);border-radius:999px;padding:1px 9px;background:#f3f7fa;color:var(--sub)}
+.chip.warn{background:var(--warn-bg);border-color:var(--warn-border);color:var(--warn-ink);font-weight:700}
+.chip.ai{background:var(--soft);border-color:#b7d9ec;color:#07557f}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}
+.card{background:#fff;border:1px solid var(--border);border-radius:16px;padding:14px 16px;display:flex;flex-direction:column;gap:6px;align-items:flex-start}
+.stuck{margin:10px 0 14px}
+details{margin-top:12px}
+summary{cursor:pointer;font-weight:700}
+details .grid{margin-top:10px}
+.sharebox{margin-top:14px;border:1px dashed #9db3c4;border-radius:14px;padding:12px 16px;background:#fafcfe}
+.sharebox p{margin:4px 0 8px}
+.before ul{margin:6px 0 0;padding-left:20px;font-size:15px}
+.before li{margin:5px 0}
+#toast{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);background:#152432;color:#fff;padding:10px 16px;border-radius:12px;font-size:14px;max-width:90vw;box-shadow:0 6px 24px #0003;z-index:5}
+kbd{font:inherit;font-size:13px;background:#eef3f7;border:1px solid var(--border);border-bottom-width:2px;border-radius:6px;padding:0 6px}
+footer{font-size:13px;color:var(--sub);margin-top:26px;text-align:center}
+@media (max-width:620px){.toggle{min-height:78px}}
+@media (prefers-reduced-motion:no-preference){.toggle{transition:border-color .15s,background .15s}}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <header>
+    <div class="eyebrow">AI &amp; Machine Learning · Classroom Activity</div>
+    <h1>Make something with AI</h1>
+    <p class="lead">Pick what you want to make. We show the best free tools, copy a ready-made prompt for you and open the tool in a new tab.</p>
+    <nav class="top"><a class="btn" id="navMain" href="#">← My number</a><a class="btn" id="navStudio" href="#">Canva Code guide</a><a class="btn" id="navNext" href="#">Take my design further</a><a class="btn" id="navGallery" href="#">Class gallery</a></nav>
+  </header>
+
+  <noscript><div class="notice bad"><p>This page needs JavaScript.</p></div></noscript>
+
+  <div id="app">
+    <section class="panel" aria-labelledby="p1">
+      <h2 id="p1">1. What is it about?</h2>
+      <input id="topic" type="text" aria-label="What is it about?" maxlength="120" dir="auto" placeholder="Example: my favorite football team" autocomplete="off">
+      <div class="hint">One short line. We use it to write your prompts. Do not type your full name, phone number, address or school.</div>
+    </section>
+
+    <h2 class="sec" id="p2">2. What do you want to make?</h2>
+    <div class="toggles" id="tabs" role="tablist" aria-labelledby="p2"></div>
+    <section id="panel" role="tabpanel" tabindex="-1" aria-live="polite"></section>
+
+    <section class="panel before" aria-labelledby="p3">
+      <h2 id="p3">Before you start</h2>
+      <ul>
+        <li><strong>Free to start:</strong> every tool here has a free version with limits. If a tool asks you to pay, close it and use the next one on the list.</li>
+        <li><strong>Accounts:</strong> most tools use your Google sign-in. A few need their own free account. Never share your password.</li>
+        <li><strong>Age:</strong> most tools are for ages 13 and up. Tools marked <strong>18+</strong> are for adults only. If you are younger, ask your teacher first.</li>
+        <li><strong>Blocked or "not available for your account"?</strong> A school account can block a tool. Try your personal Google account, or use the next tool.</li>
+        <li><strong>Be careful:</strong> AI makes mistakes, so check the facts. Do not upload photos of people or put personal details in a prompt or a website.</li>
+      </ul>
+    </section>
+  </div>
+  <footer>Free plans were checked in November 2026 and they change often. These are other companies' websites with their own rules. This page only opens them and copies your prompt.</footer>
+</main>
+<div id="toast" role="status" aria-live="polite" hidden></div>
+
+<script>window.CLASSROOM_CONFIG = { API_URL: "https://script.google.com/macros/s/AKfycbzhE3qrCU0pCMTOwBQt4Agp4ho2HMBN5L8-UiFyK9n53Q-46b-HvBEfU7crK4obe-RR7A/exec" };</script>
+<script>
+(() => {
+  'use strict';
+  const $ = (id) => document.getElementById(id);
+  const ROOT = location.pathname.replace(/create\/(index\.html)?$/, '');
+  $('navMain').href = ROOT;
+  $('navStudio').href = ROOT + 'studio/';
+  $('navNext').href = ROOT + 'next/';
+  $('navGallery').href = ROOT + 'gallery/';
+
+  // ---------------------------------------------------------------------------------------------
+  // THE LISTS OF TOOLS. To add, remove or change a tool, edit these lists and republish the page.
+  // Only fixed https addresses are ever opened. The student's text is never put into an address.
+  // `ai: true` means the tool takes a prompt: its button copies the student's prompt first.
+  // `age` is shown only where a tool is stricter than "13 and up".
+  // ---------------------------------------------------------------------------------------------
+  const T = {
+    gemini:    { name: 'Gemini', url: 'https://gemini.google.com/app', sign: 'Google account', free: 'Free, daily limits', ai: true },
+    chatgpt:   { name: 'ChatGPT', url: 'https://chatgpt.com/', sign: 'Works without an account', free: 'Free, with limits', age: '13+ (under 18: ask a parent)', ai: true },
+    copilot:   { name: 'Microsoft Copilot', url: 'https://copilot.microsoft.com/', sign: 'Free Microsoft account', free: 'Free, with limits', ai: true },
+    duck:      { name: 'Duck.ai', url: 'https://duck.ai/', sign: 'No account', free: 'Free, with limits', ai: true },
+    claude:    { name: 'Claude', url: 'https://claude.ai/', sign: 'Free account', free: 'Free, with limits', age: '18+ only', ai: true },
+    sites:     { name: 'Google Sites', url: 'https://sites.google.com/new', sign: 'Google account', free: 'Free' },
+    canvacode: { name: 'Canva Code (AI)', url: '@studio', sign: 'Free Canva account (Google sign-in)', free: 'Free' },
+    bolt:      { name: 'Bolt', url: 'https://bolt.new/', sign: 'Free account', free: 'Free: daily limit, hosting included', ai: true },
+    lovable:   { name: 'Lovable', url: 'https://lovable.dev/', sign: 'Free account', free: 'Free: 5 credits a day', ai: true },
+    aistudio:  { name: 'Google AI Studio', url: 'https://aistudio.google.com/apps', sign: 'Google account', free: 'Free to build', age: '18+ only', ai: true },
+    netlify:   { name: 'Netlify Drop', url: 'https://app.netlify.com/drop', sign: 'No account to try', free: 'Free' },
+    appinv:    { name: 'MIT App Inventor', url: 'https://ai2.appinventor.mit.edu/', sign: 'Google account', free: 'Free' },
+    thunk:     { name: 'Thunkable', url: 'https://thunkable.com/', sign: 'Free account', free: 'Free plan' },
+    makecode:  { name: 'MakeCode Arcade', url: 'https://arcade.makecode.com/', sign: 'No account', free: 'Free' },
+    scratch:   { name: 'Scratch', url: 'https://scratch.mit.edu/projects/editor/', sign: 'No account to start', free: 'Free' },
+    figma:     { name: 'Figma', url: 'https://www.figma.com/', sign: 'Google sign-in', free: 'Free Starter plan' },
+    figmamake: { name: 'Figma Make (AI)', url: 'https://www.figma.com/make/', sign: 'Google sign-in', free: 'Free: monthly AI credits', ai: true },
+    penpot:    { name: 'Penpot', url: 'https://design.penpot.app/', sign: 'Free account', free: 'Free, open source' },
+    canva:     { name: 'Canva', url: 'https://www.canva.com/', sign: 'Free Canva account (Google sign-in)', free: 'Free' },
+    express:   { name: 'Adobe Express', url: 'https://new.express.adobe.com/', sign: 'Free Adobe account', free: 'Free' },
+    stitch:    { name: 'Google Stitch', url: 'https://stitch.withgoogle.com/', sign: 'Google account', free: 'Free, daily limits', age: '18+ only', ai: true },
+    excali:    { name: 'Excalidraw', url: 'https://excalidraw.com/', sign: 'No account', free: 'Free' },
+    clipchamp: { name: 'Clipchamp', url: 'https://clipchamp.com/en/', sign: 'Free account', free: 'Free: 1080p exports' },
+    canvavid:  { name: 'Canva video editor', url: 'https://www.canva.com/create/videos/', sign: 'Free Canva account (Google sign-in)', free: 'Free' },
+    capcut:    { name: 'CapCut', url: 'https://www.capcut.com/', sign: 'Free account (Google sign-in)', free: 'Free, some effects are paid' },
+    vids:      { name: 'Google Vids', url: 'https://docs.google.com/videos/', sign: 'Google account', free: 'Free, small AI limit', ai: true },
+    dreamina:  { name: 'Dreamina', url: 'https://dreamina.capcut.com/', sign: 'Free account', free: 'Free daily credits', ai: true },
+    designer:  { name: 'Microsoft Designer', url: 'https://designer.microsoft.com/', sign: 'Free Microsoft account', free: 'Free: monthly credits', ai: true },
+    firefly:   { name: 'Adobe Firefly', url: 'https://firefly.adobe.com/', sign: 'Free Adobe account', free: 'Free: monthly credits', ai: true },
+  };
+  const t = (key, how) => Object.assign({ key }, T[key], { how });
+  const SHARE_AND_EXPORT = 'To get a link, choose Share and export, then Share.';
+
+  // `best` is the first choice, `others` are good backups, `more` is folded away (adults only, or extra).
+  const TOGGLES = [
+    { id: 'website', icon: '🌐', label: 'Website', tag: 'Build it, get a link', title: 'Build a website', share: true,
+      what: 'Describe your website, let the AI build it, change it one step at a time, then publish it and share the link.',
+      steps: ['Open the best pick and paste your prompt (Ctrl+V).', 'Look at the preview. Ask for one change at a time.', 'Publish or share to get a link. Then add it to the class gallery.'],
+      prompt: 'Build a one-page website about {topic} for my classmates. Include a big title, an About section, three fun facts and a small quiz with a score. Use bright colors and make it work on a phone.',
+      best: t('gemini', 'Click Canvas (under the prompt box or in the Tools menu), paste your prompt and watch your website appear. ' + SHARE_AND_EXPORT),
+      others: [
+        t('sites', 'No coding. Choose a template, type your text, click Publish and copy the link. A school Google account may block it: use your personal one.'),
+        t('canvacode', 'Our step-by-step guide opens first, then Canva. Publish and copy the link.'),
+        t('bolt', 'Builds a whole website from your prompt and hosts it for you. Click Publish, then copy the link.'),
+        t('lovable', 'Builds a website from your prompt. The free plan is small, so plan your changes. Click Publish, then copy the link.'),
+      ],
+      more: [
+        t('netlify', 'Got an index.html file from an AI? Put it in a folder, drag the folder onto the page and you get a live link. Make a free account to keep it.'),
+        t('aistudio', "Google's app builder. You can share a project with a link. A public web address uses Google Cloud, which may need billing."),
+      ] },
+    { id: 'app', icon: '📱', label: 'App', tag: 'Phone and web apps', title: 'Make an app', share: true,
+      what: 'Let an AI build a working app, like a quiz or a calculator, or build a real phone app yourself with blocks.',
+      steps: ['Open a tool. To let an AI build it, paste your prompt (Ctrl+V).', 'Test it, then ask for one fix at a time.', 'Share the link, then add it to the class gallery.'],
+      prompt: 'Build a simple app about {topic}: a quiz with 5 questions, a score screen and a Play again button. Use big buttons and bright colors, and make it work on a phone.',
+      best: t('gemini', 'Choose Canvas and describe your app. It runs right on the page, so you can test it at once. ' + SHARE_AND_EXPORT + ' The link works on a phone too.'),
+      others: [
+        t('appinv', 'Snap colorful blocks together to build a real Android app. Made by MIT. Test it on a phone with the free MIT AI2 Companion app.'),
+        t('bolt', 'Builds a working web app from your prompt, with hosting included. Click Publish for a link.'),
+        t('lovable', 'Builds a web app from your prompt. Click Publish for a link.'),
+      ],
+      more: [
+        t('thunk', 'Build iPhone and Android apps with blocks. Test on your phone with the Thunkable app.'),
+        t('aistudio', "Google's app builder. Describe an app and get a working one you can share."),
+      ] },
+    { id: 'game', icon: '🎮', label: 'Game', tag: 'Play what you make', title: 'Make a game', share: true,
+      what: 'Make a game you can play right away, with blocks or with a prompt.',
+      steps: ['Open a tool and start a new project.', 'Build one small level and play it often.', 'Share your game, then add the link to the class gallery.'],
+      prompt: 'Make a simple browser game about {topic}. The player moves with the arrow keys, collects things, avoids obstacles and sees a score. Add a Play again button and keep it all in one HTML file.',
+      best: t('makecode', 'Make retro games with colorful blocks or JavaScript, and play them in the page. Click Share to get a link.'),
+      others: [
+        t('scratch', 'Make games and animations with blocks. You can start without an account. A free account lets you share.'),
+        t('gemini', 'Ask for a game in Canvas, for example a memory game or a snake game. ' + SHARE_AND_EXPORT),
+      ],
+      more: [] },
+    { id: 'design', icon: '🎨', label: 'Design', tag: 'Screens, logos, posters', title: 'Design something',
+      what: 'Design app screens, logos, posters or a whole website layout. Sketch first, then make it look great.',
+      steps: ['Open a tool and start a new design.', 'Sketch your idea with shapes, text and pictures, or paste the prompt into an AI design tool.', 'Download a PNG picture. You can use it in your website or poster.'],
+      prompt: 'Design a mobile app home screen about {topic}: a friendly title, a hero picture, three big buttons and a bottom menu. Use a bright, modern color palette.',
+      best: t('figma', 'The tool real designers use. The free Starter plan has unlimited drafts and 3 design files. Sign in with Google.'),
+      others: [
+        t('figmamake', 'Describe an app or website and get a clickable design. The free plan has monthly AI credits.'),
+        t('penpot', 'Free and open source, like Figma. Great for app screens and websites.'),
+        t('canva', 'You already know it. Posters, logos, slides and social posts.'),
+        t('express', 'Free posters, logos and social posts, with AI help.'),
+      ],
+      more: [
+        t('excali', 'Quick hand-drawn sketches and wireframes. Plan your screens before you design.'),
+        t('stitch', "Google's AI design tool: describe a screen and get a design you can copy into Figma."),
+      ] },
+    { id: 'video', icon: '🎬', label: 'Video', tag: 'Edit or make clips', title: 'Make a video',
+      what: 'Cut clips, add text and music, or let an AI make a short clip.',
+      steps: ['Open an editor. Add your pictures, clips and text.', 'Add music and keep it short. 30 seconds is great.', 'Export your video and show it to the class.'],
+      prompt: 'A short, bright video about {topic}: smooth camera moves, friendly cartoon style, no text.',
+      best: t('clipchamp', 'Free video editor from Microsoft. Add clips, pictures, text and music, and export in 1080p.'),
+      others: [
+        t('canvavid', 'Make videos from templates, with text, music and animation.'),
+        t('capcut', 'Popular free editor with captions and effects. Some effects are paid: ignore them.'),
+        t('vids', 'Build a video with AI help. Free Google accounts can also make short AI video clips, with a small monthly limit.'),
+      ],
+      more: [
+        t('dreamina', 'An AI makes short videos and pictures from a prompt. Free daily credits. Ask your teacher first.'),
+      ] },
+    { id: 'image', icon: '🖼️', label: 'Pictures', tag: 'AI art', title: 'Make AI pictures',
+      what: 'Describe a picture and an AI draws it. Use it in your website, poster or video.',
+      steps: ['Open a picture tool. Paste your prompt (Ctrl+V).', 'Change the style words (cartoon, watercolor, 3D) to get new looks.', 'Download your favorite and add it to your design or website.'],
+      prompt: 'A colorful, friendly illustration about {topic}, simple shapes, bright colors, no text, suitable for school.',
+      best: t('gemini', 'Ask it to create an image of your idea. Free, with daily limits.'),
+      others: [
+        t('designer', 'Type what you want and get pictures. Free credits each month.'),
+        t('firefly', "Adobe's picture AI. Free credits each month."),
+        t('chatgpt', 'Ask ChatGPT to draw it. A few free pictures a day.'),
+      ],
+      more: [] },
+    { id: 'chat', icon: '🤖', label: 'Ask AI', tag: 'Chat, practice prompts', title: 'Chat with an AI',
+      what: 'Ask questions, get ideas and practice writing prompts. A strong prompt says who it is for, what you want and how it should look.',
+      steps: ['Open a chat tool. Sign in if it asks.', 'Paste your starter prompt (Ctrl+V) and press Enter.', 'Answer its questions, then ask for something better. AI makes mistakes, so check the facts.'],
+      prompt: 'I am a student and I want to make something about {topic}. Ask me 3 short questions about what I want. Then give me 3 ideas I can build today with free AI tools: a website, an app or a video.',
+      best: t('gemini', "Google's AI. Chat, ideas, pictures, and Canvas for building web pages."),
+      others: [
+        t('chatgpt', 'You can try it without an account. A free account saves your chats.'),
+        t('copilot', "Microsoft's AI assistant."),
+        t('duck', 'Private AI chat from DuckDuckGo with several AI models.'),
+      ],
+      more: [
+        t('claude', 'Very good at writing and coding. For adults only.'),
+      ] },
+  ];
+
+  // ---------------------------------------------------------------------------------------------
+  const SAFE_URL = /^https:\/\/[a-z0-9.-]+\.[a-z]{2,}(\/[A-Za-z0-9._~\/-]*)?$/;   // fixed https addresses only, no query strings
+  let topic = '';
+  try { topic = localStorage.getItem('canvaNextTopic') || ''; } catch (_) {}      // the same line the "Take my design further" page uses
+  const edited = new Map();                                                       // toggle id -> prompt the student changed by hand
+  let current = null;
+
+  const toast = (text) => {
+    const el = $('toast'); el.textContent = text; el.hidden = false;
+    clearTimeout(toast.timer); toast.timer = setTimeout(() => { el.hidden = true; }, 6000);
+  };
+  async function copyText(text) {
+    try { await navigator.clipboard.writeText(text); return true; } catch (_) {}
+    const ta = document.createElement('textarea');
+    ta.value = text; ta.setAttribute('readonly', ''); ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select();
+    let ok = false;
+    try { ok = document.execCommand('copy'); } catch (_) {}
+    ta.remove();
+    return ok;
+  }
+  const fillPrompt = (tpl) => tpl.replace('{topic}', topic.trim() || 'my project');
+  const el = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
+
+  function openLink(tool, primary) {
+    const internal = tool.url === '@studio';
+    const url = internal ? ROOT + 'studio/' : tool.url;
+    if (!internal && !SAFE_URL.test(url)) return null;                         // never link to anything unexpected
+    const a = el('a', 'btn' + (primary ? ' primary' : ' small'), 'Open ' + tool.name + (internal ? ' guide' : ' ↗'));
+    a.href = url; a.dataset.tool = tool.name;
+    if (!internal) { a.target = '_blank'; a.rel = 'noopener noreferrer'; }
+    if (tool.ai) {
+      a.addEventListener('click', async () => {
+        const box = $('prompt');
+        const ok = box ? await copyText(box.value) : false;
+        toast(ok ? 'Prompt copied. In ' + tool.name + ', click the box and press Ctrl+V.' : 'Could not copy automatically. Select your prompt and copy it.');
+      });
+    }
+    return a;
+  }
+  function toolCard(tool, best) {
+    const card = el('article', best ? 'best' : 'card');
+    card.dataset.tool = tool.key;
+    if (best) card.appendChild(el('span', 'ribbon', 'Best pick'));
+    card.appendChild(el('h3', null, tool.name));
+    card.appendChild(el('p', 'how', tool.how));
+    const tags = el('div', 'tags');
+    tags.append(el('span', 'chip', tool.sign), el('span', 'chip', tool.free));
+    if (tool.age) tags.appendChild(el('span', 'chip warn', tool.age));
+    if (tool.ai) tags.appendChild(el('span', 'chip ai', 'Uses your prompt'));
+    card.appendChild(tags);
+    const a = openLink(tool, best);
+    if (a) card.appendChild(a);
+    return card;
+  }
+  function toolGrid(list) {
+    const g = el('div', 'grid');
+    for (const tool of list) g.appendChild(toolCard(tool, false));
+    return g;
+  }
+
+  function renderPanel(g) {
+    const panel = $('panel'); panel.textContent = '';
+    panel.setAttribute('aria-labelledby', 'tab-' + g.id);
+    panel.dataset.id = g.id;
+
+    const top = el('div', 'panel');
+    const head = el('div', 'phead');
+    const ico = el('span', 'ico', g.icon); ico.setAttribute('aria-hidden', 'true');
+    const hd = el('div'); hd.append(el('h2', null, g.title), el('div', 'sub', g.what));
+    head.append(ico, hd);
+    top.appendChild(head);
+    panel.appendChild(top);
+
+    // the best pick comes first, so the big button is on screen as soon as a toggle is chosen
+    panel.appendChild(toolCard(g.best, true));
+    panel.appendChild(el('p', 'sub stuck', 'Not opening, blocked at school, or asking for money? Use the next tool on the list.'));
+
+    const box = el('div', 'panel');
+    box.appendChild(el('h2', null, 'How it works'));
+    const ol = el('ol', 'steps'); for (const s of g.steps) ol.appendChild(el('li', null, s));
+    box.appendChild(ol);
+
+    const pb = el('div', 'promptbox');
+    const lab = el('label', null, 'Your starter prompt'); lab.htmlFor = 'prompt';
+    const ta = el('textarea'); ta.id = 'prompt'; ta.dir = 'auto'; ta.maxLength = 700;
+    ta.value = edited.has(g.id) ? edited.get(g.id) : fillPrompt(g.prompt);
+    ta.addEventListener('input', () => edited.set(g.id, ta.value));
+    const row = el('div', 'row');
+    const copy = el('button', 'btn small', 'Copy prompt'); copy.type = 'button'; copy.id = 'copyPrompt';
+    copy.addEventListener('click', async () => {
+      const ok = await copyText(ta.value);
+      copy.textContent = ok ? 'Copied ✓' : 'Select and copy';
+      setTimeout(() => { copy.textContent = 'Copy prompt'; }, 2000);
+    });
+    row.append(copy, el('span', 'hint', 'Tools marked "Uses your prompt" copy it for you when you open them. Edit it first if you like.'));
+    pb.append(lab, ta, row);
+    box.appendChild(pb);
+    panel.appendChild(box);
+
+    if (g.others.length) {
+      panel.appendChild(el('h2', 'sec', 'Other good choices'));
+      panel.appendChild(toolGrid(g.others));
+    }
+    if (g.more.length) {
+      const d = el('details');
+      d.appendChild(el('summary', null, 'More tools (' + g.more.length + ')'));
+      d.appendChild(toolGrid(g.more));
+      panel.appendChild(d);
+    }
+    if (g.share) {
+      const s = el('div', 'sharebox');
+      s.append(el('strong', null, 'When your link is ready'),
+        el('p', null, 'Copy the link of your published website, app or game and add it to the class gallery, so your classmates can try it.'));
+      const a = el('a', 'btn primary small', 'Add my link to the class gallery'); a.id = 'shareBtn'; a.href = ROOT + 'studio/#share';
+      s.appendChild(a);
+      panel.appendChild(s);
+    }
+  }
+
+  function select(id, opts) {
+    const g = TOGGLES.find((x) => x.id === id) || TOGGLES[0];
+    current = g.id;
+    for (const b of $('tabs').querySelectorAll('[role=tab]')) {
+      const on = b.dataset.id === g.id;
+      b.setAttribute('aria-selected', on ? 'true' : 'false');
+      b.tabIndex = on ? 0 : -1;
+    }
+    renderPanel(g);
+    try { localStorage.setItem('canvaCreateTab', g.id); } catch (_) {}
+    if (opts && opts.hash) { try { history.replaceState(null, '', '#' + g.id); } catch (_) {} }
+    if (opts && opts.focus) { const b = $('tab-' + g.id); if (b) b.focus(); }
+  }
+
+  function buildTabs() {
+    const host = $('tabs'); host.textContent = '';
+    for (const g of TOGGLES) {
+      const b = el('button', 'toggle'); b.type = 'button'; b.id = 'tab-' + g.id; b.dataset.id = g.id;
+      b.setAttribute('role', 'tab'); b.setAttribute('aria-controls', 'panel'); b.setAttribute('aria-selected', 'false'); b.tabIndex = -1;
+      const ico = el('span', 'ico', g.icon); ico.setAttribute('aria-hidden', 'true');
+      b.append(ico, el('span', 'lbl', g.label), el('span', 'tag', g.tag));
+      b.addEventListener('click', () => select(g.id, { hash: true }));
+      host.appendChild(b);
+    }
+    host.addEventListener('keydown', (e) => {
+      const keys = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 };
+      let i = TOGGLES.findIndex((x) => x.id === current);
+      if (e.key in keys) i = (i + keys[e.key] + TOGGLES.length) % TOGGLES.length;
+      else if (e.key === 'Home') i = 0;
+      else if (e.key === 'End') i = TOGGLES.length - 1;
+      else return;
+      e.preventDefault();
+      select(TOGGLES[i].id, { hash: true, focus: true });
+    });
+  }
+
+  $('topic').addEventListener('input', () => {
+    topic = $('topic').value;
+    try { localStorage.setItem('canvaNextTopic', topic); } catch (_) {}
+    const g = TOGGLES.find((x) => x.id === current);
+    if (g && !edited.has(g.id) && $('prompt')) $('prompt').value = fillPrompt(g.prompt);
+  });
+  const fromHash = () => { const id = decodeURIComponent(location.hash.slice(1)); return TOGGLES.some((x) => x.id === id) ? id : null; };
+  window.addEventListener('hashchange', () => { const id = fromHash(); if (id && id !== current) select(id); });
+
+  $('topic').value = topic;
+  buildTabs();
+  let start = fromHash();
+  if (!start) { try { start = localStorage.getItem('canvaCreateTab'); } catch (_) {} }
+  select(TOGGLES.some((x) => x.id === start) ? start : TOGGLES[0].id);
+})();
+</script>
+</body>
+</html>
