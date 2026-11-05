@@ -120,7 +120,7 @@ footer{font-size:13px;color:var(--sub);margin-top:26px;text-align:center}
 (() => {
   'use strict';
   const $ = (id) => document.getElementById(id);
-  const ROOT = location.pathname.replace(/create\/(index\.html)?$/, '');
+  const ROOT = location.pathname.replace(/create\/?(index\.html)?$/, '');   // works with or without the trailing slash
   $('navMain').href = ROOT;
   $('navStudio').href = ROOT + 'studio/';
   $('navNext').href = ROOT + 'next/';
