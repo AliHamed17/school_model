@@ -73,6 +73,8 @@ details .grid{margin-top:10px}
 .before li{margin:5px 0}
 #toast{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);background:#152432;color:#fff;padding:10px 16px;border-radius:12px;font-size:14px;max-width:90vw;box-shadow:0 6px 24px #0003;z-index:5}
 kbd{font:inherit;font-size:13px;background:#eef3f7;border:1px solid var(--border);border-bottom-width:2px;border-radius:6px;padding:0 6px}
+.recipe label{font-size:14px;margin-top:8px}
+.recipe .btn{margin-top:10px}
 #ageList strong{display:block;margin-top:8px}
 #ageList ul{margin:4px 0 6px}
 footer{font-size:13px;color:var(--sub);margin-top:26px;text-align:center}
@@ -165,6 +167,15 @@ footer{font-size:13px;color:var(--sub);margin-top:26px;text-align:center}
     dreamina:  { name: 'Dreamina', url: 'https://dreamina.capcut.com/', sign: 'Free account', free: 'Free daily credits', age: '18+ (reported)', ai: true },
     designer:  { name: 'Microsoft Designer', url: 'https://designer.microsoft.com/', sign: 'Free Microsoft account', free: 'Free: monthly credits', ai: true },
     firefly:   { name: 'Adobe Firefly', url: 'https://firefly.adobe.com/', sign: 'Free Adobe account', free: 'Free: monthly credits', age: 'Age rule unclear: ask your teacher', ai: true },
+    notebooklm:{ name: 'NotebookLM', url: 'https://notebooklm.google.com/', sign: 'Google account', free: 'Free', age: '13+ (school account: ask your teacher)' },
+    quizlet:   { name: 'Quizlet', url: 'https://quizlet.com/', sign: 'Free account', free: 'Free', age: '13+ (under 13: parent email)' },
+    translate: { name: 'Google Translate', url: 'https://translate.google.com/', sign: 'No account', free: 'Free' },
+    desmos:    { name: 'Desmos', url: 'https://www.desmos.com/calculator', sign: 'No account', free: 'Free' },
+    docs:      { name: 'Google Docs', url: 'https://docs.google.com/document/create', sign: 'Google account', free: 'Free' },
+    slides:    { name: 'Google Slides', url: 'https://docs.google.com/presentation/create', sign: 'Google account', free: 'Free' },
+    canvapres: { name: 'Canva presentations', url: 'https://www.canva.com/create/presentations/', sign: 'Free Canva account (Google sign-in)', free: 'Free' },
+    grammarly: { name: 'Grammarly', url: 'https://www.grammarly.com/', sign: 'Free account', free: 'Free plan' },
+    gamma:     { name: 'Gamma', url: 'https://gamma.app/', sign: 'Free account', free: 'Free starter credits', age: 'Age rule unclear: ask your teacher', ai: true },
   };
   const t = (key, how) => Object.assign({ key }, T[key], { how });
   const SHARE_AND_EXPORT = 'To get a link, choose Share and export, then Share.';
@@ -250,6 +261,32 @@ footer{font-size:13px;color:var(--sub);margin-top:26px;text-align:center}
       more: [
         t('firefly', "Adobe's picture AI. Free credits each month."),
       ] },
+    { id: 'study', icon: '📚', label: 'Study', tag: 'Learn, practice, translate', title: 'Study smarter',
+      what: 'Learn a topic step by step, make flashcards, translate words and practice maths. Use the AI as a tutor, not as an answer machine.',
+      steps: ['Open a tool. Paste your prompt (Ctrl+V) if it takes one.', 'Answer the questions the tutor asks you. Try before you look at the answer.', 'Test yourself with flashcards or a quiz, then check the facts in your book.'],
+      prompt: 'Teach me about {topic} step by step, in simple words. After each step ask me one question and wait for my answer before you continue.',
+      best: t('gemini', 'Ask it to be your tutor. It explains, asks you questions and checks your answers. If you see Guided Learning in the menu, try it.'),
+      others: [
+        t('notebooklm', 'Add your own notes or a web page, then ask questions or make a study guide from them.'),
+        t('quizlet', 'Make flashcards and play study games with them.'),
+        t('translate', 'Translate words and whole sentences between Arabic, Hebrew, English and 100 more languages.'),
+        t('desmos', 'Draw graphs and explore maths.'),
+      ],
+      more: [] },
+    { id: 'write', icon: '✍️', label: 'Write', tag: 'Plan, write, present', title: 'Write and present',
+      what: 'Plan your writing, get feedback and build slides. Ask the AI for an outline and feedback, then write it in your own words.',
+      steps: ['Open the best pick and paste your prompt (Ctrl+V).', 'Write in your own words in Google Docs or Slides. Ask the AI for feedback, not for the finished text.', 'Check spelling and facts, then share or print it.'],
+      prompt: 'I am writing about {topic}. Ask me 3 questions about what I want to say. Then give me an outline with headings. When I send my draft, give me feedback but do not rewrite it for me.',
+      best: t('gemini', 'Your writing coach: it asks questions, makes an outline and gives feedback on your draft.'),
+      others: [
+        t('docs', 'Write your text here. Tools, Voice typing lets you speak instead of type.'),
+        t('slides', 'Make slides with templates and pictures.'),
+        t('canvapres', 'Pick a presentation template and fill it in.'),
+        t('grammarly', 'Checks spelling and grammar as you type. The free plan is enough for school.'),
+      ],
+      more: [
+        t('gamma', 'An AI makes slides from your outline. Free starter credits.'),
+      ] },
     { id: 'chat', icon: '🤖', label: 'Ask AI', tag: 'Chat, practice prompts', title: 'Chat with an AI',
       what: 'Ask questions, get ideas and practice writing prompts. A strong prompt says who it is for, what you want and how it should look.',
       steps: ['Open a chat tool. Sign in if it asks.', 'Paste your starter prompt (Ctrl+V) and press Enter.', 'Answer its questions, then ask for something better. AI makes mistakes, so check the facts.'],
@@ -266,9 +303,49 @@ footer{font-size:13px;color:var(--sub);margin-top:26px;text-align:center}
   ];
 
   // ---------------------------------------------------------------------------------------------
+  // For every toggle: the start of a prompt built from "who, what, how", and three other ideas the student can try with one click.
+  const EXTRA = {
+    website: { verb: 'Build a website', ideas: [
+      ['Quiz', 'Build a quiz website about {topic} with 5 questions, a score at the end and a Play again button. Use bright colors.'],
+      ['Fan page', 'Make a fan page about {topic} with a photo section, a facts table and a fun poll. Use bright colors.'],
+      ['Study guide', 'Create a study guide website about {topic} with short summaries, a checklist and big headings. Use calm colors.']] },
+    app: { verb: 'Build an app', ideas: [
+      ['Habit tracker', 'Build a simple habit tracker app about {topic}: add a habit, tick it each day and see a streak. Big buttons, works on a phone.'],
+      ['Flashcards', 'Build a flashcard app about {topic}: show a question, tap to flip the card, a Next button and a Shuffle button. Works on a phone.'],
+      ['Calculator', 'Build a small calculator app that helps with {topic}. Big buttons, clear answers, works on a phone.']] },
+    game: { verb: 'Make a game', ideas: [
+      ['Memory game', 'Make a memory card matching game about {topic} in one HTML file with a move counter and a Play again button.'],
+      ['Snake', 'Make a snake game in one HTML file. The food is about {topic}. Show the score and add a Play again button.'],
+      ['Quiz game', 'Make a quiz game about {topic} in one HTML file: answer questions to move forward, three lives, a score and a Play again button.']] },
+    design: { verb: 'Design a screen', ideas: [
+      ['Logo', 'Design a simple, friendly logo for {topic}: one shape, two colors and a short name.'],
+      ['Poster', 'Design a poster about {topic}: a big title, a short slogan, three key facts and bright colors.'],
+      ['Phone app screen', 'Design a mobile app home screen about {topic}: a friendly title, a hero picture, three big buttons and a bottom menu.']] },
+    video: { verb: 'Make a short video', ideas: [
+      ['Intro', 'A 5 second bright intro animation for a channel about {topic}: a bouncing title, cartoon style, no other text.'],
+      ['Explainer', 'A short friendly explainer video about {topic}: simple drawings, smooth camera moves, no text.'],
+      ['Slideshow', 'A calm photo slideshow video about {topic}: slow zooms, soft music and gentle light.']] },
+    image: { verb: 'Draw a picture', ideas: [
+      ['Mascot', 'A friendly cartoon mascot for {topic}, simple shapes, bright colors, no text.'],
+      ['Poster art', 'A flat illustration of {topic} for a school poster, bold colors, no text.'],
+      ['Comic panel', 'A comic panel about {topic}: two characters talking, simple shapes, bright colors, no text.']] },
+    study: { verb: 'Teach me', ideas: [
+      ['Quiz me', 'Quiz me about {topic} with 5 questions, one at a time. Wait for my answer, then tell me if I am right and why.'],
+      ['Flashcards', 'Make 10 flashcards about {topic}: a question on one line and the answer on the next line.'],
+      ['Explain simply', 'Explain {topic} to me like I am 10 years old, with one example I can picture.']] },
+    write: { verb: 'Help me write', ideas: [
+      ['Outline', 'I am writing about {topic}. Ask me 3 questions, then give me an outline with headings. Do not write it for me.'],
+      ['Feedback', 'Here is my draft about {topic}. Tell me three things that are good and three things to improve. Do not rewrite it.'],
+      ['Slides plan', 'Plan a 6 slide presentation about {topic}: a title for each slide and two short bullet points. No long text.']] },
+    chat: { verb: 'Give me ideas', ideas: [
+      ['Brainstorm', 'Give me 5 creative project ideas about {topic} that I can finish in one lesson with free tools.'],
+      ['Explain simply', 'Explain {topic} in simple words with one example.'],
+      ['Better prompt', 'My prompt is: "make a website about {topic}". Ask me 3 questions to make it better, then rewrite it as a strong prompt.']] },
+  };
   const SAFE_URL = /^https:\/\/[a-z0-9.-]+\.[a-z]{2,}(\/[A-Za-z0-9._~\/-]*)?$/;   // fixed https addresses only, no query strings
   let topic = '';
   try { topic = localStorage.getItem('canvaNextTopic') || ''; } catch (_) {}      // the same line the "Take my design further" page uses
+  const ideaTpl = new Map();                                                     // toggle id -> the idea the student chose
   const edited = new Map();                                                       // toggle id -> prompt the student changed by hand
   let current = null;
 
@@ -286,7 +363,8 @@ footer{font-size:13px;color:var(--sub);margin-top:26px;text-align:center}
     ta.remove();
     return ok;
   }
-  const fillPrompt = (tpl) => tpl.replace('{topic}', topic.trim() || 'my project');
+  const fillPrompt = (tpl) => tpl.split('{topic}').join(topic.trim() || 'my project');
+  const currentTpl = (g) => ideaTpl.get(g.id) || g.prompt;
   const el = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
 
   function openLink(tool, primary) {
@@ -351,7 +429,7 @@ footer{font-size:13px;color:var(--sub);margin-top:26px;text-align:center}
     const pb = el('div', 'promptbox');
     const lab = el('label', null, 'Your starter prompt'); lab.htmlFor = 'prompt';
     const ta = el('textarea'); ta.id = 'prompt'; ta.dir = 'auto'; ta.maxLength = 700;
-    ta.value = edited.has(g.id) ? edited.get(g.id) : fillPrompt(g.prompt);
+    ta.value = edited.has(g.id) ? edited.get(g.id) : fillPrompt(currentTpl(g));
     ta.addEventListener('input', () => edited.set(g.id, ta.value));
     const row = el('div', 'row');
     const copy = el('button', 'btn small', 'Copy prompt'); copy.type = 'button'; copy.id = 'copyPrompt';
@@ -362,6 +440,37 @@ footer{font-size:13px;color:var(--sub);margin-top:26px;text-align:center}
     });
     row.append(copy, el('span', 'hint', 'Tools marked "Uses your prompt" copy it for you when you open them. Edit it first if you like.'));
     pb.append(lab, ta, row);
+    const ideas = (EXTRA[g.id] || {}).ideas || [];
+    if (ideas.length) {
+      const ir = el('div', 'row'); ir.id = 'ideas';
+      ir.appendChild(el('span', 'hint', 'Try another idea:'));
+      for (const [label, tpl] of ideas) {
+        const b = el('button', 'btn small', label); b.type = 'button'; b.dataset.idea = label;
+        b.addEventListener('click', () => { edited.delete(g.id); ideaTpl.set(g.id, tpl); ta.value = fillPrompt(tpl); });
+        ir.appendChild(b);
+      }
+      pb.appendChild(ir);
+    }
+    const rec = el('details', 'recipe');
+    rec.appendChild(el('summary', null, 'Build my own prompt (who, what, how)'));
+    rec.appendChild(el('div', 'hint', 'A strong prompt says who it is for, what it includes and how it should look. Fill in what you like and leave the rest empty.'));
+    const inputs = {};
+    for (const [k, label, ph] of [['who', 'Who is it for?', 'my classmates'], ['what', 'What should it include?', 'a title, three facts and a quiz'], ['how', 'How should it look or feel?', 'bright, fun and easy to read']]) {
+      const l = el('label', null, label); l.htmlFor = 'recipe-' + k;
+      const i = el('input'); i.type = 'text'; i.id = 'recipe-' + k; i.maxLength = 100; i.dir = 'auto'; i.placeholder = 'Example: ' + ph; i.autocomplete = 'off';
+      inputs[k] = i; rec.append(l, i);
+    }
+    const use = el('button', 'btn small', 'Use these in my prompt'); use.type = 'button'; use.id = 'recipeUse';
+    use.addEventListener('click', () => {
+      const v = (k) => inputs[k].value.trim();
+      let text = ((EXTRA[g.id] || {}).verb || 'Help me') + ' about ' + (topic.trim() || 'my project') + (v('who') ? ' for ' + v('who') : '') + '.';
+      if (v('what')) text += ' It should include ' + v('what') + '.';
+      if (v('how')) text += ' Make it ' + v('how') + '.';
+      ta.value = text; edited.set(g.id, text);
+      toast('Your prompt is ready. Click Copy prompt, or open a tool.');
+    });
+    rec.appendChild(use);
+    pb.appendChild(rec);
     box.appendChild(pb);
     panel.appendChild(box);
 
@@ -425,7 +534,7 @@ footer{font-size:13px;color:var(--sub);margin-top:26px;text-align:center}
     topic = $('topic').value;
     try { localStorage.setItem('canvaNextTopic', topic); } catch (_) {}
     const g = TOGGLES.find((x) => x.id === current);
-    if (g && !edited.has(g.id) && $('prompt')) $('prompt').value = fillPrompt(g.prompt);
+    if (g && !edited.has(g.id) && $('prompt')) $('prompt').value = fillPrompt(currentTpl(g));
   });
   const fromHash = () => { const id = decodeURIComponent(location.hash.slice(1)); return TOGGLES.some((x) => x.id === id) ? id : null; };
   window.addEventListener('hashchange', () => { const id = fromHash(); if (id && id !== current) select(id); });
