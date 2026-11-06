@@ -75,6 +75,12 @@ dialog input{font:inherit;font-size:18px;width:100%;padding:10px 12px;border:2px
 dialog input:focus{border-color:var(--accent);outline:none}
 dialog .err{color:#b42318;min-height:1.4em;margin:6px 0 0;font-size:14px}
 dialog .actions{display:flex;justify-content:flex-end;gap:10px;margin-top:10px}
+dialog label.check{display:flex;gap:8px;align-items:center;font-weight:400;margin:8px 0 0;font-size:14px}
+dialog label.check input{width:auto;padding:0;font-size:inherit}
+.pwbox{margin-top:14px;padding:12px 14px;border-radius:12px;border:1px solid var(--warn-border);background:var(--warn-bg)}
+.pwbox.ok{background:var(--ok-bg);border-color:var(--ok-border)}
+.pwbox p{margin:0 0 8px}
+.tile.locked .who::before{content:"🔒 "}
 
 @media (max-width:640px){.grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:9px}.tile{min-height:78px}.tile .n{font-size:25px}.card{padding:18px}}
 @media (max-width:350px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
@@ -86,7 +92,7 @@ dialog .actions{display:flex;justify-content:flex-end;gap:10px;margin-top:10px}
   <header>
     <div class="eyebrow">AI &amp; Machine Learning · Classroom Activity</div>
     <h1>Choose your computer number</h1>
-    <p class="lead">New here? Pick a free number and type your name. Been here before? Click your name. Your own Canva design opens, and no sign-in is needed.</p>
+    <p class="lead">New here? Pick a free number, type your name and choose a password. Been here before? Click your name and type your password. Your own Canva design opens, and no Canva sign-in is needed.</p>
     <nav aria-label="More activities" style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:14px">
       <a class="btn primary" id="navStudio" href="#">🌐 Build a website (Canva Code)</a>
       <a class="btn" id="navNext" href="#">🚀 Take my design further</a>
@@ -124,7 +130,11 @@ dialog .actions{display:flex;justify-content:flex-end;gap:10px;margin-top:10px}
       <a id="createBtn" class="btn" href="#">Make an app, game or video with AI</a>
     </div>
     <p class="sub">Your design opens with no sign-in. For your website, Canva asks you to sign in once with Google (free). Your design and your website are both saved under your computer number, and your teacher sees them together.</p>
-    <p class="sub">Someone else on this computer? Just click your own name (or a free number) in the grid below.</p>
+    <p class="sub">Someone else on this computer? Click a free number in the grid below, or click your own name and type your password.</p>
+    <div id="pwBox" class="pwbox" hidden>
+      <p id="pwText"></p>
+      <button type="button" id="pwBtn" class="btn"></button>
+    </div>
     <div class="rename">
       <p><strong>Put your name on your design</strong></p>
       <ol>
@@ -146,10 +156,10 @@ dialog .actions{display:flex;justify-content:flex-end;gap:10px;margin-top:10px}
 
   <section id="board" aria-labelledby="boardTitle">
     <div class="bar"><h2 id="boardTitle">Student computers</h2><span id="count" class="sub">Loading…</span></div>
-    <div class="legend" aria-hidden="true"><span><i></i>Free: click to take it</span><span><i class="t"></i>Has a name: click your name to open your design</span><span><i class="m"></i>Yours</span></div>
+    <div class="legend" aria-hidden="true"><span><i></i>Free: click to take it</span><span><i class="t"></i>Has a name: click your name and type your password</span><span><i class="m"></i>Yours</span></div>
     <nav id="grid" class="grid" aria-label="Choose your computer number"></nav>
     <p id="updated" class="sub" aria-live="off"></p>
-    <p class="sub"><strong>Were you here before?</strong> Find your name in the grid and click it to open your design again.</p>
+    <p class="sub"><strong>Were you here before?</strong> Find your name in the grid, click it and type your password to open your design again.</p>
   </section>
 
   <footer>Only use the number you chose. Your teacher can see who picked which number.</footer>
@@ -161,6 +171,10 @@ dialog .actions{display:flex;justify-content:flex-end;gap:10px;margin-top:10px}
     <p class="sub" id="dlgHelp">Type your first name. It will be shown to the class next to your number.</p>
     <label for="nameInput" id="nameLabel">Your name</label>
     <input id="nameInput" name="name" type="text" maxlength="30" dir="auto" required spellcheck="false">
+    <label for="passInput" id="passLabel">Your password</label>
+    <input id="passInput" name="password" type="password" minlength="4" maxlength="30" autocomplete="off" spellcheck="false">
+    <label class="check" id="passShowLabel"><input type="checkbox" id="passShow"> Show the password</label>
+    <p class="sub" id="passHelp"></p>
     <p class="err" id="dlgErr" role="alert"></p>
     <div class="actions">
       <button type="button" id="dlgCancel" class="btn">Cancel</button>
@@ -207,12 +221,15 @@ dialog .actions{display:flex;justify-content:flex-end;gap:10px;margin-top:10px}
 
   // ---- server calls ----
   async function call(params) {
+    const post = 'password' in params;   // a password only ever travels in a POST body, never in an address
     const url = new URL(API);
-    for (const [k, v] of Object.entries(params)) url.searchParams.set(k, v);
+    if (!post) for (const [k, v] of Object.entries(params)) url.searchParams.set(k, v);
     const ctl = new AbortController();
     const timer = setTimeout(() => ctl.abort(), TIMEOUT_MS);
     try {
-      const res = await fetch(url, { redirect: 'follow', cache: 'no-store', signal: ctl.signal });
+      const res = await fetch(url, post
+        ? { method: 'POST', redirect: 'follow', cache: 'no-store', signal: ctl.signal, headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(params) }
+        : { redirect: 'follow', cache: 'no-store', signal: ctl.signal });
       const text = await res.text();
       try { return JSON.parse(text); } catch (_) { return { ok: false, error: 'bad_response' }; }
     } catch (_) {
@@ -260,7 +277,14 @@ dialog .actions{display:flex;justify-content:flex-end;gap:10px;margin-top:10px}
     wrong_name: 'That is not the name used for this number. Type it the same way as before.',
     bad_token: 'Your browser could not be recognised. Reload the page and try again.',
     no_seat: 'You do not have a computer yet.',
+    bad_password: 'Use a password with 4 to 30 letters or numbers.',
+    locked: 'Too many wrong tries for this number. Wait 5 minutes, or ask your teacher.',
+    no_password: 'This number has no password yet, so it can only be opened on the computer it was made on. Ask your teacher.',
+    use_post: 'Please reload the page and try again.',
   };
+  const errText = (res) => res.error === 'wrong_password'
+    ? `That password is not right. ${res.left} ${res.left === 1 ? 'try' : 'tries'} left.`
+    : (MESSAGES[res.error] || MESSAGES.server);
   function say(kind, text, action) {
     const box = $('notice');
     box.className = 'notice' + (kind ? ' ' + kind : '');
@@ -297,11 +321,11 @@ dialog .actions{display:flex;justify-content:flex-end;gap:10px;margin-top:10px}
       const known = statusLoaded && !!s;
       const taken = known && s.taken && !isMine;
       if (known && !s.taken) free++;
-      t.className = 'tile' + (isMine ? ' mine' : taken ? ' taken' : known ? '' : ' unknown');
+      t.className = 'tile' + (isMine ? ' mine' : taken ? ' taken' : known ? '' : ' unknown') + (taken && s.protected ? ' locked' : '');
       t.disabled = false;   // every number is always clickable, whatever this browser did before or whether the list loaded
       t.querySelector('.who').textContent = isMine ? mine.name : taken ? s.name : '';
       t.setAttribute('aria-label', isMine ? `Computer ${n}, yours (${mine.name})`
-        : taken ? `Computer ${n}, ${s.name}. Click your name to open your design.`
+        : taken ? `Computer ${n}, ${s.name}${s.protected ? ', protected by a password' : ''}. Click your name and type your password.`
         : known ? `Computer ${n}, free. Click to take it.` : `Computer ${n}`);
     }
     $('count').textContent = statusLoaded ? `${free} free · ${SEATS - free} taken` : 'Loading…';
@@ -333,8 +357,8 @@ dialog .actions{display:flex;justify-content:flex-end;gap:10px;margin-top:10px}
 
   // ---- my seat card ----
   function setMine(res) {
-    mine = { seat: res.seat, name: res.name, url: res.url };
-    seatInfo[mine.seat] = { seat: mine.seat, taken: true, name: mine.name };
+    mine = { seat: res.seat, name: res.name, url: res.url, protected: !!res.protected };
+    seatInfo[mine.seat] = { seat: mine.seat, taken: true, name: mine.name, protected: mine.protected };
     $('mySeat').textContent = mine.seat;
     $('myName').textContent = mine.name;
     $('openBtn').href = mine.url;
@@ -342,12 +366,23 @@ dialog .actions{display:flex;justify-content:flex-end;gap:10px;margin-top:10px}
     $('namePill').hidden = false;
     $('copyBtn').textContent = 'Copy my name';
     $('mine').hidden = false;
+    paintPw();
     paintGrid();
     schedulePoll();
+  }
+  function paintPw() {
+    if (!mine) return;
+    $('pwBox').hidden = false;
+    $('pwBox').className = 'pwbox' + (mine.protected ? ' ok' : '');
+    $('pwText').textContent = mine.protected
+      ? '🔒 Your design is protected by your password. You need it to open your design on another computer.'
+      : 'Your design has no password yet, so a classmate could take your number. Choose a password now.';
+    $('pwBtn').textContent = mine.protected ? 'Change my password' : 'Choose my password';
   }
   function clearMine() {
     mine = null;
     $('mine').hidden = true;
+    $('pwBox').hidden = true;
     paintGrid();
   }
 
@@ -382,25 +417,33 @@ dialog .actions{display:flex;justify-content:flex-end;gap:10px;margin-top:10px}
     dialogSeat = seat;
     $('dlgErr').textContent = '';
     $('dlgSeat').textContent = seat;
-    $('dlgTitle').firstChild.textContent = mode === 'rename' ? 'Change your name · Computer ' : 'Computer ';
+    $('dlgTitle').firstChild.textContent = mode === 'rename' ? 'Change your name · Computer ' : mode === 'setpw' ? 'Your password · Computer ' : 'Computer ';
     $('dlgSubmit').textContent = submitLabel();
     const owner = (seatInfo[seat] || {}).name || 'someone';
     $('dlgHelp').textContent = mode === 'reopen'
-      ? `Computer ${seat} belongs to ${owner}. Is that you? If yes, you go straight back into your design.`
+      ? `Computer ${seat} belongs to ${owner}. If it is you, type your password and you go straight back into your design.`
       : mode === 'rename' ? 'Type the name you want to show next to your number.'
-      : 'Type your first name. It will be shown to the class next to your number.';
-    const needsName = mode !== 'reopen';   // returning students just confirm, no typing
+      : mode === 'setpw' ? 'Choose a password. You need it to open your design on another computer. Do not tell anyone.'
+      : 'Type your first name. It will be shown to the class next to your number. Then choose a password.';
+    const needsName = mode === 'claim' || mode === 'rename';
+    const needsPass = mode !== 'rename';
+    for (const id of ['passLabel', 'passInput', 'passShowLabel', 'passHelp']) $(id).hidden = !needsPass;
+    $('passInput').required = needsPass;
+    $('passInput').value = ''; $('passInput').type = 'password'; $('passShow').checked = false;
+    $('passLabel').textContent = mode === 'reopen' ? 'Your password' : 'Choose a password';
+    $('passHelp').textContent = mode === 'reopen' ? '' : 'At least 4 letters or numbers. Remember it or write it down.';
     $('nameLabel').hidden = !needsName;
     $('nameInput').hidden = !needsName;
     $('nameInput').required = needsName;
     $('nameInput').value = mode === 'rename' && mine ? mine.name : mode === 'reopen' ? '' : (store.get('canvaSeatName') || '');
     if (!dlg.open) dlg.showModal();
-    if (needsName) { $('nameInput').focus(); $('nameInput').select(); } else { $('dlgSubmit').focus(); }
+    if (needsName) { $('nameInput').focus(); $('nameInput').select(); } else if (needsPass) { $('passInput').focus(); } else { $('dlgSubmit').focus(); }
   }
   $('dlgCancel').addEventListener('click', () => { if (!busy) dlg.close(); });
+  $('passShow').addEventListener('change', () => { $('passInput').type = $('passShow').checked ? 'text' : 'password'; });
   dlg.addEventListener('cancel', (e) => { if (busy) e.preventDefault(); });
 
-  function submitLabel() { return dialogMode === 'rename' ? 'Save name' : dialogMode === 'reopen' ? 'Yes, that is me. Open my design' : 'Open my design'; }
+  function submitLabel() { return dialogMode === 'rename' ? 'Save name' : dialogMode === 'setpw' ? 'Save my password' : 'Open my design'; }
   function waitingLabel() { $('dlgSubmit').textContent = 'Waiting in line…'; }
 
   function setBusy(on) {
@@ -409,13 +452,16 @@ dialog .actions{display:flex;justify-content:flex-end;gap:10px;margin-top:10px}
     $('dlgSubmit').disabled = on;
     $('dlgCancel').disabled = on;
     $('nameInput').disabled = on;
+    $('passInput').disabled = on;
   }
 
   $('nameForm').addEventListener('submit', async (ev) => {
     ev.preventDefault();
     if (busy) return;
     const name = $('nameInput').value.trim();
-    if (!name && dialogMode !== 'reopen') { $('dlgErr').textContent = MESSAGES.bad_name; return; }
+    const password = $('passInput').value.trim();
+    if (!name && (dialogMode === 'claim' || dialogMode === 'rename')) { $('dlgErr').textContent = MESSAGES.bad_name; return; }
+    if (dialogMode !== 'rename' && Array.from(password).length < 4) { $('dlgErr').textContent = MESSAGES.bad_password; $('passInput').focus(); return; }
 
     if (dialogMode === 'rename') {
       setBusy(true);
@@ -425,6 +471,17 @@ dialog .actions{display:flex;justify-content:flex-end;gap:10px;margin-top:10px}
       store.set('canvaSeatName', res.name);
       setMine(res);
       dlg.close();
+      return;
+    }
+
+    if (dialogMode === 'setpw') {
+      setBusy(true);
+      const res = await callRetry({ action: 'set_password', token, password }, 4, waitingLabel);
+      setBusy(false);
+      if (!res.ok) { $('dlgErr').textContent = errText(res); return; }
+      setMine(res);
+      dlg.close();
+      say('', 'Your password is saved. Remember it: you need it to open your design on another computer.');
       return;
     }
 
@@ -442,7 +499,7 @@ dialog .actions{display:flex;justify-content:flex-end;gap:10px;margin-top:10px}
 
     setBusy(true);
     const seat = dialogSeat;
-    const request = dialogMode === 'reopen' ? { action: 'reopen', seat, token } : { action: 'claim', seat, name, token };
+    const request = dialogMode === 'reopen' ? { action: 'reopen', seat, token, password } : { action: 'claim', seat, name, token, password };
     const res = await callRetry(request, 4, waitingLabel);
     setBusy(false);
 
@@ -477,16 +534,22 @@ dialog .actions{display:flex;justify-content:flex-end;gap:10px;margin-top:10px}
       refresh();
       return;
     }
-    $('dlgErr').textContent = MESSAGES[res.error] || MESSAGES.server;
+    $('dlgErr').textContent = errText(res);
+    if (res.error === 'wrong_password' || res.error === 'bad_password') { $('passInput').value = ''; $('passInput').focus(); }
   });
 
   function onTile(n) {
     if (mine && mine.seat === n) { $('mine').scrollIntoView({ behavior: 'smooth', block: 'start' }); return; }
     const s = seatInfo[n];
+    if (s && s.taken && !s.protected) {
+      say('', `Computer ${n} (${s.name}) has no password yet, so it can only be opened on the computer it was made on. If it is yours and you cannot get in, ask your teacher.`);
+      return;
+    }
     openDialog(s && s.taken ? 'reopen' : 'claim', n);
   }
 
   $('renameBtn').addEventListener('click', () => { if (mine) openDialog('rename', mine.seat); });
+  $('pwBtn').addEventListener('click', () => { if (mine) openDialog('setpw', mine.seat); });
   $('releaseBtn').addEventListener('click', async () => {
     if (!mine) return;
     if (!confirm(`Give up computer ${mine.seat}? Another student could take it.`)) return;
