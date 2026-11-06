@@ -264,6 +264,7 @@ dialog label.check input{width:auto;padding:0;font-size:inherit}
   let dialogMode = 'claim'; // 'claim' | 'recover' | 'rename'
   let dialogSeat = 0;
   let busy = false;
+  let forcedPw = false;   // the "choose your password" window opened by the page itself cannot be closed until a password is saved
 
   // ---- notice ----
   const MESSAGES = {
@@ -412,7 +413,9 @@ dialog label.check input{width:auto;padding:0;font-size:inherit}
 
   // ---- dialog ----
   const dlg = $('nameDialog');
-  function openDialog(mode, seat) {
+  function openDialog(mode, seat, force) {
+    forcedPw = !!force && mode === 'setpw';
+    $('dlgCancel').hidden = forcedPw;
     dialogMode = mode;
     dialogSeat = seat;
     $('dlgErr').textContent = '';
@@ -423,7 +426,7 @@ dialog label.check input{width:auto;padding:0;font-size:inherit}
     $('dlgHelp').textContent = mode === 'reopen'
       ? `Computer ${seat} belongs to ${owner}. If it is you, type your password and you go straight back into your design.`
       : mode === 'rename' ? 'Type the name you want to show next to your number.'
-      : mode === 'setpw' ? 'Choose a password. You need it to open your design on another computer. Do not tell anyone.'
+      : mode === 'setpw' ? (forcedPw ? 'Your number needs a password now. Choose one: you need it to open your design on another computer. Do not tell anyone.' : 'Choose a password. You need it to open your design on another computer. Do not tell anyone.')
       : 'Type your first name. It will be shown to the class next to your number. Then choose a password.';
     const needsName = mode === 'claim' || mode === 'rename';
     const needsPass = mode !== 'rename';
@@ -441,7 +444,7 @@ dialog label.check input{width:auto;padding:0;font-size:inherit}
   }
   $('dlgCancel').addEventListener('click', () => { if (!busy) dlg.close(); });
   $('passShow').addEventListener('change', () => { $('passInput').type = $('passShow').checked ? 'text' : 'password'; });
-  dlg.addEventListener('cancel', (e) => { if (busy) e.preventDefault(); });
+  dlg.addEventListener('cancel', (e) => { if (busy || forcedPw) e.preventDefault(); });
 
   function submitLabel() { return dialogMode === 'rename' ? 'Save name' : dialogMode === 'setpw' ? 'Save my password' : 'Open my design'; }
   function waitingLabel() { $('dlgSubmit').textContent = 'Waiting in line…'; }
@@ -478,7 +481,12 @@ dialog label.check input{width:auto;padding:0;font-size:inherit}
       setBusy(true);
       const res = await callRetry({ action: 'set_password', token, password }, 4, waitingLabel);
       setBusy(false);
-      if (!res.ok) { $('dlgErr').textContent = errText(res); return; }
+      if (!res.ok) {
+        $('dlgErr').textContent = errText(res);
+        if (res.error !== 'bad_password') { forcedPw = false; $('dlgCancel').hidden = false; }   // a server problem must never trap the student
+        return;
+      }
+      forcedPw = false;
       setMine(res);
       dlg.close();
       say('', 'Your password is saved. Remember it: you need it to open your design on another computer.');
@@ -578,6 +586,7 @@ dialog label.check input{width:auto;padding:0;font-size:inherit}
     if (st.ok) applyStatus(st);
     if (res.ok && res.has) {
       setMine(res);
+      if (!mine.protected) openDialog('setpw', mine.seat, true);   // a number taken before passwords existed: ask for one now
       if (!st.ok) refresh();
       return;
     }
