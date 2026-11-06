@@ -73,6 +73,8 @@ details .grid{margin-top:10px}
 .before li{margin:5px 0}
 #toast{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);background:#152432;color:#fff;padding:10px 16px;border-radius:12px;font-size:14px;max-width:90vw;box-shadow:0 6px 24px #0003;z-index:5}
 kbd{font:inherit;font-size:13px;background:#eef3f7;border:1px solid var(--border);border-bottom-width:2px;border-radius:6px;padding:0 6px}
+#ageList strong{display:block;margin-top:8px}
+#ageList ul{margin:4px 0 6px}
 footer{font-size:13px;color:var(--sub);margin-top:26px;text-align:center}
 @media (max-width:620px){.toggle{min-height:78px}}
 @media (prefers-reduced-motion:no-preference){.toggle{transition:border-color .15s,background .15s}}
@@ -102,6 +104,7 @@ footer{font-size:13px;color:var(--sub);margin-top:26px;text-align:center}
 
     <section class="panel before" aria-labelledby="p3">
       <h2 id="p3">Before you start</h2>
+      <details id="ageGuide" open><summary>Which tools are for my age?</summary><div id="ageList"></div></details>
       <ul>
         <li><strong>Free to start:</strong> every tool here has a free version with limits. If a tool asks you to pay, close it and use the next one on the list.</li>
         <li><strong>Accounts:</strong> most tools use your Google sign-in. A few need their own free account. Never share your password.</li>
@@ -426,6 +429,24 @@ footer{font-size:13px;color:var(--sub);margin-top:26px;text-align:center}
   });
   const fromHash = () => { const id = decodeURIComponent(location.hash.slice(1)); return TOGGLES.some((x) => x.id === id) ? id : null; };
   window.addEventListener('hashchange', () => { const id = fromHash(); if (id && id !== current) select(id); });
+
+  // "Which tools are for my age?" is written from the same list of tools, so it can never disagree with the tags on the cards
+  (function buildAgeGuide() {
+    const groups = [['Only for adults (18+)', []], ["Need a parent's OK", []], ['Ask your teacher first', []], ['Other age limits', []]];
+    for (const k of Object.keys(T)) {
+      const a = T[k].age;
+      if (!a) continue;
+      const i = /parent/i.test(a) ? 1 : /18\+/.test(a) ? 0 : /unclear|teacher/i.test(a) ? 2 : 3;
+      groups[i][1].push(T[k].name + ' (' + a + ')');
+    }
+    const host = $('ageList'); host.textContent = '';
+    for (const [title, items] of groups) {
+      if (!items.length) continue;
+      host.appendChild(el('strong', null, title));
+      const ul = el('ul'); for (const x of items) ul.appendChild(el('li', null, x)); host.appendChild(ul);
+    }
+    host.appendChild(el('p', 'sub', 'The other tools are for ages 13 and up as far as we could find, but each company decides. If a tool says you are too young, close it and use the next one.'));
+  })();
 
   $('topic').value = topic;
   buildTabs();
