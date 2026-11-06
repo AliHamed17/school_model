@@ -437,7 +437,7 @@ footer{font-size:13px;color:var(--sub);margin-top:26px;text-align:center}
       const a = T[k].age;
       if (!a) continue;
       const i = /parent/i.test(a) ? 1 : /18\+/.test(a) ? 0 : /unclear|teacher/i.test(a) ? 2 : 3;
-      groups[i][1].push(T[k].name + ' (' + a + ')');
+      groups[i][1].push(T[k].name + ': ' + a);
     }
     const host = $('ageList'); host.textContent = '';
     for (const [title, items] of groups) {
