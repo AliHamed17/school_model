@@ -105,7 +105,7 @@ footer{font-size:13px;color:var(--sub);margin-top:26px;text-align:center}
       <ul>
         <li><strong>Free to start:</strong> every tool here has a free version with limits. If a tool asks you to pay, close it and use the next one on the list.</li>
         <li><strong>Accounts:</strong> most tools use your Google sign-in. A few need their own free account. Never share your password.</li>
-        <li><strong>Age:</strong> most tools are for ages 13 and up. Tools marked <strong>18+</strong> are for adults only. If you are younger, ask your teacher first.</li>
+        <li><strong>Age:</strong> some tools are only for adults (marked <strong>18+</strong>) and a few need a parent's OK. They are kept in the "More tools" fold. If a tool says you are too young, close it and use the next one.</li>
         <li><strong>Blocked or "not available for your account"?</strong> A school account can block a tool. Try your personal Google account, or use the next tool.</li>
         <li><strong>Be careful:</strong> AI makes mistakes, so check the facts. Do not upload photos of people or put personal details in a prompt or a website.</li>
       </ul>
@@ -140,28 +140,28 @@ footer{font-size:13px;color:var(--sub);margin-top:26px;text-align:center}
     claude:    { name: 'Claude', url: 'https://claude.ai/', sign: 'Free account', free: 'Free, with limits', age: '18+ only', ai: true },
     sites:     { name: 'Google Sites', url: 'https://sites.google.com/new', sign: 'Google account', free: 'Free' },
     canvacode: { name: 'Canva Code (AI)', url: '@studio', sign: 'Free Canva account (Google sign-in)', free: 'Free' },
-    bolt:      { name: 'Bolt', url: 'https://bolt.new/', sign: 'Free account', free: 'Free: daily limit, hosting included', ai: true },
-    lovable:   { name: 'Lovable', url: 'https://lovable.dev/', sign: 'Free account', free: 'Free: 5 credits a day', ai: true },
+    bolt:      { name: 'Bolt', url: 'https://bolt.new/', sign: 'Free account', free: 'Free: daily limit, hosting included', age: '18+ only', ai: true },
+    lovable:   { name: 'Lovable', url: 'https://lovable.dev/', sign: 'Free account', free: 'Free: 5 credits a day', age: '18+ (under 18: a parent must allow it)', ai: true },
     aistudio:  { name: 'Google AI Studio', url: 'https://aistudio.google.com/apps', sign: 'Google account', free: 'Free to build', age: '18+ only', ai: true },
     netlify:   { name: 'Netlify Drop', url: 'https://app.netlify.com/drop', sign: 'No account to try', free: 'Free' },
     appinv:    { name: 'MIT App Inventor', url: 'https://ai2.appinventor.mit.edu/', sign: 'Google account', free: 'Free' },
-    thunk:     { name: 'Thunkable', url: 'https://thunkable.com/', sign: 'Free account', free: 'Free plan' },
+    thunk:     { name: 'Thunkable', url: 'https://thunkable.com/', sign: 'Free account', free: 'Free plan', age: 'Age rule unclear: ask your teacher' },
     makecode:  { name: 'MakeCode Arcade', url: 'https://arcade.makecode.com/', sign: 'No account', free: 'Free' },
     scratch:   { name: 'Scratch', url: 'https://scratch.mit.edu/projects/editor/', sign: 'No account to start', free: 'Free' },
-    figma:     { name: 'Figma', url: 'https://www.figma.com/', sign: 'Google sign-in', free: 'Free Starter plan' },
-    figmamake: { name: 'Figma Make (AI)', url: 'https://www.figma.com/make/', sign: 'Google sign-in', free: 'Free: monthly AI credits', ai: true },
-    penpot:    { name: 'Penpot', url: 'https://design.penpot.app/', sign: 'Free account', free: 'Free, open source' },
+    figma:     { name: 'Figma', url: 'https://www.figma.com/', sign: 'Google sign-in', free: 'Free Starter plan', age: 'Legal-age rule: ask your teacher' },
+    figmamake: { name: 'Figma Make (AI)', url: 'https://www.figma.com/make/', sign: 'Google sign-in', free: 'Free: monthly AI credits', age: '18+ only', ai: true },
+    penpot:    { name: 'Penpot', url: 'https://design.penpot.app/', sign: 'Free account', free: 'Free, open source', age: '14+' },
     canva:     { name: 'Canva', url: 'https://www.canva.com/', sign: 'Free Canva account (Google sign-in)', free: 'Free' },
     express:   { name: 'Adobe Express', url: 'https://new.express.adobe.com/', sign: 'Free Adobe account', free: 'Free' },
     stitch:    { name: 'Google Stitch', url: 'https://stitch.withgoogle.com/', sign: 'Google account', free: 'Free, daily limits', age: '18+ only', ai: true },
     excali:    { name: 'Excalidraw', url: 'https://excalidraw.com/', sign: 'No account', free: 'Free' },
     clipchamp: { name: 'Clipchamp', url: 'https://clipchamp.com/en/', sign: 'Free account', free: 'Free: 1080p exports' },
     canvavid:  { name: 'Canva video editor', url: 'https://www.canva.com/create/videos/', sign: 'Free Canva account (Google sign-in)', free: 'Free' },
-    capcut:    { name: 'CapCut', url: 'https://www.capcut.com/', sign: 'Free account (Google sign-in)', free: 'Free, some effects are paid' },
+    capcut:    { name: 'CapCut', url: 'https://www.capcut.com/', sign: 'Free account (Google sign-in)', free: 'Free, some effects are paid', age: '13+ (under 18: ask a parent)' },
     vids:      { name: 'Google Vids', url: 'https://docs.google.com/videos/', sign: 'Google account', free: 'Free, small AI limit', ai: true },
-    dreamina:  { name: 'Dreamina', url: 'https://dreamina.capcut.com/', sign: 'Free account', free: 'Free daily credits', ai: true },
+    dreamina:  { name: 'Dreamina', url: 'https://dreamina.capcut.com/', sign: 'Free account', free: 'Free daily credits', age: '18+ (reported)', ai: true },
     designer:  { name: 'Microsoft Designer', url: 'https://designer.microsoft.com/', sign: 'Free Microsoft account', free: 'Free: monthly credits', ai: true },
-    firefly:   { name: 'Adobe Firefly', url: 'https://firefly.adobe.com/', sign: 'Free Adobe account', free: 'Free: monthly credits', ai: true },
+    firefly:   { name: 'Adobe Firefly', url: 'https://firefly.adobe.com/', sign: 'Free Adobe account', free: 'Free: monthly credits', age: 'Age rule unclear: ask your teacher', ai: true },
   };
   const t = (key, how) => Object.assign({ key }, T[key], { how });
   const SHARE_AND_EXPORT = 'To get a link, choose Share and export, then Share.';
@@ -176,10 +176,10 @@ footer{font-size:13px;color:var(--sub);margin-top:26px;text-align:center}
       others: [
         t('sites', 'No coding. Choose a template, type your text, click Publish and copy the link. A school Google account may block it: use your personal one.'),
         t('canvacode', 'Our step-by-step guide opens first, then Canva. Publish and copy the link.'),
-        t('bolt', 'Builds a whole website from your prompt and hosts it for you. Click Publish, then copy the link.'),
-        t('lovable', 'Builds a website from your prompt. The free plan is small, so plan your changes. Click Publish, then copy the link.'),
       ],
       more: [
+        t('bolt', 'Builds a whole website from your prompt and hosts it for you. Click Publish, then copy the link.'),
+        t('lovable', 'Builds a website from your prompt. The free plan is small, so plan your changes. Click Publish, then copy the link.'),
         t('netlify', 'Got an index.html file from an AI? Put it in a folder, drag the folder onto the page and you get a live link. Make a free account to keep it.'),
         t('aistudio', "Google's app builder. You can share a project with a link. A public web address uses Google Cloud, which may need billing."),
       ] },
@@ -190,11 +190,11 @@ footer{font-size:13px;color:var(--sub);margin-top:26px;text-align:center}
       best: t('gemini', 'Choose Canvas and describe your app. It runs right on the page, so you can test it at once. ' + SHARE_AND_EXPORT + ' The link works on a phone too.'),
       others: [
         t('appinv', 'Snap colorful blocks together to build a real Android app. Made by MIT. Test it on a phone with the free MIT AI2 Companion app.'),
-        t('bolt', 'Builds a working web app from your prompt, with hosting included. Click Publish for a link.'),
-        t('lovable', 'Builds a web app from your prompt. Click Publish for a link.'),
+        t('thunk', 'Build iPhone and Android apps with blocks. Test on your phone with the Thunkable app.'),
       ],
       more: [
-        t('thunk', 'Build iPhone and Android apps with blocks. Test on your phone with the Thunkable app.'),
+        t('bolt', 'Builds a working web app from your prompt, with hosting included. Click Publish for a link.'),
+        t('lovable', 'Builds a web app from your prompt. Click Publish for a link.'),
         t('aistudio', "Google's app builder. Describe an app and get a working one you can share."),
       ] },
     { id: 'game', icon: '🎮', label: 'Game', tag: 'Play what you make', title: 'Make a game', share: true,
@@ -211,15 +211,15 @@ footer{font-size:13px;color:var(--sub);margin-top:26px;text-align:center}
       what: 'Design app screens, logos, posters or a whole website layout. Sketch first, then make it look great.',
       steps: ['Open a tool and start a new design.', 'Sketch your idea with shapes, text and pictures, or paste the prompt into an AI design tool.', 'Download a PNG picture. You can use it in your website or poster.'],
       prompt: 'Design a mobile app home screen about {topic}: a friendly title, a hero picture, three big buttons and a bottom menu. Use a bright, modern color palette.',
-      best: t('figma', 'The tool real designers use. The free Starter plan has unlimited drafts and 3 design files. Sign in with Google.'),
+      best: t('canva', 'You already know it, and your Google sign-in works. Posters, logos, slides and social posts.'),
       others: [
-        t('figmamake', 'Describe an app or website and get a clickable design. The free plan has monthly AI credits.'),
         t('penpot', 'Free and open source, like Figma. Great for app screens and websites.'),
-        t('canva', 'You already know it. Posters, logos, slides and social posts.'),
+        t('figma', 'The tool many professional designers use. The free Starter plan has unlimited drafts and 3 design files. Sign in with Google.'),
         t('express', 'Free posters, logos and social posts, with AI help.'),
       ],
       more: [
         t('excali', 'Quick hand-drawn sketches and wireframes. Plan your screens before you design.'),
+        t('figmamake', 'Describe an app or website and get a clickable design. The free plan has monthly AI credits.'),
         t('stitch', "Google's AI design tool: describe a screen and get a design you can copy into Figma."),
       ] },
     { id: 'video', icon: '🎬', label: 'Video', tag: 'Edit or make clips', title: 'Make a video',
@@ -242,10 +242,11 @@ footer{font-size:13px;color:var(--sub);margin-top:26px;text-align:center}
       best: t('gemini', 'Ask it to create an image of your idea. Free, with daily limits.'),
       others: [
         t('designer', 'Type what you want and get pictures. Free credits each month.'),
-        t('firefly', "Adobe's picture AI. Free credits each month."),
         t('chatgpt', 'Ask ChatGPT to draw it. A few free pictures a day.'),
       ],
-      more: [] },
+      more: [
+        t('firefly', "Adobe's picture AI. Free credits each month."),
+      ] },
     { id: 'chat', icon: '🤖', label: 'Ask AI', tag: 'Chat, practice prompts', title: 'Chat with an AI',
       what: 'Ask questions, get ideas and practice writing prompts. A strong prompt says who it is for, what you want and how it should look.',
       steps: ['Open a chat tool. Sign in if it asks.', 'Paste your starter prompt (Ctrl+V) and press Enter.', 'Answer its questions, then ask for something better. AI makes mistakes, so check the facts.'],
